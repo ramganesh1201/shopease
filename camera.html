@@ -1,588 +1,1059 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Cameras — ShopEase</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cameras & Photography - ShopEase</title>
 
-<style>
-/* ========== BASE ========== */
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f1f3f6;
-  color: #212121;
-}
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-/* ========== HEADER ========== */
-.top-header {
-  background: #ffffff;
-  border-bottom: 1px solid #e5e7eb;
-  padding: 14px 0;
-}
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
+    body { background:#f4f6fb; color:#333; }
+    a { text-decoration:none; color:inherit; }
+    ul { list-style:none; }
 
-.nav-container {
-  max-width: 1200px;
-  margin: auto;
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
+    /* ===== HEADER ===== */
+    .header {
+      background:#fff; padding:12px 5%;
+      display:flex; align-items:center; justify-content:space-between;
+      box-shadow:0 2px 15px rgba(0,0,0,0.06); position:sticky; top:0; z-index:1000;
+    }
+    .logo { font-size:28px; font-weight:700; color:#ff3f6c; cursor:pointer; }
+    .logo span { color:#333; }
+    .search-bar { flex:1; max-width:500px; margin:0 30px; display:flex; }
+    .search-bar input {
+      flex:1; padding:12px 15px; border:2px solid #eee;
+      border-radius:8px 0 0 8px; outline:none; font-size:14px; transition:border-color 0.3s;
+    }
+    .search-bar input:focus { border-color:#ff3f6c; }
+    .search-bar button {
+      padding:12px 20px; border:none; background:#ff3f6c; color:#fff;
+      border-radius:0 8px 8px 0; cursor:pointer; transition:background 0.3s;
+    }
+    .search-bar button:hover { background:#e6365c; }
+    .header-actions { display:flex; align-items:center; gap:25px; }
+    .cart-icon { position:relative; font-size:22px; cursor:pointer; color:#333; transition:color 0.3s; }
+    .cart-icon:hover { color:#ff3f6c; }
+    .cart-badge {
+      position:absolute; top:-8px; right:-10px; background:#ff3f6c; color:#fff;
+      font-size:11px; font-weight:600; width:20px; height:20px; border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+    }
+    .cart-badge:empty, .cart-badge[data-count="0"] { display:none; }
 
-.search-bar-top {
-  flex: 1;
-  display: flex;
-}
+    /* ===== BREADCRUMB ===== */
+    .breadcrumb { padding:15px 5%; font-size:13px; color:#888; }
+    .breadcrumb a { color:#ff3f6c; font-weight:500; }
 
-.search-bar-top input {
-  flex: 1;
-  padding: 10px 12px;
-  border: 1px solid #d1d5db;
-  border-right: none;
-  border-radius: 6px 0 0 6px;
-}
+    /* ===== HERO ===== */
+    .hero {
+      margin:0 5% 30px;
+      background:linear-gradient(135deg,#1a1a2e 0%,#16213e 40%,#0f3460 100%);
+      border-radius:20px; padding:40px 50px;
+      display:flex; justify-content:space-between; align-items:center;
+      position:relative; overflow:hidden;
+    }
+    /* Aperture ring decoration */
+    .hero-aperture {
+      position:absolute; right:340px; top:50%; transform:translateY(-50%);
+      width:220px; height:220px; border-radius:50%;
+      border:2px solid rgba(255,63,108,0.15);
+      display:flex; align-items:center; justify-content:center;
+      pointer-events:none;
+    }
+    .hero-aperture::before {
+      content:''; width:160px; height:160px; border-radius:50%;
+      border:2px solid rgba(255,63,108,0.1);
+      position:absolute;
+    }
+    .hero-aperture::after {
+      content:''; width:100px; height:100px; border-radius:50%;
+      border:2px solid rgba(255,63,108,0.08);
+      position:absolute;
+    }
+    /* Lens flare dot */
+    .lens-flare {
+      position:absolute; top:30px; left:38%; width:6px; height:6px;
+      background:#ff3f6c; border-radius:50%;
+      box-shadow:0 0 20px 8px rgba(255,63,108,0.3), 0 0 60px 20px rgba(255,63,108,0.1);
+      pointer-events:none;
+    }
+    .hero-text { position:relative; z-index:2; }
+    .hero-text h2 { font-size:36px; font-weight:700; margin-bottom:12px; color:#fff; line-height:1.2; }
+    .hero-text h2 span { color:#ff3f6c; }
+    .hero-text p { color:rgba(255,255,255,0.7); font-size:15px; margin-bottom:20px; max-width:460px; }
+    .hero-tags { display:flex; gap:8px; margin-bottom:22px; flex-wrap:wrap; }
+    .hero-tag {
+      padding:6px 14px; border-radius:20px; font-size:12px; font-weight:500;
+      background:rgba(255,63,108,0.15); color:#ff3f6c;
+      border:1px solid rgba(255,63,108,0.3);
+    }
+    .hero-stats { display:flex; gap:30px; }
+    .stat { text-align:center; }
+    .stat-number { font-size:24px; font-weight:700; color:#ff3f6c; }
+    .stat-label  { font-size:12px; color:rgba(255,255,255,0.5); }
+    .hero-image { position:relative; z-index:2; }
+    .hero-image img {
+      width:320px; height:auto; border-radius:15px;
+      box-shadow:0 20px 60px rgba(0,0,0,0.5);
+    }
 
-.search-bar-top button {
-  background: #2874f0;
-  color: white;
-  border: none;
-  padding: 10px 18px;
-  border-radius: 0 6px 6px 0;
-  cursor: pointer;
-}
+    /* ===== SHOOT TYPE STRIP ===== */
+    .shoot-strip {
+      margin:0 5% 28px;
+      display:grid; grid-template-columns:repeat(5,1fr); gap:14px;
+    }
+    .shoot-card {
+      background:#fff; border-radius:14px; padding:16px 14px;
+      display:flex; flex-direction:column; align-items:center; gap:8px;
+      box-shadow:0 3px 15px rgba(0,0,0,0.05); transition:all 0.3s;
+      cursor:pointer; text-align:center; border:2px solid transparent;
+    }
+    .shoot-card:hover, .shoot-card.active { border-color:#ff3f6c; transform:translateY(-4px); }
+    .shoot-card:hover .shoot-icon, .shoot-card.active .shoot-icon { background:linear-gradient(135deg,#ff3f6c,#ff7043); color:#fff; }
+    .shoot-icon {
+      width:48px; height:48px; border-radius:12px;
+      background:#fff5f7; color:#ff3f6c;
+      display:flex; align-items:center; justify-content:center;
+      font-size:20px; transition:all 0.3s;
+    }
+    .shoot-card h4 { font-size:12px; font-weight:600; color:#1a1a1a; }
+    .shoot-card p  { font-size:10px; color:#888; }
 
-.breadcrumb {
-  max-width: 1200px;
-  margin: 15px auto 5px;
-  font-size: 14px;
-  color: #6b7280;
-  display: flex;
-  gap: 8px;
-}
+    /* ===== MAIN LAYOUT ===== */
+    .main-container { display:flex; gap:30px; padding:0 5% 50px; }
 
-.breadcrumb .active {
-  font-weight: 500;
-  color: #212121;
-}
+    /* ===== SIDEBAR ===== */
+    .sidebar {
+      width:280px; background:#fff; padding:25px; border-radius:16px;
+      box-shadow:0 5px 25px rgba(0,0,0,0.05); height:fit-content;
+      position:sticky; top:90px;
+    }
+    .sidebar-header {
+      display:flex; justify-content:space-between; align-items:center;
+      margin-bottom:20px; padding-bottom:15px; border-bottom:1px solid #eee;
+    }
+    .sidebar-header h3 { font-size:18px; font-weight:600; }
+    .clear-all-btn { font-size:13px; color:#ff3f6c; cursor:pointer; font-weight:500; }
+    .clear-all-btn:hover { text-decoration:underline; }
+    .filter-section { margin-bottom:25px; border-bottom:1px solid #f0f0f0; padding-bottom:20px; }
+    .filter-section:last-child { border-bottom:none; }
+    .filter-header { display:flex; justify-content:space-between; align-items:center; cursor:pointer; margin-bottom:15px; }
+    .filter-header h4 { font-size:14px; font-weight:600; color:#1a1a1a; }
+    .filter-header i  { font-size:12px; color:#888; transition:transform 0.3s; }
+    .filter-header.collapsed i { transform:rotate(-90deg); }
+    .filter-options { display:flex; flex-direction:column; gap:10px; }
+    .filter-options.collapsed { display:none; }
+    .filter-option { display:flex; align-items:center; gap:10px; cursor:pointer; }
+    .filter-option input[type="checkbox"] { width:18px; height:18px; accent-color:#ff3f6c; cursor:pointer; }
+    .filter-option span { font-size:13px; color:#444; transition:color 0.2s; }
+    .filter-option:hover span { color:#ff3f6c; }
+    .filter-option .count { margin-left:auto; font-size:11px; color:#999; background:#f5f5f5; padding:2px 8px; border-radius:10px; }
+    .color-options { display:flex; flex-wrap:wrap; gap:10px; }
+    .color-option {
+      width:32px; height:32px; border-radius:50%; cursor:pointer;
+      border:2px solid transparent; transition:all 0.2s; position:relative;
+    }
+    .color-option:hover,.color-option.active { border-color:#ff3f6c; transform:scale(1.1); }
+    .color-option.active::after {
+      content:'\2713'; position:absolute; top:50%; left:50%;
+      transform:translate(-50%,-50%); color:#fff; font-size:14px; font-weight:bold;
+    }
+    .active-filters { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:15px; }
+    .active-filter {
+      display:flex; align-items:center; gap:6px; padding:6px 12px;
+      background:#fff5f7; border:1px solid #ff3f6c; border-radius:20px;
+      font-size:12px; color:#ff3f6c;
+    }
+    .active-filter i { cursor:pointer; }
+    .active-filter i:hover { color:#e6365c; }
+    .rating-option { display:flex; align-items:center; gap:8px; cursor:pointer; padding:6px 8px; border-radius:8px; transition:background 0.2s; }
+    .rating-option:hover { background:#fff5f7; }
+    .rating-option .stars { color:#ffb800; font-size:13px; }
 
-.brand {
-  font-size: 22px;
-  font-weight: bold;
-  color: #2874f0;
-  text-decoration: none;
-}
+    /* ===== PRODUCTS AREA ===== */
+    .products-area { flex:1; min-width:0; }
+    .category-tabs { display:flex; gap:10px; margin-bottom:20px; flex-wrap:wrap; }
+    .tab-btn {
+      padding:10px 20px; border:none; background:#fff; border-radius:25px; cursor:pointer;
+      font-size:13px; font-weight:500; color:#666; transition:all 0.3s;
+      box-shadow:0 2px 10px rgba(0,0,0,0.05);
+    }
+    .tab-btn:hover { color:#ff3f6c; }
+    .tab-btn.active { background:#ff3f6c; color:#fff; }
 
-.cart-btn {
-  position: relative;
-  font-weight: 600;
-  color: #212121;
-  text-decoration: none;
-}
+    /* ===== SORT BAR ===== */
+    .sort-bar {
+      display:flex; justify-content:space-between; align-items:center;
+      margin-bottom:20px; background:#fff; padding:15px 20px;
+      border-radius:12px; box-shadow:0 2px 15px rgba(0,0,0,0.05);
+    }
+    .results-count { font-size:14px; color:#666; }
+    .results-count strong { color:#1a1a1a; }
+    .sort-options { display:flex; align-items:center; gap:15px; }
+    .sort-dropdown { padding:8px 15px; border:1px solid #ddd; border-radius:8px; font-size:13px; color:#333; cursor:pointer; background:#fff; }
+    .view-toggle { display:flex; gap:8px; }
+    .view-btn {
+      width:36px; height:36px; border:1px solid #ddd; border-radius:8px; background:#fff;
+      cursor:pointer; display:flex; align-items:center; justify-content:center;
+      color:#666; transition:all 0.2s;
+    }
+    .view-btn:hover,.view-btn.active { border-color:#ff3f6c; color:#ff3f6c; background:#fff5f7; }
 
-.cart-count {
-  position: absolute;
-  top: -8px;
-  right: -10px;
-  background: #ff6161;
-  color: #fff;
-  font-size: 12px;
-  padding: 3px 6px;
-  border-radius: 50%;
-}
+    /* ===== PRODUCT GRID ===== */
+    .product-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:25px; }
+    .product-grid.list-view { grid-template-columns:1fr; }
 
-/* ========== LAYOUT ========== */
-.page-wrap {
-  display: flex;
-  max-width: 1200px;
-  margin: 20px auto;
-  gap: 15px;
-}
+    .product-card {
+      background:#fff; border-radius:16px; overflow:hidden;
+      box-shadow:0 5px 25px rgba(0,0,0,0.05); transition:all 0.3s ease; cursor:pointer;
+      display:flex; flex-direction:column;
+    }
+    .product-card:hover { transform:translateY(-8px); box-shadow:0 15px 40px rgba(0,0,0,0.12); }
+    .product-card.list-view { flex-direction:row; }
 
-/* ========== SIDEBAR ========== */
-.sidebar {
-  width: 250px;
-  background: #fff;
-  padding: 15px;
-  border-radius: 4px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-}
+    /* Shutter speed strip — unique camera feel */
+    .shutter-strip {
+      height:6px;
+      background:linear-gradient(90deg,#1a1a1a 0%,#ff3f6c 30%,#ff7043 60%,#1a1a1a 100%);
+      background-size:200% 100%;
+      animation:shutterSlide 3s linear infinite;
+    }
+    @keyframes shutterSlide {
+      0%   { background-position:200% 0; }
+      100% { background-position:-200% 0; }
+    }
 
-.sidebar h3 {
-  font-size: 16px;
-  margin-bottom: 10px;
-}
+    .product-image { position:relative; overflow:hidden; background:#1a1a1a; }
+    .product-card.list-view .product-image { width:220px; flex-shrink:0; }
+    .product-image img { width:100%; height:250px; object-fit:contain; padding:16px; transition:transform 0.5s; filter:brightness(0.97); }
+    .product-card.list-view .product-image img { height:100%; }
+    .product-card:hover .product-image img { transform:scale(1.06); filter:brightness(1); }
 
-.filter-group {
-  border-bottom: 1px solid #eee;
-  padding: 10px 0;
-}
+    /* Aperture overlay on hover */
+    .product-image::after {
+      content:''; position:absolute; inset:0;
+      background:radial-gradient(circle at center, transparent 40%, rgba(0,0,0,0.3) 100%);
+      opacity:0; transition:opacity 0.4s;
+      pointer-events:none;
+    }
+    .product-card:hover .product-image::after { opacity:1; }
 
-.filter-head {
-  font-weight: 600;
-  margin-bottom: 8px;
-}
+    .wishlist-btn {
+      position:absolute; top:12px; right:12px; width:36px; height:36px;
+      background:rgba(255,255,255,0.9); border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+      cursor:pointer; box-shadow:0 2px 10px rgba(0,0,0,0.2);
+      transition:all 0.3s; border:none; font-size:16px; color:#666; z-index:2;
+      backdrop-filter:blur(4px);
+    }
+    .wishlist-btn:hover { color:#ff3f6c; transform:scale(1.1); }
+    .wishlist-btn.active { color:#ff3f6c; }
 
-.filter-body label {
-  display: block;
-  font-size: 14px;
-  margin: 6px 0;
-  cursor: pointer;
-}
+    .badge { position:absolute; top:12px; left:12px; padding:4px 10px; border-radius:4px; font-size:11px; font-weight:600; z-index:2; }
+    .badge.default   { background:#ff3f6c; color:#fff; }
+    .badge.new       { background:#28a745; color:#fff; }
+    .badge.pro       { background:#1a1a1a; color:#ff3f6c; border:1px solid #ff3f6c; }
+    .badge.deal      { background:#ff8c00; color:#fff; }
 
-/* ========== PRODUCTS AREA ========== */
-.products {
-  flex: 1;
-}
+    /* Level meter — skill level indicator */
+    .level-strip {
+      display:flex; gap:0; background:#f8f8f8;
+      border-bottom:1px solid #f0f0f0;
+    }
+    .level-item {
+      flex:1; text-align:center; padding:7px 4px;
+      font-size:10px; font-weight:600; color:#ccc;
+      border-right:1px solid #f0f0f0; transition:all 0.2s;
+    }
+    .level-item:last-child { border-right:none; }
+    .level-item.active-level { color:#ff3f6c; background:#fff5f7; }
 
-.page-header {
-  background: #fff;
-  padding: 15px;
-  border-radius: 4px;
-  margin-bottom: 10px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-}
+    .product-info { padding:16px 18px 18px; flex:1; display:flex; flex-direction:column; }
+    .product-brand { font-size:12px; color:#888; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:4px; }
+    .product-title {
+      font-size:14px; font-weight:500; color:#1a1a1a; margin-bottom:8px;
+      line-height:1.4; display:-webkit-box; -webkit-line-clamp:2;
+      -webkit-box-orient:vertical; overflow:hidden;
+    }
 
-.page-header h2 {
-  margin: 0;
-  font-size: 22px;
-}
+    .product-meta { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:10px; }
+    .meta-tag { padding:3px 10px; background:#fff5f7; color:#ff3f6c; border-radius:4px; font-size:11px; font-weight:500; }
+    .meta-tag.dark  { background:#f5f5f5; color:#555; }
+    .meta-tag.blue  { background:#e8f4fd; color:#1565c0; }
+    .meta-tag.green { background:#e8f5e9; color:#2e7d32; }
 
-.page-header p {
-  font-size: 13px;
-  color: #777;
-}
+    .product-pricing { display:flex; align-items:center; gap:10px; margin-bottom:10px; }
+    .current-price  { font-size:18px; font-weight:700; color:#1a1a1a; }
+    .original-price { font-size:14px; color:#999; text-decoration:line-through; }
+    .discount       { font-size:12px; color:#ff3f6c; font-weight:600; }
 
-/* Sort Bar */
-.controls {
-  background: #fff;
-  padding: 12px;
-  border-radius: 4px;
-  margin-bottom: 15px;
-  display: flex;
-  justify-content: space-between;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-}
+    .product-rating { display:flex; align-items:center; gap:6px; margin-bottom:10px; }
+    .rating-stars   { color:#ffb800; font-size:13px; }
+    .rating-count   { font-size:12px; color:#888; }
 
-.controls select,
-.controls input {
-  padding: 6px 8px;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-}
+    /* Camera spec grid — 2×2 tech specs */
+    .spec-grid { display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-bottom:14px; }
+    .spec-item { background:#f8f9fa; border-radius:8px; padding:7px 10px; }
+    .spec-key  { font-size:10px; color:#aaa; text-transform:uppercase; letter-spacing:0.3px; display:block; }
+    .spec-val  { font-size:12px; font-weight:600; color:#333; display:block; margin-top:1px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 
-/* ========== PRODUCT GRID ========== */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 15px;
-}
+    .color-dots { display:flex; gap:6px; align-items:center; margin-bottom:14px; }
+    .color-dots span { font-size:11px; color:#888; }
+    .cdot { width:16px; height:16px; border-radius:50%; border:1.5px solid #ddd; }
 
-/* ========== PRODUCT CARD ========== */
-.card {
-  background: #fff;
-  border-radius: 4px;
-  padding: 12px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-  transition: 0.2s;
-}
+    .available-sizes { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:14px; }
+    .size-chip {
+      padding:5px 10px; border:1px solid #ddd; border-radius:6px;
+      font-size:11px; color:#666; cursor:pointer; transition:all 0.2s;
+    }
+    .size-chip:hover { border-color:#ff3f6c; color:#ff3f6c; }
 
-.card:hover {
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-}
+    .add-to-cart-btn {
+      width:100%; padding:12px; border:none; background:#ff3f6c; color:#fff;
+      border-radius:10px; font-size:13px; font-weight:600; cursor:pointer;
+      transition:all 0.3s; display:flex; align-items:center; justify-content:center;
+      gap:8px; margin-top:auto;
+    }
+    .add-to-cart-btn:hover { background:#e6365c; }
+    .add-to-cart-btn.added { background:#28a745; }
 
-.thumb {
-  height: 180px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 10px;
-}
+    /* ===== PROMO BANNER ===== */
+    .promo-banner {
+      grid-column:1/-1;
+      background:linear-gradient(135deg,#1a1a2e 0%,#16213e 50%,#0f3460 100%);
+      border-radius:16px; padding:28px 40px;
+      display:flex; align-items:center; justify-content:space-between;
+      color:#fff; position:relative; overflow:hidden;
+    }
+    .promo-banner::before {
+      content:'📸'; position:absolute; right:160px; top:50%;
+      transform:translateY(-50%); font-size:80px; opacity:0.08; pointer-events:none;
+    }
+    .promo-banner h3 { font-size:22px; font-weight:700; margin-bottom:6px; }
+    .promo-banner h3 span { color:#ff3f6c; }
+    .promo-banner p  { font-size:14px; opacity:0.75; }
+    .promo-banner-btn {
+      padding:12px 28px; background:#ff3f6c; color:#fff; border:none;
+      border-radius:25px; font-size:14px; font-weight:600; cursor:pointer;
+      transition:all 0.3s; white-space:nowrap; margin-left:20px;
+    }
+    .promo-banner-btn:hover { background:#e6365c; transform:scale(1.05); box-shadow:0 5px 20px rgba(255,63,108,0.4); }
 
-.thumb img {
-  max-height: 100%;
-  max-width: 100%;
-  object-fit: contain;
-}
+    /* ===== PAGINATION ===== */
+    .pagination { display:flex; justify-content:center; align-items:center; gap:8px; margin-top:40px; }
+    .page-btn {
+      min-width:40px; height:40px; border:1px solid #ddd; background:#fff;
+      border-radius:8px; display:flex; align-items:center; justify-content:center;
+      cursor:pointer; font-size:14px; color:#666; transition:all 0.2s;
+    }
+    .page-btn:hover { border-color:#ff3f6c; color:#ff3f6c; }
+    .page-btn.active { background:#ff3f6c; border-color:#ff3f6c; color:#fff; }
+    .page-btn:disabled { opacity:0.5; cursor:not-allowed; }
+    .page-ellipsis { padding:0 5px; color:#888; }
 
-.title {
-  font-size: 15px;
-  font-weight: 600;
-  margin-bottom: 5px;
-}
+    /* ===== NO RESULTS ===== */
+    .no-results { text-align:center; padding:60px 20px; background:#fff; border-radius:16px; grid-column:1/-1; }
+    .no-results i { font-size:60px; color:#ddd; margin-bottom:20px; }
+    .no-results h3 { font-size:20px; color:#333; margin-bottom:10px; }
+    .no-results p  { color:#888; }
 
-.brand-name {
-  font-size: 13px;
-  color: #777;
-  margin-bottom: 4px;
-}
+    /* ===== TOAST ===== */
+    .toast {
+      position:fixed; bottom:30px; right:30px; background:#1a1a1a; color:#fff;
+      padding:14px 22px; border-radius:10px; font-size:14px; font-weight:500;
+      display:flex; align-items:center; gap:10px; z-index:9999;
+      transform:translateY(100px); opacity:0;
+      transition:all 0.4s cubic-bezier(0.34,1.56,0.64,1);
+      box-shadow:0 10px 30px rgba(0,0,0,0.3);
+    }
+    .toast.show { transform:translateY(0); opacity:1; }
+    .toast i { color:#ff3f6c; font-size:18px; }
 
-.rating {
-  display: inline-block;
-  background: #388e3c;
-  color: #fff;
-  font-size: 12px;
-  padding: 3px 6px;
-  border-radius: 3px;
-  margin-bottom: 6px;
-}
-
-.features {
-  font-size: 13px;
-  color: #555;
-  margin-bottom: 8px;
-}
-
-.price-section {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.price {
-  font-size: 18px;
-  font-weight: bold;
-}
-
-.mrp {
-  text-decoration: line-through;
-  color: #777;
-  font-size: 13px;
-}
-
-.discount {
-  color: #388e3c;
-  font-size: 13px;
-  font-weight: 600;
-}
-
-.stock {
-  font-size: 13px;
-  color: #388e3c;
-  margin-top: 4px;
-}
-
-.add-btn {
-  margin-top: 8px;
-  width: 100%;
-  padding: 8px;
-  border: none;
-  background: #2874f0;
-  color: #fff;
-  font-weight: 600;
-  border-radius: 3px;
-  cursor: pointer;
-}
-
-.add-btn:hover {
-  background: #1a5fd1;
-}
-
-/* Responsive */
-@media (max-width: 900px) {
-  .grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .page-wrap {
-    flex-direction: column;
-  }
-  .sidebar {
-    width: 100%;
-  }
-}
-</style>
+    /* ===== RESPONSIVE ===== */
+    @media (max-width:1200px) { .product-grid { grid-template-columns:repeat(2,1fr); } .shoot-strip { grid-template-columns:repeat(3,1fr); } }
+    @media (max-width:992px)  {
+      .main-container { flex-direction:column; }
+      .sidebar { width:100%; position:static; }
+      .hero { padding:30px; }
+      .hero-image img { width:200px; }
+      .shoot-strip { grid-template-columns:repeat(3,1fr); }
+    }
+    @media (max-width:768px)  {
+      .hero { flex-direction:column; text-align:center; gap:25px; }
+      .hero-stats { justify-content:center; }
+      .hero-text p { max-width:100%; }
+      .product-grid { grid-template-columns:repeat(2,1fr); gap:15px; }
+      .product-image img { height:180px; }
+      .promo-banner { flex-direction:column; gap:15px; text-align:center; }
+      .promo-banner-btn { margin-left:0; }
+      .shoot-strip { grid-template-columns:repeat(3,1fr); }
+      .hero-aperture { display:none; }
+    }
+    @media (max-width:480px)  {
+      .product-grid { grid-template-columns:1fr; }
+      .shoot-strip { grid-template-columns:repeat(2,1fr); }
+      .tab-btn { padding:8px 14px; font-size:12px; }
+    }
+  </style>
 </head>
 <body>
-<!-- ===== TOP NAVBAR ===== -->
-<header class="top-header">
-  <div class="nav-container">
-    <a href="index.html" class="brand">ShopEase</a>
 
-    <div class="search-bar-top">
-      <input type="text" id="searchInput" placeholder="Search cameras, lenses...">
-      <button onclick="applyFilters()">🔍</button>
+<!-- ===================== HEADER ===================== -->
+<header class="header">
+  <div class="logo" onclick="window.location.href='index.html'">Shop<span>Ease</span></div>
+  <div class="search-bar">
+    <input type="text" id="searchInput" placeholder="Search cameras, lenses, tripods, bags...">
+    <button><i class="fas fa-search"></i></button>
+  </div>
+  <div class="header-actions">
+    <div class="cart-icon" onclick="window.location.href='cart.html'">
+      <i class="fas fa-shopping-cart"></i>
+      <span class="cart-badge" id="cartBadge">0</span>
     </div>
-
-    <a class="cart-btn" href="cart.html">
-      🛒
-      <span id="cartCount" class="cart-count">0</span>
-    </a>
   </div>
 </header>
 
-<!-- ===== BREADCRUMB ===== -->
+<!-- ===================== BREADCRUMB ===================== -->
 <div class="breadcrumb">
-  <span>🏠</span>
-  <span>Electronics</span>
-  <span>›</span>
-  <span class="active">Cameras</span>
+  <a href="index.html">Home</a> <i class="fas fa-chevron-right"></i>
+  <a href="#">Electronics</a> <i class="fas fa-chevron-right"></i>
+  <span>Cameras &amp; Photography</span>
 </div>
 
-<div class="page-wrap">
+<!-- ===================== HERO ===================== -->
+<div class="hero">
+  <div class="lens-flare"></div>
+  <div class="hero-aperture"></div>
+  <div class="hero-text">
+    <h2>Cameras &amp; <span>Photography</span></h2>
+    <p>Capture every moment in stunning detail. DSLRs, mirrorless, lenses, tripods & pro gear — all in one place.</p>
+    <div class="hero-tags">
+      <span class="hero-tag">📷 DSLR</span>
+      <span class="hero-tag">🎥 Mirrorless</span>
+      <span class="hero-tag">🔭 Lenses</span>
+      <span class="hero-tag">🎞️ Film Cameras</span>
+      <span class="hero-tag">💡 Lighting</span>
+      <span class="hero-tag">🎒 Bags & Tripods</span>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-number" id="totalProducts">0</div><div class="stat-label">Products</div></div>
+      <div class="stat"><div class="stat-number">25+</div><div class="stat-label">Brands</div></div>
+      <div class="stat"><div class="stat-number">50%</div><div class="stat-label">Off</div></div>
+    </div>
+  </div>
+  <div class="hero-image">
+    <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=500" alt="Cameras & Photography">
+  </div>
+</div>
 
-  <!-- LEFT FILTER SIDEBAR -->
-  <aside class="sidebar" aria-label="Filters">
-    <h3>Refine results</h3>
+<!-- ===================== SHOOT TYPE STRIP ===================== -->
+<div class="shoot-strip" id="shootStrip">
+  <div class="shoot-card" data-shoot="Portrait" onclick="filterByShoot(this)">
+    <div class="shoot-icon"><i class="fas fa-portrait"></i></div>
+    <h4>Portrait</h4><p>Best for portraits</p>
+  </div>
+  <div class="shoot-card" data-shoot="Wildlife" onclick="filterByShoot(this)">
+    <div class="shoot-icon"><i class="fas fa-paw"></i></div>
+    <h4>Wildlife</h4><p>Fast AF & reach</p>
+  </div>
+  <div class="shoot-card" data-shoot="Landscape" onclick="filterByShoot(this)">
+    <div class="shoot-icon"><i class="fas fa-mountain"></i></div>
+    <h4>Landscape</h4><p>Wide angle shots</p>
+  </div>
+  <div class="shoot-card" data-shoot="Street" onclick="filterByShoot(this)">
+    <div class="shoot-icon"><i class="fas fa-city"></i></div>
+    <h4>Street</h4><p>Compact & stealthy</p>
+  </div>
+  <div class="shoot-card" data-shoot="Video" onclick="filterByShoot(this)">
+    <div class="shoot-icon"><i class="fas fa-video"></i></div>
+    <h4>Video / Vlog</h4><p>4K cinematic</p>
+  </div>
+</div>
 
-    <div class="filter-group" data-key="brand">
-      <div class="filter-head">
-        <strong>Brand</strong>
-      </div>
-      <div class="filter-body">
-        <label><input type="checkbox" class="filter brand" value="Canon"> Canon</label>
-        <label><input type="checkbox" class="filter brand" value="Sony"> Sony</label>
-        <label><input type="checkbox" class="filter brand" value="Nikon"> Nikon</label>
-        <label><input type="checkbox" class="filter brand" value="GoPro"> GoPro</label>
-        <label><input type="checkbox" class="filter brand" value="DJI"> DJI</label>
-        <label><input type="checkbox" class="filter brand" value="Fujifilm"> Fujifilm</label>
-        <label><input type="checkbox" class="filter brand" value="Panasonic"> Panasonic</label>
-        <label><input type="checkbox" class="filter brand" value="Insta360"> Insta360</label>
+<!-- ===================== MAIN CONTAINER ===================== -->
+<div class="main-container">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <h3><i class="fas fa-filter"></i> Filters</h3>
+      <span class="clear-all-btn" onclick="clearAllFilters()">Clear All</span>
+    </div>
+    <div class="active-filters" id="activeFilters"></div>
+
+    <!-- Category -->
+    <div class="filter-section">
+      <div class="filter-header" onclick="toggleFilter(this)"><h4>Category</h4><i class="fas fa-chevron-down"></i></div>
+      <div class="filter-options" id="categoryFilters"></div>
+    </div>
+
+    <!-- Brand -->
+    <div class="filter-section">
+      <div class="filter-header" onclick="toggleFilter(this)"><h4>Brand</h4><i class="fas fa-chevron-down"></i></div>
+      <div class="filter-options" id="brandFilters"></div>
+    </div>
+
+    <!-- Sensor Type -->
+    <div class="filter-section">
+      <div class="filter-header" onclick="toggleFilter(this)"><h4>Sensor / Type</h4><i class="fas fa-chevron-down"></i></div>
+      <div class="filter-options" id="sensorFilters">
+        <label class="filter-option"><input type="checkbox" value="Full Frame" onchange="applyFilters()"><span>🟦 Full Frame</span></label>
+        <label class="filter-option"><input type="checkbox" value="APS-C" onchange="applyFilters()"><span>🟩 APS-C</span></label>
+        <label class="filter-option"><input type="checkbox" value="Micro 4/3" onchange="applyFilters()"><span>🟨 Micro 4/3</span></label>
+        <label class="filter-option"><input type="checkbox" value="Medium Format" onchange="applyFilters()"><span>🟥 Medium Format</span></label>
+        <label class="filter-option"><input type="checkbox" value="N/A" onchange="applyFilters()"><span>⬜ Accessories</span></label>
       </div>
     </div>
 
-    <div class="filter-group" data-key="price">
-      <div class="filter-head">
-        <strong>Price</strong>
-      </div>
-      <div class="filter-body">
-        <label><input type="radio" name="price" class="price" value="under50000"> Under ₹50,000</label>
-        <label><input type="radio" name="price" class="price" value="50000-100000"> ₹50,000 - ₹1,00,000</label>
-        <label><input type="radio" name="price" class="price" value="above100000"> Above ₹1,00,000</label>
-        <label><input type="radio" name="price" class="price" value="all" checked> All</label>
+    <!-- Skill Level -->
+    <div class="filter-section">
+      <div class="filter-header" onclick="toggleFilter(this)"><h4>Skill Level</h4><i class="fas fa-chevron-down"></i></div>
+      <div class="filter-options" id="levelFilters">
+        <label class="filter-option"><input type="checkbox" value="Beginner" onchange="applyFilters()"><span>🟢 Beginner</span></label>
+        <label class="filter-option"><input type="checkbox" value="Intermediate" onchange="applyFilters()"><span>🟡 Intermediate</span></label>
+        <label class="filter-option"><input type="checkbox" value="Professional" onchange="applyFilters()"><span>🔴 Professional</span></label>
       </div>
     </div>
 
-    <div style="margin-top:12px;font-size:13px;color:#777">
-      <div>Showing <span id="count">0</span> results</div>
+    <!-- Mount / Compatibility -->
+    <div class="filter-section">
+      <div class="filter-header" onclick="toggleFilter(this)"><h4>Mount / Compatibility</h4><i class="fas fa-chevron-down"></i></div>
+      <div class="filter-options" id="mountFilters">
+        <label class="filter-option"><input type="checkbox" value="Sony E" onchange="applyFilters()"><span>Sony E-Mount</span></label>
+        <label class="filter-option"><input type="checkbox" value="Canon RF" onchange="applyFilters()"><span>Canon RF</span></label>
+        <label class="filter-option"><input type="checkbox" value="Canon EF" onchange="applyFilters()"><span>Canon EF</span></label>
+        <label class="filter-option"><input type="checkbox" value="Nikon Z" onchange="applyFilters()"><span>Nikon Z</span></label>
+        <label class="filter-option"><input type="checkbox" value="Nikon F" onchange="applyFilters()"><span>Nikon F</span></label>
+        <label class="filter-option"><input type="checkbox" value="Fujifilm X" onchange="applyFilters()"><span>Fujifilm X</span></label>
+        <label class="filter-option"><input type="checkbox" value="MFT" onchange="applyFilters()"><span>Micro 4/3</span></label>
+        <label class="filter-option"><input type="checkbox" value="Universal" onchange="applyFilters()"><span>Universal</span></label>
+      </div>
     </div>
 
-    <div style="display:flex;gap:8px;margin-top:12px">
-      <button id="resetFilters" class="add-btn" style="flex:1">Reset</button>
-      <button id="applyFiltersBtn" class="add-btn" style="flex:1;background:#0b73ff">Apply</button>
+    <!-- Color -->
+    <div class="filter-section">
+      <div class="filter-header" onclick="toggleFilter(this)"><h4>Color / Finish</h4><i class="fas fa-chevron-down"></i></div>
+      <div class="filter-options">
+        <div class="color-options" id="colorFilters"></div>
+      </div>
+    </div>
+
+    <!-- Price Range -->
+    <div class="filter-section">
+      <div class="filter-header" onclick="toggleFilter(this)"><h4>Price Range</h4><i class="fas fa-chevron-down"></i></div>
+      <div class="filter-options">
+        <label class="filter-option"><input type="checkbox" value="under2000" onchange="applyFilters()"><span>Under ₹2,000</span></label>
+        <label class="filter-option"><input type="checkbox" value="2000-10000" onchange="applyFilters()"><span>₹2,000 – ₹10,000</span></label>
+        <label class="filter-option"><input type="checkbox" value="10000-50000" onchange="applyFilters()"><span>₹10,000 – ₹50,000</span></label>
+        <label class="filter-option"><input type="checkbox" value="50000-150000" onchange="applyFilters()"><span>₹50,000 – ₹1,50,000</span></label>
+        <label class="filter-option"><input type="checkbox" value="above150000" onchange="applyFilters()"><span>Above ₹1,50,000</span></label>
+      </div>
+    </div>
+
+    <!-- Rating -->
+    <div class="filter-section">
+      <div class="filter-header" onclick="toggleFilter(this)"><h4>Rating</h4><i class="fas fa-chevron-down"></i></div>
+      <div class="filter-options">
+        <label class="filter-option rating-option"><input type="checkbox" value="4" onchange="applyFilters()"><span class="stars">★★★★☆</span><span>& above</span></label>
+        <label class="filter-option rating-option"><input type="checkbox" value="3" onchange="applyFilters()"><span class="stars">★★★☆☆</span><span>& above</span></label>
+      </div>
+    </div>
+
+    <!-- Offers -->
+    <div class="filter-section">
+      <div class="filter-header" onclick="toggleFilter(this)"><h4>Offers</h4><i class="fas fa-chevron-down"></i></div>
+      <div class="filter-options" id="offerFilters">
+        <label class="filter-option"><input type="checkbox" value="Free Delivery" onchange="applyFilters()"><span>Free Delivery</span></label>
+        <label class="filter-option"><input type="checkbox" value="Bundle Deal" onchange="applyFilters()"><span>Bundle Deal</span></label>
+        <label class="filter-option"><input type="checkbox" value="Special Price" onchange="applyFilters()"><span>Special Price</span></label>
+        <label class="filter-option"><input type="checkbox" value="Combo Pack" onchange="applyFilters()"><span>Combo Pack</span></label>
+      </div>
     </div>
   </aside>
 
-  <!-- PRODUCTS -->
-  <section class="products" aria-labelledby="products">
-    <div class="page-header">
-      <h1>Cameras</h1>
-      <p><span id="productCount">0</span> Products | Updated Today</p>
-    </div>
-    
-    <div class="controls">
-      <div class="search">
-        <input id="searchInput2" placeholder="Search cameras, e.g. 'Canon EOS'">
-      </div>
+  <!-- PRODUCTS AREA -->
+  <div class="products-area">
 
-      <div class="sort-wrap">
-        <select id="sortSelect">
-          <option value="popular">Sort by: Popular</option>
-          <option value="price-asc">Price: Low to High</option>
-          <option value="price-desc">Price: High to Low</option>
-          <option value="rating">Top Rated</option>
+    <!-- Category Tabs -->
+    <div class="category-tabs">
+      <button class="tab-btn active" data-category="all">All</button>
+      <button class="tab-btn" data-category="DSLR Cameras">DSLR</button>
+      <button class="tab-btn" data-category="Mirrorless Cameras">Mirrorless</button>
+      <button class="tab-btn" data-category="Lenses">Lenses</button>
+      <button class="tab-btn" data-category="Action Cameras">Action Cams</button>
+      <button class="tab-btn" data-category="Tripods & Stabilizers">Tripods</button>
+      <button class="tab-btn" data-category="Camera Bags">Bags</button>
+      <button class="tab-btn" data-category="Lighting">Lighting</button>
+      <button class="tab-btn" data-category="Memory & Storage">Memory</button>
+      <button class="tab-btn" data-category="Filters & Accessories">Filters</button>
+    </div>
+
+    <!-- Sort Bar -->
+    <div class="sort-bar">
+      <div class="results-count">
+        Showing <strong id="showingStart">0</strong> – <strong id="showingEnd">0</strong> of <strong id="totalResults">0</strong> products
+      </div>
+      <div class="sort-options">
+        <select class="sort-dropdown" id="sortDropdown" onchange="sortProducts()">
+          <option value="popularity">Sort by: Popularity</option>
+          <option value="price-low">Price: Low to High</option>
+          <option value="price-high">Price: High to Low</option>
+          <option value="rating">Rating</option>
         </select>
+        <div class="view-toggle">
+          <button class="view-btn active" id="gridViewBtn" onclick="setView('grid')"><i class="fas fa-th"></i></button>
+          <button class="view-btn" id="listViewBtn" onclick="setView('list')"><i class="fas fa-list"></i></button>
+        </div>
       </div>
     </div>
 
-    <div class="grid" id="grid"></div>
-  </section>
+    <div class="product-grid" id="productGrid"></div>
+    <div class="pagination" id="pagination"></div>
+  </div>
 </div>
 
-<footer style="max-width:1180px;margin:30px auto;text-align:center;color:#777;padding:18px">© 2025 ShopEase</footer>
+<!-- TOAST -->
+<div class="toast" id="toast"><i class="fas fa-check-circle"></i><span id="toastMsg">Added to cart!</span></div>
 
 <script>
-/* ===============================
-   PRODUCT DATA (Real cameras - no fake items)
-================================= */
+// ================================================================
+//  PRODUCT DATA  —  50 products across 10 categories
+// ================================================================
 const products = [
-  {brand:"Canon",name:"EOS R6 Mark II",specs:"24.2MP • 4K60 • Dual Pixel AF • Full-Frame",rating:4.9,price:229990,img:"https://m.media-amazon.com/images/I/71j4L8k8wDL._SL1500_.jpg"},
-  {brand:"Sony",name:"Alpha ZV-E10",specs:"24MP • 4K • Flip Screen • Vlog Camera",rating:4.7,price:67990,img:"https://m.media-amazon.com/images/I/81GvB0j4hBL._SL1500_.jpg"},
-  {brand:"Nikon",name:"Z6 II Mirrorless",specs:"24.5MP • 273-point AF • 4K UHD",rating:4.8,price:189990,img:"https://m.media-amazon.com/images/I/71ym0lP6nUL._SL1500_.jpg"},
-  {brand:"GoPro",name:"HERO12 Black",specs:"5.3K60 • HyperSmooth 6.0 • Waterproof 10m",rating:4.7,price:45990,img:"https://m.media-amazon.com/images/I/71U8JmMnSSL._SL1500_.jpg"},
-  {brand:"DJI",name:"Mini 4 Pro Drone",specs:"4K HDR • 34min Flight • Obstacle Sensing",rating:4.8,price:114990,img:"https://m.media-amazon.com/images/I/71MmUUPxYwL._SL1500_.jpg"},
-  {brand:"Fujifilm",name:"X-T30 II",specs:"26.1MP APS-C • 425 AF Points • 4K30p",rating:4.6,price:89990,img:"https://m.media-amazon.com/images/I/71yQw8zWQ-L._SL1500_.jpg"},
-  {brand:"Panasonic",name:"Lumix G7",specs:"16MP • 4K Video • Micro Four Thirds",rating:4.5,price:49990,img:"https://m.media-amazon.com/images/I/71mJ7SC3ABL._SL1500_.jpg"},
-  {brand:"Canon",name:"EOS 200D II",specs:"24.1MP • Dual Pixel AF • Vari-Angle Screen",rating:4.6,price:58990,img:"https://m.media-amazon.com/images/I/71EWRyqzw0L._SL1500_.jpg"},
-  {brand:"Insta360",name:"X3 360 Camera",specs:"5.7K • FlowState Stabilization • Waterproof",rating:4.8,price:49990,img:"https://m.media-amazon.com/images/I/61f5f4+RMAL._SL1500_.jpg"},
-  {brand:"Sony",name:"Alpha 7 IV",specs:"33MP • 4K60p • Full-Frame Mirrorless",rating:4.9,price:249990,img:"https://m.media-amazon.com/images/I/71KvPiqsGcL._SL1500_.jpg"}
+
+  // ── DSLR CAMERAS ─────────────────────────────────────────────
+  { id:1,  brand:"Canon",   title:"Canon EOS 1500D 24.1MP DSLR with 18-55mm Lens",              category:"DSLR Cameras",         sensor:"APS-C",       level:"Beginner",      mount:"Canon EF",  shoots:["Portrait","Street"],     colors:["Black"],           sizes:[],         specs:{megapixel:"24.1 MP",iso:"100–6400",fps:"3 fps",video:"Full HD"},     price:34990,  originalPrice:55990,  discount:37, rating:4.6, reviewCount:18240, badge:"",      offer:"Free Delivery", image:"https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=400" },
+  { id:2,  brand:"Nikon",   title:"Nikon D3500 24.2MP DSLR with AF-P 18-55mm Kit",              category:"DSLR Cameras",         sensor:"APS-C",       level:"Beginner",      mount:"Nikon F",   shoots:["Portrait","Landscape"],  colors:["Black"],           sizes:[],         specs:{megapixel:"24.2 MP",iso:"100–25600",fps:"5 fps",video:"Full HD"},    price:34990,  originalPrice:54990,  discount:36, rating:4.7, reviewCount:14320, badge:"",      offer:"Free Delivery", image:"https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=400" },
+  { id:3,  brand:"Canon",   title:"Canon EOS 90D 32.5MP DSLR Body",                             category:"DSLR Cameras",         sensor:"APS-C",       level:"Intermediate",  mount:"Canon EF",  shoots:["Wildlife","Portrait","Video"], colors:["Black"],      sizes:[],         specs:{megapixel:"32.5 MP",iso:"100–25600",fps:"10 fps",video:"4K"},        price:119990, originalPrice:159990, discount:25, rating:4.8, reviewCount:9870,  badge:"pro",   offer:"Free Delivery", image:"https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=400" },
+  { id:4,  brand:"Nikon",   title:"Nikon D7500 20.9MP DSLR with 18-140mm Lens",                 category:"DSLR Cameras",         sensor:"APS-C",       level:"Intermediate",  mount:"Nikon F",   shoots:["Wildlife","Street"],     colors:["Black"],           sizes:[],         specs:{megapixel:"20.9 MP",iso:"100–51200",fps:"8 fps",video:"4K"},         price:99990,  originalPrice:139990, discount:29, rating:4.7, reviewCount:7650,  badge:"",      offer:"Special Price", image:"https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=400" },
+  { id:5,  brand:"Canon",   title:"Canon EOS 5D Mark IV Full Frame DSLR Body",                  category:"DSLR Cameras",         sensor:"Full Frame",  level:"Professional",  mount:"Canon EF",  shoots:["Portrait","Landscape","Video"], colors:["Black"],    sizes:[],         specs:{megapixel:"30.4 MP",iso:"100–32000",fps:"7 fps",video:"4K"},        price:229990, originalPrice:309990, discount:26, rating:4.9, reviewCount:5430,  badge:"pro",   offer:"Free Delivery", image:"https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=400" },
+  { id:6,  brand:"Nikon",   title:"Nikon D850 45.7MP Full Frame DSLR Body",                     category:"DSLR Cameras",         sensor:"Full Frame",  level:"Professional",  mount:"Nikon F",   shoots:["Landscape","Portrait","Wildlife"], colors:["Black"], sizes:[],         specs:{megapixel:"45.7 MP",iso:"64–25600",fps:"7 fps",video:"4K"},         price:269990, originalPrice:369990, discount:27, rating:4.9, reviewCount:4320,  badge:"pro",   offer:"Free Delivery", image:"https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=400" },
+
+  // ── MIRRORLESS CAMERAS ────────────────────────────────────────
+  { id:7,  brand:"Sony",    title:"Sony Alpha a7 IV Full Frame Mirrorless 33MP",                 category:"Mirrorless Cameras",   sensor:"Full Frame",  level:"Intermediate",  mount:"Sony E",    shoots:["Portrait","Video","Street"], colors:["Black"],        sizes:[],         specs:{megapixel:"33 MP",iso:"100–51200",fps:"10 fps",video:"4K 60fps"},    price:249990, originalPrice:299990, discount:17, rating:4.9, reviewCount:12340, badge:"pro",   offer:"Free Delivery", image:"https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=400" },
+  { id:8,  brand:"Canon",   title:"Canon EOS R50 24.2MP Mirrorless Content Creator Kit",        category:"Mirrorless Cameras",   sensor:"APS-C",       level:"Beginner",      mount:"Canon RF",  shoots:["Video","Portrait","Street"], colors:["Black","White"], sizes:[],        specs:{megapixel:"24.2 MP",iso:"100–32000",fps:"15 fps",video:"4K"},        price:79990,  originalPrice:109990, discount:27, rating:4.7, reviewCount:9870,  badge:"new",   offer:"Free Delivery", image:"https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=400" },
+  { id:9,  brand:"Fujifilm", title:"Fujifilm X-T5 40MP APS-C Mirrorless Body",                  category:"Mirrorless Cameras",   sensor:"APS-C",       level:"Intermediate",  mount:"Fujifilm X",shoots:["Landscape","Street","Portrait"], colors:["Black","Silver"], sizes:[], specs:{megapixel:"40 MP",iso:"125–12800",fps:"15 fps",video:"6.2K"},      price:189990, originalPrice:239990, discount:21, rating:4.8, reviewCount:7650,  badge:"",      offer:"Special Price", image:"https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=400" },
+  { id:10, brand:"Nikon",   title:"Nikon Z6 III Full Frame Mirrorless 24.5MP",                  category:"Mirrorless Cameras",   sensor:"Full Frame",  level:"Professional",  mount:"Nikon Z",   shoots:["Wildlife","Video","Portrait"], colors:["Black"],       sizes:[],         specs:{megapixel:"24.5 MP",iso:"100–64000",fps:"20 fps",video:"6K RAW"},    price:229990, originalPrice:289990, discount:21, rating:4.8, reviewCount:5430,  badge:"new",   offer:"Free Delivery", image:"https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=400" },
+  { id:11, brand:"Sony",    title:"Sony ZV-E10 APS-C Mirrorless Vlog Camera",                   category:"Mirrorless Cameras",   sensor:"APS-C",       level:"Beginner",      mount:"Sony E",    shoots:["Video","Portrait","Street"], colors:["Black","White"], sizes:[],        specs:{megapixel:"24.2 MP",iso:"100–32000",fps:"11 fps",video:"4K"},        price:54990,  originalPrice:75990,  discount:28, rating:4.6, reviewCount:18920, badge:"",      offer:"Bundle Deal",   image:"https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=400" },
+  { id:12, brand:"OM System",title:"OM System OM-5 20.4MP Micro 4/3 Mirrorless",               category:"Mirrorless Cameras",   sensor:"Micro 4/3",   level:"Intermediate",  mount:"MFT",       shoots:["Landscape","Wildlife","Street"], colors:["Black","Silver"], sizes:[], specs:{megapixel:"20.4 MP",iso:"200–25600",fps:"30 fps",video:"4K 60fps"}, price:124990, originalPrice:164990, discount:24, rating:4.7, reviewCount:4320,  badge:"",      offer:"Free Delivery", image:"https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=400" },
+
+  // ── LENSES ────────────────────────────────────────────────────
+  { id:13, brand:"Sony",    title:"Sony FE 85mm f/1.8 Full Frame Lens",                         category:"Lenses",               sensor:"Full Frame",  level:"Intermediate",  mount:"Sony E",    shoots:["Portrait"],              colors:["Black"],           sizes:[],         specs:{focal:"85mm",aperture:"f/1.8",filter:"67mm",stabilizer:"No"},        price:49990,  originalPrice:74990,  discount:33, rating:4.8, reviewCount:9870,  badge:"",      offer:"Free Delivery", image:"https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=400" },
+  { id:14, brand:"Canon",   title:"Canon RF 50mm f/1.8 STM Pancake Lens",                       category:"Lenses",               sensor:"Full Frame",  level:"Beginner",      mount:"Canon RF",  shoots:["Portrait","Street"],     colors:["Black"],           sizes:[],         specs:{focal:"50mm",aperture:"f/1.8",filter:"43mm",stabilizer:"No"},        price:19990,  originalPrice:27990,  discount:29, rating:4.7, reviewCount:14320, badge:"",      offer:"Free Delivery", image:"https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=400" },
+  { id:15, brand:"Sigma",   title:"Sigma 100-400mm f/5-6.3 DG OS HSM Contemporary Lens",       category:"Lenses",               sensor:"Full Frame",  level:"Intermediate",  mount:"Canon EF",  shoots:["Wildlife"],              colors:["Black"],           sizes:[],         specs:{focal:"100-400mm",aperture:"f/5-6.3",filter:"67mm",stabilizer:"OS"},  price:64990,  originalPrice:94990,  discount:32, rating:4.7, reviewCount:5430,  badge:"",      offer:"Special Price", image:"https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=400" },
+  { id:16, brand:"Nikon",   title:"Nikon NIKKOR Z 24-70mm f/2.8 S Zoom Lens",                  category:"Lenses",               sensor:"Full Frame",  level:"Professional",  mount:"Nikon Z",   shoots:["Portrait","Landscape","Video"], colors:["Black"],     sizes:[],         specs:{focal:"24-70mm",aperture:"f/2.8",filter:"82mm",stabilizer:"No"},     price:149990, originalPrice:189990, discount:21, rating:4.9, reviewCount:3210,  badge:"pro",   offer:"Free Delivery", image:"https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=400" },
+  { id:17, brand:"Fujifilm", title:"Fujifilm XF 18-55mm f/2.8-4 R LM OIS Kit Lens",            category:"Lenses",               sensor:"APS-C",       level:"Intermediate",  mount:"Fujifilm X",shoots:["Street","Landscape"],    colors:["Black"],           sizes:[],         specs:{focal:"18-55mm",aperture:"f/2.8-4",filter:"58mm",stabilizer:"OIS"},  price:42990,  originalPrice:59990,  discount:28, rating:4.7, reviewCount:6540,  badge:"",      offer:"Bundle Deal",   image:"https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=400" },
+  { id:18, brand:"Tamron",  title:"Tamron 17-28mm f/2.8 Di III RXD Ultra-Wide Lens",            category:"Lenses",               sensor:"Full Frame",  level:"Intermediate",  mount:"Sony E",    shoots:["Landscape","Video"],     colors:["Black"],           sizes:[],         specs:{focal:"17-28mm",aperture:"f/2.8",filter:"67mm",stabilizer:"No"},     price:59990,  originalPrice:89990,  discount:33, rating:4.8, reviewCount:4320,  badge:"",      offer:"Free Delivery", image:"https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=400" },
+  { id:19, brand:"Canon",   title:"Canon EF 70-200mm f/2.8L IS III USM Telephoto",             category:"Lenses",               sensor:"Full Frame",  level:"Professional",  mount:"Canon EF",  shoots:["Wildlife","Portrait","Video"], colors:["White/Black"], sizes:[],        specs:{focal:"70-200mm",aperture:"f/2.8",filter:"77mm",stabilizer:"IS III"}, price:184990, originalPrice:229990, discount:20, rating:4.9, reviewCount:2100,  badge:"pro",   offer:"Free Delivery", image:"https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=400" },
+
+  // ── ACTION CAMERAS ────────────────────────────────────────────
+  { id:20, brand:"GoPro",   title:"GoPro HERO12 Black 5.3K Action Camera",                     category:"Action Cameras",       sensor:"N/A",         level:"Beginner",      mount:"Universal", shoots:["Video","Street","Wildlife"], colors:["Black"],          sizes:[],         specs:{resolution:"5.3K",waterproof:"10m",stabilizer:"HyperSmooth 6.0",fps:"60"},price:34990,  originalPrice:49990,  discount:30, rating:4.7, reviewCount:21340, badge:"",      offer:"Free Delivery", image:"https://images.unsplash.com/photo-1452802447250-470a88ac82bc?w=400" },
+  { id:21, brand:"DJI",     title:"DJI Osmo Action 4 4K Action Camera",                        category:"Action Cameras",       sensor:"N/A",         level:"Beginner",      mount:"Universal", shoots:["Video","Sports"],        colors:["Black"],           sizes:[],         specs:{resolution:"4K",waterproof:"18m",stabilizer:"RockSteady 3.0",fps:"120"},price:24990, originalPrice:35990,  discount:31, rating:4.6, reviewCount:14320, badge:"",      offer:"Special Price", image:"https://images.unsplash.com/photo-1452802447250-470a88ac82bc?w=400" },
+  { id:22, brand:"Insta360",title:"Insta360 X4 360° Action Camera 8K",                         category:"Action Cameras",       sensor:"N/A",         level:"Intermediate",  mount:"Universal", shoots:["Video","Street"],        colors:["Black"],           sizes:[],         specs:{resolution:"8K 360°",waterproof:"10m",stabilizer:"FlowState",fps:"60"}, price:39990,  originalPrice:54990,  discount:27, rating:4.7, reviewCount:9870,  badge:"new",   offer:"Bundle Deal",   image:"https://images.unsplash.com/photo-1452802447250-470a88ac82bc?w=400" },
+
+  // ── TRIPODS & STABILIZERS ─────────────────────────────────────
+  { id:23, brand:"Manfrotto",title:"Manfrotto MT055CXPRO4 Carbon Fibre Tripod",                category:"Tripods & Stabilizers",sensor:"N/A",         level:"Intermediate",  mount:"Universal", shoots:["Landscape","Portrait","Video"], colors:["Black"],      sizes:[],         specs:{height:"170cm",weight:"1.9kg",load:"9kg",material:"Carbon Fibre"},   price:34990,  originalPrice:52990,  discount:34, rating:4.8, reviewCount:5430,  badge:"",      offer:"Free Delivery", image:"https://images.unsplash.com/photo-1484503793037-5c9644d6a80a?w=400" },
+  { id:24, brand:"DJI",     title:"DJI RS 3 Mini Lightweight Gimbal Stabilizer",               category:"Tripods & Stabilizers",sensor:"N/A",         level:"Beginner",      mount:"Universal", shoots:["Video"],                 colors:["Black"],           sizes:[],         specs:{height:"N/A",weight:"795g",load:"2kg",material:"Aluminium"},         price:24990,  originalPrice:34990,  discount:29, rating:4.7, reviewCount:9870,  badge:"",      offer:"Free Delivery", image:"https://images.unsplash.com/photo-1484503793037-5c9644d6a80a?w=400" },
+  { id:25, brand:"Joby",    title:"Joby GorillaPod 5K Flexible Mini Tripod",                   category:"Tripods & Stabilizers",sensor:"N/A",         level:"Beginner",      mount:"Universal", shoots:["Portrait","Street","Video"], colors:["Black"],        sizes:[],         specs:{height:"38cm",weight:"450g",load:"5kg",material:"ABS + Aluminium"}, price:6990,   originalPrice:9990,   discount:30, rating:4.6, reviewCount:18920, badge:"",      offer:"Free Delivery", image:"https://images.unsplash.com/photo-1484503793037-5c9644d6a80a?w=400" },
+  { id:26, brand:"Benro",   title:"Benro TAD28C Travel Angel Carbon Tripod",                   category:"Tripods & Stabilizers",sensor:"N/A",         level:"Intermediate",  mount:"Universal", shoots:["Landscape","Travel"],    colors:["Black"],           sizes:[],         specs:{height:"165cm",weight:"1.6kg",load:"18kg",material:"Carbon Fibre"},  price:19990,  originalPrice:29990,  discount:33, rating:4.7, reviewCount:4320,  badge:"",      offer:"Special Price", image:"https://images.unsplash.com/photo-1484503793037-5c9644d6a80a?w=400" },
+  { id:27, brand:"Zhiyun",  title:"Zhiyun Crane-M3 Pro 3-Axis Gimbal for Mirrorless",          category:"Tripods & Stabilizers",sensor:"N/A",         level:"Intermediate",  mount:"Universal", shoots:["Video","Portrait"],      colors:["Black"],           sizes:[],         specs:{height:"N/A",weight:"895g",load:"2.5kg",material:"Aluminium"},       price:29990,  originalPrice:44990,  discount:33, rating:4.6, reviewCount:3210,  badge:"",      offer:"Bundle Deal",   image:"https://images.unsplash.com/photo-1484503793037-5c9644d6a80a?w=400" },
+
+  // ── CAMERA BAGS ───────────────────────────────────────────────
+  { id:28, brand:"Lowepro", title:"Lowepro ProTactic 450 AW II Camera Backpack",               category:"Camera Bags",          sensor:"N/A",         level:"Professional",  mount:"Universal", shoots:["Landscape","Travel","Wildlife"], colors:["Black","Slate Gray"], sizes:[], specs:{capacity:"30L",fit:"DSLR + 6 lenses",waterproof:"Yes",laptop:"15\""}, price:12990,  originalPrice:19990,  discount:35, rating:4.8, reviewCount:12340, badge:"",      offer:"Free Delivery", image:"https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400" },
+  { id:29, brand:"Peak Design",title:"Peak Design Everyday Backpack 30L",                     category:"Camera Bags",          sensor:"N/A",         level:"Intermediate",  mount:"Universal", shoots:["Street","Travel"],       colors:["Black","Ash"],     sizes:["20L","30L"],  specs:{capacity:"30L",fit:"Mirrorless + 3 lenses",waterproof:"Yes",laptop:"15\""},price:22990, originalPrice:34990,  discount:34, rating:4.9, reviewCount:7650,  badge:"",      offer:"Free Delivery", image:"https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400" },
+  { id:30, brand:"Manfrotto",title:"Manfrotto Manhattan Chic Mover 30 Roller Bag",            category:"Camera Bags",          sensor:"N/A",         level:"Professional",  mount:"Universal", shoots:["Travel","Video"],        colors:["Black"],           sizes:[],         specs:{capacity:"30L",fit:"DSLR + 5 lenses",waterproof:"Yes",laptop:"15\""}, price:14990,  originalPrice:22990,  discount:35, rating:4.7, reviewCount:4320,  badge:"",      offer:"Special Price", image:"https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400" },
+  { id:31, brand:"National Geographic",title:"National Geographic Africa Shoulder Bag",       category:"Camera Bags",          sensor:"N/A",         level:"Beginner",      mount:"Universal", shoots:["Street","Travel"],       colors:["Khaki","Black"],   sizes:["S","M"],     specs:{capacity:"10L",fit:"DSLR + 2 lenses",waterproof:"Splash",laptop:"No"}, price:3990,  originalPrice:6990,   discount:43, rating:4.5, reviewCount:9870,  badge:"deal",  offer:"Free Delivery", image:"https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400" },
+
+  // ── LIGHTING ─────────────────────────────────────────────────
+  { id:32, brand:"Godox",   title:"Godox AD200Pro 200Ws TTL Pocket Flash",                    category:"Lighting",             sensor:"N/A",         level:"Intermediate",  mount:"Universal", shoots:["Portrait","Video"],      colors:["Black"],           sizes:[],         specs:{power:"200Ws",type:"Speedlite",battery:"500 shots",GN:"60"},          price:24990,  originalPrice:37990,  discount:34, rating:4.8, reviewCount:9870,  badge:"",      offer:"Free Delivery", image:"https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=400" },
+  { id:33, brand:"Profoto", title:"Profoto B10X Plus 500Ws Studio Flash",                    category:"Lighting",             sensor:"N/A",         level:"Professional",  mount:"Universal", shoots:["Portrait","Video"],      colors:["Silver"],          sizes:[],         specs:{power:"500Ws",type:"Monoblock",battery:"215 flashes",GN:"80"},        price:119990, originalPrice:159990, discount:25, rating:4.9, reviewCount:2100,  badge:"pro",   offer:"Free Delivery", image:"https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=400" },
+  { id:34, brand:"Godox",   title:"Godox SL-60W LED Video Light with Softbox",               category:"Lighting",             sensor:"N/A",         level:"Beginner",      mount:"Universal", shoots:["Video","Portrait"],      colors:["Black"],           sizes:[],         specs:{power:"60W",type:"LED Continuous",battery:"AC only",GN:"N/A"},       price:7990,   originalPrice:12990,  discount:38, rating:4.6, reviewCount:14320, badge:"",      offer:"Bundle Deal",   image:"https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=400" },
+  { id:35, brand:"Elgato",  title:"Elgato Key Light Air 10W Studio Panel Light",             category:"Lighting",             sensor:"N/A",         level:"Beginner",      mount:"Universal", shoots:["Video","Portrait"],      colors:["White"],           sizes:[],         specs:{power:"10W",type:"LED Panel",battery:"USB-C",GN:"N/A"},               price:9990,   originalPrice:14990,  discount:33, rating:4.7, reviewCount:18920, badge:"",      offer:"Free Delivery", image:"https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=400" },
+  { id:36, brand:"Neewer",  title:"Neewer 2-Pack LED Ring Light 10\" with Tripod Stand",     category:"Lighting",             sensor:"N/A",         level:"Beginner",      mount:"Universal", shoots:["Portrait","Video"],      colors:["Black","White"],   sizes:[],         specs:{power:"12W",type:"Ring Light",battery:"AC",GN:"N/A"},                 price:3490,   originalPrice:5990,   discount:42, rating:4.4, reviewCount:32100, badge:"deal",  offer:"Combo Pack",    image:"https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=400" },
+
+  // ── MEMORY & STORAGE ─────────────────────────────────────────
+  { id:37, brand:"SanDisk", title:"SanDisk Extreme Pro 256GB SDXC UHS-I V30 Card",            category:"Memory & Storage",     sensor:"N/A",         level:"Beginner",      mount:"Universal", shoots:["Video","Landscape"],     colors:["Red/Gold"],        sizes:["64GB","128GB","256GB","512GB"], specs:{read:"200 MB/s",write:"140 MB/s",class:"V30 / U3 / A2",type:"SD"},   price:3490,   originalPrice:5990,   discount:42, rating:4.8, reviewCount:45670, badge:"",      offer:"Free Delivery", image:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400" },
+  { id:38, brand:"Sony",    title:"Sony Tough CFexpress Type A 160GB Card",                   category:"Memory & Storage",     sensor:"N/A",         level:"Professional",  mount:"Universal", shoots:["Video","Wildlife"],      colors:["Black"],           sizes:["80GB","160GB"],       specs:{read:"800 MB/s",write:"700 MB/s",class:"CFexpress Type A",type:"CF"}, price:12990,  originalPrice:18990,  discount:32, rating:4.8, reviewCount:5430,  badge:"",      offer:"Free Delivery", image:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400" },
+  { id:39, brand:"Lexar",   title:"Lexar Professional 2000x 128GB SDXC UHS-II",               category:"Memory & Storage",     sensor:"N/A",         level:"Intermediate",  mount:"Universal", shoots:["Video","Wildlife"],      colors:["Gold/Black"],      sizes:["64GB","128GB","256GB"],       specs:{read:"300 MB/s",write:"260 MB/s",class:"V90 / U3",type:"SD"},         price:5990,   originalPrice:8990,   discount:33, rating:4.7, reviewCount:8760,  badge:"",      offer:"Special Price", image:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400" },
+  { id:40, brand:"WD",      title:"WD 4TB My Passport Portable SSD for Photographers",        category:"Memory & Storage",     sensor:"N/A",         level:"Beginner",      mount:"Universal", shoots:["Video","Landscape"],     colors:["Black","Blue","Red"], sizes:["1TB","2TB","4TB"],   specs:{read:"1050 MB/s",write:"1000 MB/s",class:"USB-C 3.2",type:"SSD"},    price:11990,  originalPrice:17990,  discount:33, rating:4.7, reviewCount:14320, badge:"",      offer:"Free Delivery", image:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400" },
+
+  // ── FILTERS & ACCESSORIES ─────────────────────────────────────
+  { id:41, brand:"K&F Concept",title:"K&F Concept 82mm ND 1000 Variable ND Filter",          category:"Filters & Accessories",sensor:"N/A",         level:"Intermediate",  mount:"Universal", shoots:["Landscape","Video"],     colors:["Black"],           sizes:["52mm","58mm","67mm","77mm","82mm"], specs:{type:"ND Filter",factor:"ND1000",glass:"Schott B270",thread:"82mm"},   price:3490,   originalPrice:5990,   discount:42, rating:4.6, reviewCount:9870,  badge:"",      offer:"Free Delivery", image:"https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=400" },
+  { id:42, brand:"Hoya",    title:"Hoya HD3 77mm Circular Polarising Filter",                category:"Filters & Accessories",sensor:"N/A",         level:"Intermediate",  mount:"Universal", shoots:["Landscape","Street"],    colors:["Black"],           sizes:["52mm","62mm","77mm","82mm"],    specs:{type:"CPL Filter",factor:"N/A",glass:"HD3 Glass",thread:"77mm"},      price:6990,   originalPrice:9990,   discount:30, rating:4.8, reviewCount:5430,  badge:"",      offer:"Special Price", image:"https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=400" },
+  { id:43, brand:"Canon",   title:"Canon LC-E6E Battery Charger for LP-E6NH",                category:"Filters & Accessories",sensor:"N/A",         level:"Beginner",      mount:"Canon EF",  shoots:["Portrait","Landscape"],  colors:["Black"],           sizes:[],         specs:{type:"Battery Charger",factor:"N/A",glass:"N/A",thread:"N/A"},        price:2990,   originalPrice:4990,   discount:40, rating:4.7, reviewCount:14320, badge:"",      offer:"Free Delivery", image:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400" },
+  { id:44, brand:"Rode",    title:"Rode Wireless GO II Compact Wireless Microphone",          category:"Filters & Accessories",sensor:"N/A",         level:"Intermediate",  mount:"Universal", shoots:["Video","Portrait"],      colors:["Black","White"],   sizes:[],         specs:{type:"Wireless Mic",factor:"250m range",glass:"N/A",thread:"TRS/USB"},price:19990,  originalPrice:27990,  discount:29, rating:4.8, reviewCount:12340, badge:"",      offer:"Free Delivery", image:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400" },
+  { id:45, brand:"Manfrotto",title:"Manfrotto MHXPRO-3W X-PRO 3-Way Head",                  category:"Filters & Accessories",sensor:"N/A",         level:"Intermediate",  mount:"Universal", shoots:["Landscape","Portrait"],  colors:["Black"],           sizes:[],         specs:{type:"Ball Head",factor:"12kg load",glass:"N/A",thread:"1/4\"-3/8\""},price:8990,   originalPrice:13990,  discount:36, rating:4.7, reviewCount:4320,  badge:"",      offer:"Bundle Deal",   image:"https://images.unsplash.com/photo-1484503793037-5c9644d6a80a?w=400" },
+  { id:46, brand:"DJI",     title:"DJI Mic Wireless Lavalier Microphone 2-Person",           category:"Filters & Accessories",sensor:"N/A",         level:"Beginner",      mount:"Universal", shoots:["Video"],                 colors:["Black"],           sizes:[],         specs:{type:"Lav Mic",factor:"250m range",glass:"N/A",thread:"TRS/USB-C"},   price:14990,  originalPrice:20990,  discount:29, rating:4.8, reviewCount:9870,  badge:"new",   offer:"Free Delivery", image:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400" },
+  { id:47, brand:"Tiffen",  title:"Tiffen 77mm Black Pro-Mist 1/4 Cinematic Filter",         category:"Filters & Accessories",sensor:"N/A",         level:"Intermediate",  mount:"Universal", shoots:["Portrait","Video"],      colors:["Black"],           sizes:["67mm","72mm","77mm","82mm"],    specs:{type:"Diffusion Filter",factor:"1/4 strength",glass:"Water White",thread:"77mm"},price:5490,originalPrice:7990,discount:31,rating:4.7,reviewCount:3210, badge:"",      offer:"Special Price", image:"https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=400" },
+  { id:48, brand:"Peak Design",title:"Peak Design Capture Clip V3 Camera Clip System",       category:"Filters & Accessories",sensor:"N/A",         level:"Intermediate",  mount:"Universal", shoots:["Landscape","Street","Wildlife"], colors:["Black","Silver"],sizes:[],      specs:{type:"Clip Mount",factor:"90kg tested",glass:"N/A",thread:"Arca Swiss"},price:8490,  originalPrice:12490,  discount:32, rating:4.8, reviewCount:7650,  badge:"",      offer:"Free Delivery", image:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400" },
+  { id:49, brand:"Blackmagic",title:"Blackmagic Pocket Cinema Camera 6K G2",                category:"Mirrorless Cameras",   sensor:"APS-C",       level:"Professional",  mount:"Canon EF",  shoots:["Video"],                 colors:["Black"],           sizes:[],         specs:{megapixel:"6K",iso:"100–25600",fps:"50 fps",video:"BRAW 12-bit"},    price:169990, originalPrice:219990, discount:23, rating:4.8, reviewCount:2100,  badge:"pro",   offer:"Free Delivery", image:"https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=400" },
+  { id:50, brand:"Hasselblad",title:"Hasselblad X2D 100C Medium Format Mirrorless",         category:"Mirrorless Cameras",   sensor:"Medium Format",level:"Professional",  mount:"Fujifilm X",shoots:["Portrait","Landscape"],  colors:["Black","Natural"],sizes:[],         specs:{megapixel:"100 MP",iso:"64–6400",fps:"3 fps",video:"No"},            price:749990, originalPrice:949990, discount:21, rating:4.9, reviewCount:540,   badge:"pro",   offer:"Free Delivery", image:"https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=400" },
 ];
 
-/* ===============================
-   DOM REFERENCES
-================================= */
-const grid = document.getElementById("grid");
-const searchInput = document.getElementById("searchInput");
-const searchInput2 = document.getElementById("searchInput2");
-const sortSelect = document.getElementById("sortSelect");
-const brandChecks = document.querySelectorAll(".filter.brand");
-const priceRadios = document.querySelectorAll(".price");
-const countEls = document.querySelectorAll("#count, #productCount");
-const resetBtn = document.getElementById("resetFilters");
-const applyBtn = document.getElementById("applyFiltersBtn");
-const cartCountEl = document.getElementById("cartCount");
+// ================================================================
+//  STATE
+// ================================================================
+let filteredProducts = [...products];
+let currentPage = 1;
+const productsPerPage = 12;
+let currentView = 'grid';
+let activeFilters = { categories:[], brands:[], sensors:[], levels:[], mounts:[], offers:[] };
+let activeShoot = null;
 
-/* ===============================
-   CART SYSTEM
-================================= */
-function getCart(){
-  return JSON.parse(localStorage.getItem("shop_cart")) || [];
+// ================================================================
+//  CART
+// ================================================================
+function getCart() { try { return JSON.parse(localStorage.getItem('shopease_cart')) || []; } catch(e) { return []; } }
+function saveCart(c) { localStorage.setItem('shopease_cart', JSON.stringify(c)); updateCartBadge(); }
+function addToCart(p) {
+  const cart = getCart(), ex = cart.find(i => i.id===p.id);
+  if (ex) ex.qty++; else cart.push({ id:p.id, title:p.title, brand:p.brand, price:p.price, image:p.image, qty:1 });
+  saveCart(cart);
+}
+function updateCartBadge() {
+  const total = getCart().reduce((s,i) => s+i.qty, 0);
+  const b = document.getElementById('cartBadge');
+  b.textContent = total; b.setAttribute('data-count', total);
 }
 
-function setCart(cart){
-  localStorage.setItem("shop_cart", JSON.stringify(cart));
-  updateCartCount();
+// ================================================================
+//  TOAST
+// ================================================================
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  document.getElementById('toastMsg').textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
 }
 
-function addToCart(productName){
-  const cart = getCart();
-  const existing = cart.find(item => item.name === productName);
-
-  if(existing){
-    existing.qty++;
+// ================================================================
+//  SHOOT TYPE FILTER (hero strip)
+// ================================================================
+function filterByShoot(el) {
+  const shoot = el.dataset.shoot;
+  document.querySelectorAll('.shoot-card').forEach(c => c.classList.remove('active'));
+  if (activeShoot === shoot) {
+    activeShoot = null;
   } else {
-    cart.push({name: productName, qty: 1});
+    el.classList.add('active');
+    activeShoot = shoot;
   }
-
-  setCart(cart);
-}
-
-function updateCartCount(){
-  const cart = getCart();
-  const total = cart.reduce((sum, item) => sum + item.qty, 0);
-  cartCountEl.textContent = total;
-}
-
-updateCartCount();
-
-/* ===============================
-   RENDER PRODUCTS
-================================= */
-function renderProducts(list){
-  grid.innerHTML = "";
-
-  if(list.length === 0){
-    grid.innerHTML = "<p>No products found</p>";
-    countEls.forEach(el => el.textContent = 0);
-    return;
-  }
-
-  list.forEach(p => {
-    const card = document.createElement("div");
-    card.className = "card";
-
-    card.innerHTML = `
-      <div class="thumb">
-        <img src="${p.img}" alt="${p.name}">
-      </div>
-
-      <div class="brand-name">${p.brand}</div>
-      <div class="title">${p.name}</div>
-
-      <div class="rating">
-        ⭐ ${p.rating}
-      </div>
-
-      <div class="features">${p.specs}</div>
-
-      <div class="price-section">
-        <span class="price">₹${p.price.toLocaleString()}</span>
-        <span class="mrp">₹${(p.price + 15000).toLocaleString()}</span>
-        <span class="discount">6% off</span>
-      </div>
-
-      <div class="stock">In stock</div>
-
-      <button class="add-btn" onclick="addToCart('${p.name}')">
-        Add to Cart
-      </button>
-    `;
-
-    grid.appendChild(card);
-  });
-
-  countEls.forEach(el => el.textContent = list.length);
-}
-
-/* ===============================
-   FILTER + SEARCH + SORT
-================================= */
-function applyFilters(){
-  let filtered = [...products];
-
-  const query = (searchInput.value || searchInput2.value).trim().toLowerCase();
-  if(query){
-    filtered = filtered.filter(p =>
-      p.name.toLowerCase().includes(query) ||
-      p.brand.toLowerCase().includes(query)
-    );
-  }
-
-  const selectedBrands = [...brandChecks]
-    .filter(c => c.checked)
-    .map(c => c.value);
-
-  if(selectedBrands.length){
-    filtered = filtered.filter(p =>
-      selectedBrands.includes(p.brand)
-    );
-  }
-
-  const priceVal = [...priceRadios].find(r => r.checked)?.value;
-
-  if(priceVal === "under50000"){
-    filtered = filtered.filter(p => p.price < 50000);
-  }
-  else if(priceVal === "50000-100000"){
-    filtered = filtered.filter(p => p.price >= 50000 && p.price <= 100000);
-  }
-  else if(priceVal === "above100000"){
-    filtered = filtered.filter(p => p.price > 100000);
-  }
-
-  const sortVal = sortSelect.value;
-
-  if(sortVal === "price-asc"){
-    filtered.sort((a,b)=>a.price-b.price);
-  }
-  else if(sortVal === "price-desc"){
-    filtered.sort((a,b)=>b.price-a.price);
-  }
-  else if(sortVal === "rating"){
-    filtered.sort((a,b)=>b.rating-a.rating);
-  }
-
-  renderProducts(filtered);
-}
-
-/* ===============================
-   RESET FILTERS
-================================= */
-function resetFilters(){
-  searchInput.value = "";
-  searchInput2.value = "";
-  brandChecks.forEach(c => c.checked = false);
-  priceRadios.forEach(r => r.checked = r.value === "all");
-  sortSelect.value = "popular";
-}
-
-resetBtn.addEventListener("click", () => {
-  resetFilters();
   applyFilters();
+}
+
+// ================================================================
+//  INIT
+// ================================================================
+document.addEventListener('DOMContentLoaded', () => {
+  initFilters();
+  initEventListeners();
+  updateCartBadge();
+  renderProducts();
+  document.getElementById('totalProducts').textContent = products.length;
 });
 
-applyBtn.addEventListener("click", applyFilters);
+function initFilters() {
+  const cats = [...new Set(products.map(p => p.category))];
+  document.getElementById('categoryFilters').innerHTML = cats.map(c => {
+    const count = products.filter(p => p.category===c).length;
+    return `<label class="filter-option"><input type="checkbox" value="${c}" onchange="applyFilters()"><span>${c}</span><span class="count">${count}</span></label>`;
+  }).join('');
 
-searchInput.addEventListener("input", applyFilters);
-searchInput2.addEventListener("input", applyFilters);
-sortSelect.addEventListener("change", applyFilters);
+  const brands = [...new Set(products.map(p => p.brand))].sort();
+  document.getElementById('brandFilters').innerHTML = brands.map(b => {
+    const count = products.filter(p => p.brand===b).length;
+    return `<label class="filter-option"><input type="checkbox" value="${b}" onchange="applyFilters()"><span>${b}</span><span class="count">${count}</span></label>`;
+  }).join('');
 
-brandChecks.forEach(c => c.addEventListener("change", applyFilters));
-priceRadios.forEach(r => r.addEventListener("change", applyFilters));
+  const colorMap = { 'Black':'#1a1a1a','White':'#f5f5f5','Silver':'#c0c0c0','White/Black':'#888','Red/Gold':'#c0392b','Gold/Black':'#b8960c','Khaki':'#c3b091','Ash':'#b2bec3','Slate Gray':'#708090','Natural':'#d4c5a9','Blue':'#1565c0','Red':'#e53935','Green':'#2e7d32','White/Silver':'#ddd' };
+  const allColors = [...new Set(products.flatMap(p => p.colors))];
+  document.getElementById('colorFilters').innerHTML = allColors.map(c => {
+    const hex = colorMap[c] || '#ccc';
+    const bd  = (c==='White'||c==='White/Black'||c==='White/Silver') ? 'border:1.5px solid #ddd;' : '';
+    return `<div class="color-option" style="background:${hex};${bd}" title="${c}" data-color="${c}" onclick="toggleColorFilter('${c}')"></div>`;
+  }).join('');
+}
 
-/* ===============================
-   INITIAL LOAD
-================================= */
-renderProducts(products);
+function initEventListeners() {
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const cat = btn.dataset.category;
+      document.querySelectorAll('#categoryFilters input').forEach(cb => { cb.checked = cat!=='all' && cb.value===cat; });
+      applyFilters();
+    });
+  });
+  document.getElementById('searchInput').addEventListener('input', applyFilters);
+}
+
+function toggleColorFilter(c) {
+  const el = document.querySelector(`.color-option[data-color="${c}"]`);
+  if (el) { el.classList.toggle('active'); applyFilters(); }
+}
+
+function applyFilters() {
+  const search = document.getElementById('searchInput').value.toLowerCase();
+  activeFilters.categories = [...document.querySelectorAll('#categoryFilters input:checked')].map(i=>i.value);
+  activeFilters.brands     = [...document.querySelectorAll('#brandFilters input:checked')].map(i=>i.value);
+  activeFilters.sensors    = [...document.querySelectorAll('#sensorFilters input:checked')].map(i=>i.value);
+  activeFilters.levels     = [...document.querySelectorAll('#levelFilters input:checked')].map(i=>i.value);
+  activeFilters.mounts     = [...document.querySelectorAll('#mountFilters input:checked')].map(i=>i.value);
+  activeFilters.offers     = [...document.querySelectorAll('#offerFilters input:checked')].map(i=>i.value);
+  const selectedColors     = [...document.querySelectorAll('.color-option.active')].map(e=>e.dataset.color);
+  const priceRanges        = [...document.querySelectorAll('[value="under2000"]:checked,[value="2000-10000"]:checked,[value="10000-50000"]:checked,[value="50000-150000"]:checked,[value="above150000"]:checked')].map(i=>i.value);
+  const minRatings         = [...document.querySelectorAll('.filter-section input[value="4"]:checked,.filter-section input[value="3"]:checked')].map(i=>parseInt(i.value));
+
+  filteredProducts = products.filter(p => {
+    if (search && !p.title.toLowerCase().includes(search) && !p.brand.toLowerCase().includes(search)) return false;
+    if (activeFilters.categories.length && !activeFilters.categories.includes(p.category))  return false;
+    if (activeFilters.brands.length     && !activeFilters.brands.includes(p.brand))          return false;
+    if (activeFilters.sensors.length    && !activeFilters.sensors.includes(p.sensor))        return false;
+    if (activeFilters.levels.length     && !activeFilters.levels.includes(p.level))          return false;
+    if (activeFilters.mounts.length     && !activeFilters.mounts.includes(p.mount))          return false;
+    if (activeFilters.offers.length     && !activeFilters.offers.includes(p.offer))          return false;
+    if (selectedColors.length           && !p.colors.some(c=>selectedColors.includes(c)))    return false;
+    if (activeShoot                     && !p.shoots.includes(activeShoot))                  return false;
+    if (priceRanges.length) {
+      const ok = priceRanges.some(r => {
+        if (r==='under2000')     return p.price < 2000;
+        if (r==='2000-10000')    return p.price>=2000    && p.price<=10000;
+        if (r==='10000-50000')   return p.price>=10000   && p.price<=50000;
+        if (r==='50000-150000')  return p.price>=50000   && p.price<=150000;
+        if (r==='above150000')   return p.price > 150000;
+      });
+      if (!ok) return false;
+    }
+    if (minRatings.length && !minRatings.some(r=>p.rating>=r)) return false;
+    return true;
+  });
+
+  currentPage = 1;
+  updateActiveFiltersDisplay();
+  updateTabSelection();
+  sortProducts();
+}
+
+function updateTabSelection() {
+  const activeCats = [...document.querySelectorAll('#categoryFilters input:checked')].map(i=>i.value);
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.category==='all' ? activeCats.length===0 : activeCats.includes(btn.dataset.category));
+  });
+}
+
+function updateActiveFiltersDisplay() {
+  const container = document.getElementById('activeFilters');
+  const all = [
+    ...activeFilters.categories.map(v=>({type:'category',value:v})),
+    ...activeFilters.brands.map(v=>({type:'brand',value:v})),
+    ...activeFilters.sensors.map(v=>({type:'sensor',value:v})),
+    ...activeFilters.levels.map(v=>({type:'level',value:v})),
+    ...activeFilters.mounts.map(v=>({type:'mount',value:v})),
+    ...activeFilters.offers.map(v=>({type:'offer',value:v})),
+    ...(activeShoot ? [{type:'shoot',value:activeShoot}] : []),
+    ...[...document.querySelectorAll('.color-option.active')].map(e=>({type:'color',value:e.dataset.color})),
+  ];
+  if (!all.length) { container.innerHTML=''; return; }
+  container.innerHTML = all.map(f =>
+    `<div class="active-filter"><span>${f.value}</span><i class="fas fa-times" onclick="removeFilter('${f.type}','${f.value}')"></i></div>`
+  ).join('');
+}
+
+function removeFilter(type, value) {
+  if (type==='color') {
+    const el = document.querySelector(`.color-option[data-color="${value}"]`); if (el) el.classList.remove('active');
+  } else if (type==='shoot') {
+    activeShoot = null;
+    document.querySelectorAll('.shoot-card').forEach(c=>c.classList.remove('active'));
+  } else {
+    const m = {category:'categoryFilters',brand:'brandFilters',sensor:'sensorFilters',level:'levelFilters',mount:'mountFilters',offer:'offerFilters'};
+    const el = document.querySelector(`#${m[type]} input[value="${value}"]`); if (el) el.checked=false;
+  }
+  applyFilters();
+}
+
+function clearAllFilters() {
+  document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked=false);
+  document.querySelectorAll('.color-option').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('.tab-btn[data-category="all"]').classList.add('active');
+  document.querySelectorAll('.shoot-card').forEach(c=>c.classList.remove('active'));
+  document.getElementById('searchInput').value='';
+  activeShoot = null;
+  filteredProducts = [...products]; currentPage=1;
+  updateActiveFiltersDisplay(); sortProducts();
+}
+
+function toggleFilter(h) {
+  h.classList.toggle('collapsed');
+  const o = h.nextElementSibling; if (o) o.classList.toggle('collapsed');
+}
+
+function sortProducts() {
+  const v = document.getElementById('sortDropdown').value;
+  if (v==='price-low')  filteredProducts.sort((a,b)=>a.price-b.price);
+  else if (v==='price-high') filteredProducts.sort((a,b)=>b.price-a.price);
+  else if (v==='rating') filteredProducts.sort((a,b)=>b.rating-a.rating);
+  else filteredProducts.sort((a,b)=>b.reviewCount-a.reviewCount);
+  renderProducts();
+}
+
+function setView(v) {
+  currentView = v;
+  document.getElementById('gridViewBtn').classList.toggle('active', v==='grid');
+  document.getElementById('listViewBtn').classList.toggle('active', v==='list');
+  document.getElementById('productGrid').classList.toggle('list-view', v==='list');
+}
+
+function getStars(r) {
+  const f=Math.floor(r), h=r%1>=0.5; let s='';
+  for(let i=0;i<f;i++) s+='★'; if(h) s+='★';
+  for(let i=f+(h?1:0);i<5;i++) s+='☆';
+  return s;
+}
+
+function getBadgeHTML(p) {
+  if (p.badge==='pro')  return `<span class="badge pro">PRO</span>`;
+  if (p.badge==='new')  return `<span class="badge new">NEW</span>`;
+  if (p.badge==='deal') return `<span class="badge deal">HOT DEAL</span>`;
+  if (p.discount>=40)   return `<span class="badge default">${p.discount}% OFF</span>`;
+  return '';
+}
+
+// Level strip below image
+function getLevelStrip(level) {
+  const all = ['Beginner','Intermediate','Professional'];
+  return `<div class="level-strip">${all.map(l =>
+    `<div class="level-item ${l===level?'active-level':''}">${l}</div>`
+  ).join('')}</div>`;
+}
+
+const colorHexMap = { 'Black':'#1a1a1a','White':'#f5f5f5','Silver':'#c0c0c0','White/Black':'#888','Red/Gold':'#c0392b','Gold/Black':'#b8960c','Khaki':'#c3b091','Ash':'#b2bec3','Slate Gray':'#708090','Natural':'#d4c5a9','Blue':'#1565c0','Red':'#e53935','Green':'#2e7d32' };
+
+function renderProducts() {
+  const grid = document.getElementById('productGrid');
+  const start = (currentPage-1)*productsPerPage, end = start+productsPerPage;
+  const pp = filteredProducts.slice(start, end);
+
+  document.getElementById('showingStart').textContent = filteredProducts.length ? start+1 : 0;
+  document.getElementById('showingEnd').textContent   = Math.min(end, filteredProducts.length);
+  document.getElementById('totalResults').textContent = filteredProducts.length;
+
+  if (!pp.length) {
+    grid.innerHTML=`<div class="no-results"><i class="fas fa-camera"></i><h3>No products found</h3><p>Try adjusting your filters or search term</p></div>`;
+    renderPagination(); return;
+  }
+
+  let html='';
+  pp.forEach((p, idx) => {
+    if (currentPage===1 && idx===5) {
+      html+=`
+        <div class="promo-banner" style="grid-column:1/-1">
+          <div>
+            <h3>📸 <span>Photography Week</span> — Up to 50% Off!</h3>
+            <p>Pro cameras, lenses & gear from Canon, Sony, Nikon, Fujifilm & more. Shoot your best frame.</p>
+          </div>
+          <button class="promo-banner-btn" onclick="clearAllFilters()">Shop All Deals</button>
+        </div>`;
+    }
+
+    const sensorTag = p.sensor!=='N/A'
+      ? `<span class="meta-tag blue">${p.sensor}</span>`
+      : '';
+    const levelTagCls = p.level==='Professional' ? 'meta-tag' : p.level==='Intermediate' ? 'meta-tag green' : 'meta-tag dark';
+    const levelTag = `<span class="${levelTagCls}">${p.level}</span>`;
+
+    const specEntries = Object.entries(p.specs).slice(0,4);
+    const specGrid = `<div class="spec-grid">${specEntries.map(([k,v]) =>
+      `<div class="spec-item"><span class="spec-key">${k}</span><span class="spec-val">${v}</span></div>`
+    ).join('')}</div>`;
+
+    const colorDots = p.colors.slice(0,5).map(c => {
+      const hex = colorHexMap[c]||'#ccc';
+      const bd  = (c==='White'||c==='White/Black') ? 'border:1.5px solid #ddd;':'';
+      return `<div class="cdot" style="background:${hex};${bd}" title="${c}"></div>`;
+    }).join('');
+
+    const sizeChips = p.sizes.length
+      ? `<div class="available-sizes">${p.sizes.slice(0,5).map(s=>`<span class="size-chip">${s}</span>`).join('')}</div>`
+      : '';
+
+    html+=`
+      <div class="product-card ${currentView==='list'?'list-view':''}">
+        <div class="shutter-strip"></div>
+        <div class="product-image">
+          <img src="${p.image}" alt="${p.title}" loading="lazy">
+          <button class="wishlist-btn" onclick="toggleWishlist(${p.id})"><i class="far fa-heart"></i></button>
+          ${getBadgeHTML(p)}
+        </div>
+        ${getLevelStrip(p.level)}
+        <div class="product-info">
+          <div class="product-brand">${p.brand}</div>
+          <h3 class="product-title">${p.title}</h3>
+          <div class="product-meta">${sensorTag}${levelTag}<span class="meta-tag dark">${p.mount}</span></div>
+          <div class="product-pricing">
+            <span class="current-price">₹${p.price.toLocaleString()}</span>
+            <span class="original-price">₹${p.originalPrice.toLocaleString()}</span>
+            <span class="discount">${p.discount}% off</span>
+          </div>
+          <div class="product-rating">
+            <span class="rating-stars">${getStars(p.rating)}</span>
+            <span class="rating-count">(${p.reviewCount.toLocaleString()})</span>
+          </div>
+          ${specGrid}
+          ${sizeChips}
+          ${colorDots ? `<div class="color-dots"><span>Colors:</span>${colorDots}</div>` : ''}
+          <button class="add-to-cart-btn" onclick="addToCartClick(event,${p.id})">
+            <i class="fas fa-shopping-cart"></i> Add to Cart
+          </button>
+        </div>
+      </div>`;
+  });
+
+  grid.innerHTML = html;
+  renderPagination();
+}
+
+function addToCartClick(e, id) {
+  const p = products.find(x=>x.id===id); if (!p) return;
+  addToCart(p);
+  const btn = e.target.closest('.add-to-cart-btn');
+  btn.classList.add('added'); btn.innerHTML='<i class="fas fa-check"></i> Added!';
+  showToast(`"${p.title}" added to cart`);
+  setTimeout(() => { btn.classList.remove('added'); btn.innerHTML='<i class="fas fa-shopping-cart"></i> Add to Cart'; }, 1500);
+}
+
+function toggleWishlist(id) {
+  let wl = JSON.parse(localStorage.getItem('shopease_wishlist'))||[];
+  const idx = wl.findIndex(i=>i.id===id), p = products.find(x=>x.id===id);
+  if (idx>-1) wl.splice(idx,1); else wl.push({ id:p.id,title:p.title,brand:p.brand,price:p.price,image:p.image });
+  localStorage.setItem('shopease_wishlist', JSON.stringify(wl));
+  const btn = document.querySelector(`.wishlist-btn[onclick="toggleWishlist(${id})"]`);
+  if (btn) { btn.classList.toggle('active'); btn.innerHTML = btn.classList.contains('active') ? '<i class="fas fa-heart"></i>' : '<i class="far fa-heart"></i>'; }
+}
+
+function renderPagination() {
+  const pag = document.getElementById('pagination');
+  const total = Math.ceil(filteredProducts.length/productsPerPage);
+  if (total<=1) { pag.innerHTML=''; return; }
+  let h=`<button class="page-btn" onclick="goToPage(${currentPage-1})" ${currentPage===1?'disabled':''}><i class="fas fa-chevron-left"></i></button>`;
+  for (let i=1;i<=total;i++) {
+    if (i===1||i===total||(i>=currentPage-1&&i<=currentPage+1)) h+=`<button class="page-btn ${i===currentPage?'active':''}" onclick="goToPage(${i})">${i}</button>`;
+    else if (i===currentPage-2||i===currentPage+2) h+=`<span class="page-ellipsis">…</span>`;
+  }
+  h+=`<button class="page-btn" onclick="goToPage(${currentPage+1})" ${currentPage===total?'disabled':''}><i class="fas fa-chevron-right"></i></button>`;
+  pag.innerHTML = h;
+}
+
+function goToPage(p) {
+  const t = Math.ceil(filteredProducts.length/productsPerPage);
+  if (p<1||p>t) return;
+  currentPage=p; renderProducts();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
 </script>
 </body>
 </html>

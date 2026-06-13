@@ -1,205 +1,209 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>ShopEase — Sports (Dark Neon)</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-<style>
-  /* ======= THEME: Dark Neon ======= */
-  :root{
-    --bg-900: #04060a;
-    --panel: #07121a;
-    --card: #0b1620;
-    --muted: #8aa6ad;
-    --text: #e6fbf7;
-    --accent1: #00ffc1; /* neon green */
-    --accent2: #00b3ff; /* neon blue */
-    --glass: rgba(255,255,255,0.03);
-    --radius: 12px;
-    --shadow-strong: 0 20px 50px rgba(0,0,0,0.6);
-    --shadow-soft: 0 8px 22px rgba(0,0,0,0.5);
-    --focus-outline: 0 0 16px rgba(0,179,255,0.12);
-  }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sports & Fitness — ShopEase</title>
+  
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  
+<link rel="stylesheet" href="css/sports.css">
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-  /* ======= Base ======= */
-  *{box-sizing:border-box}
-  html,body{height:100%}
-  body{
-    margin:0;
-    font-family:'Poppins',system-ui,-apple-system,Segoe UI,Roboto,Arial;
-    background: linear-gradient(180deg,var(--bg-900), #03131a);
-    color:var(--text);
-    -webkit-font-smoothing:antialiased;
-    -moz-osx-font-smoothing:grayscale;
-  }
+  </style>
 
-  /* ======= Header (no white fade on scroll) ======= */
-  header{
-    position:sticky;
-    top:0;
-    z-index:1200;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:12px;
-    padding:12px 20px;
-    background: linear-gradient(180deg, rgba(6,12,18,0.65), rgba(6,12,18,0.65));
-    border-bottom: 1px solid rgba(255,255,255,0.03);
-    backdrop-filter: blur(6px);
-  }
-  .brand{display:flex;align-items:center;gap:12px;font-weight:700}
-  .brand img{width:42px;height:42px;border-radius:8px;object-fit:cover}
-  .searchbar{
-    display:flex;align-items:center; gap:10px;
-    padding:8px 12px;border-radius:999px;background:var(--glass);
-    border:1px solid rgba(255,255,255,0.03); min-width:320px;
-  }
-  .searchbar input{
-    background:transparent;border:0;color:var(--text);outline:none;width:300px;
-  }
-  .controls{display:flex;align-items:center;gap:10px}
+  
 
-  /* ======= Layout ======= */
-  .main{display:flex;gap:22px;padding:28px 4%;align-items:flex-start}
-  .sidebar{
-    width:320px; min-width:260px;
-    position:sticky; top:78px;
-    background: linear-gradient(180deg, rgba(255,255,255,0.01), transparent);
-    border-radius:var(--radius); padding:18px; border:1px solid rgba(255,255,255,0.03);
-    box-shadow: var(--shadow-soft);
-  }
-  .sidebar h3{margin:0 0 12px;color:var(--accent1);font-size:18px}
-  .filter-group{margin-bottom:14px}
-  .filter-group label{
-    display:flex;gap:10px;align-items:center;padding:8px 6px;border-radius:8px;cursor:pointer;color:var(--muted);
-  }
-  .filter-group input{accent-color:var(--accent1)}
+</head>
+<body>
 
-  .chip-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
-  .chip{
-    background:transparent;border:1px solid rgba(255,255,255,0.03);
-    padding:6px 10px;border-radius:999px;color:var(--muted);font-size:13px;cursor:pointer;
-  }
-  .chip.active{
-    background:linear-gradient(90deg,var(--accent1),var(--accent2));
-    border:0;color:#07121a;font-weight:600;
-  }
+  <!-- HEADER -->
+  <header class="header">
+    <div class="logo" onclick="window.location.href='index.html'">Shop<span>Ease</span></div>
+    
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Search for sports gear...">
+      <button><i class="fas fa-search"></i></button>
+    </div>
+    
+    <div class="header-actions">
+      <div class="cart-icon" onclick="window.location.href='cart.html'">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="cart-badge" id="cartBadge">0</span>
+      </div>
+    </div>
+  </header>
 
-  /* ======= Content ======= */
-  .content{flex:1;display:flex;flex-direction:column;gap:18px}
-  .hero{
-    display:flex;gap:22px;align-items:center;justify-content:space-between;padding:22px;border-radius:12px;
-    background: linear-gradient(90deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));
-    border:1px solid rgba(255,255,255,0.02);
-  }
-  .hero-left{max-width:58%}
-  .hero-title{font-size:30px;margin:0}
-  .hero-sub{color:var(--muted);margin:6px 0 0}
-  .hero-right{width:360px;height:200px;border-radius:12px;overflow:hidden;box-shadow:0 14px 36px rgba(0,0,0,0.45)}
-  .hero-right img{width:100%;height:100%;object-fit:cover}
+  <!-- BREADCRUMB -->
+  <div class="breadcrumb">
+    <a href="index.html">Home</a> <i class="fas fa-chevron-right"></i> 
+    <span>Sports</span>
+  </div>
 
-  .topbar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:6px}
-  .sort{background:var(--glass);padding:8px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);color:var(--muted)}
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-text">
+      <h2>Sports & Fitness Gear</h2>
+      <p>Premium equipment for every sport and fitness goal. Up to 50% off top brands!</p>
+      <div class="hero-stats">
+        <div class="stat">
+          <div class="stat-number" id="totalProducts">0</div>
+          <div class="stat-label">Products</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">18+</div>
+          <div class="stat-label">Brands</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">50%</div>
+          <div class="stat-label">Off</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-image">
+      <img src="https://images.pexels.com/photos/274973/pexels-photo-274973.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="Sports Gear">
+    </div>
+  </div>
 
-  /* ======= Grid & Cards ======= */
-  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:18px}
-  .card{
-    background:var(--card);
-    border-radius:12px;
-    overflow:hidden;
-    position:relative;
-    border:1px solid rgba(255,255,255,0.03);
-    transition: transform 170ms ease, box-shadow 170ms ease;
-    box-shadow: 0 10px 26px rgba(0,0,0,0.55);
-  }
-  .card:focus-within{outline:var(--focus-outline);border-color:rgba(0,179,255,0.08)}
-  .card:hover{ transform:translateY(-8px); box-shadow: 0 30px 80px rgba(0,0,0,0.6), 0 0 28px rgba(0,179,255,0.03) }
+  <!-- MAIN CONTAINER -->
+  <div class="main-container">
+    
+    <!-- SIDEBAR FILTERS -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h3><i class="fas fa-filter"></i> Filters</h3>
+        <span class="clear-all-btn" onclick="clearAllFilters()">Clear All</span>
+      </div>
 
-  .img{height:160px;overflow:hidden;background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent)}
-  .img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 260ms ease}
-  .card:hover .img img{ transform: scale(1.06) }
+      <!-- Brand Filter -->
+      <div class="filter-section">
+        <div class="filter-header" onclick="toggleFilter(this)">
+          <h4>Brand</h4>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="filter-options" id="brandFilters">
+          <!-- Generated by JS -->
+        </div>
+      </div>
 
-  /* neon soft glow ribbon */
-  .ribbon{
-    position:absolute;top:12px;left:0;padding:6px 10px;border-radius:0 8px 8px 0;
-    font-weight:700;font-size:12px;color:#07121a;
-    background:linear-gradient(90deg,var(--accent1),var(--accent2));
-    box-shadow: 0 8px 28px rgba(0,179,255,0.06);
-  }
+      <!-- Category Filter -->
+      <div class="filter-section">
+        <div class="filter-header" onclick="toggleFilter(this)">
+          <h4>Category</h4>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="filter-options" id="categoryFilters">
+          <!-- Generated by JS -->
+        </div>
+      </div>
 
-  .body{padding:12px 14px}
-  .title{font-weight:700;font-size:15px;margin-bottom:6px}
-  .meta{display:flex;justify-content:space-between;align-items:center;gap:8px;color:var(--muted);font-size:13px}
-  .price{color:var(--accent1);font-weight:800}
+      <!-- Price Filter -->
+      <div class="filter-section">
+        <div class="filter-header" onclick="toggleFilter(this)">
+          <h4>Price Range</h4>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="filter-options" id="priceFilters">
+          <label class="filter-option">
+            <input type="checkbox" value="0-1000" onchange="applyFilters()">
+            <span>Under ₹1,000</span>
+          </label>
+          <label class="filter-option">
+            <input type="checkbox" value="1000-5000" onchange="applyFilters()">
+            <span>₹1,000 - ₹5,000</span>
+          </label>
+          <label class="filter-option">
+            <input type="checkbox" value="5000-10000" onchange="applyFilters()">
+            <span>₹5,000 - ₹10,000</span>
+          </label>
+          <label class="filter-option">
+            <input type="checkbox" value="10000+" onchange="applyFilters()">
+            <span>Above ₹10,000</span>
+          </label>
+        </div>
+      </div>
 
-  .actions{display:flex;gap:8px;margin-top:10px}
-  .btn{
-    flex:1;padding:9px 10px;border-radius:10px;border:0;font-weight:700;cursor:pointer;
-  }
-  .btn.add{
-    background:linear-gradient(90deg,var(--accent1),var(--accent2)); color:var(--panel);
-    box-shadow:0 8px 28px rgba(0,179,255,0.06), inset 0 -4px 10px rgba(0,0,0,0.12);
-  }
-  .btn.wish{
-    background:transparent;border:1px solid rgba(255,255,255,0.03);color:var(--muted);
-  }
+      <!-- Rating Filter -->
+      <div class="filter-section">
+        <div class="filter-header" onclick="toggleFilter(this)">
+          <h4>Rating</h4>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="filter-options">
+          <div class="rating-option" onclick="filterByRating(4)">
+            <span class="stars">★★★★☆</span>
+            <span>& above</span>
+          </div>
+          <div class="rating-option" onclick="filterByRating(3)">
+            <span class="stars">★★★☆☆</span>
+            <span>& above</span>
+          </div>
+        </div>
+      </div>
+    </aside>
 
-  /* ======= Quick View Modal (clean) ======= */
-  .modal{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(2,6,10,0.6);z-index:1400;opacity:0;pointer-events:none}
-  .modal.show{opacity:1;pointer-events:auto}
-  .modal-card{
-    width:920px;max-width:95%;display:flex;gap:18px;background:var(--panel);border-radius:12px;padding:18px;border:1px solid rgba(255,255,255,0.03);
-    box-shadow:var(--shadow-strong);
-  }
-  .modal-card img{width:100%;height:100%;object-fit:cover;border-radius:8px}
+    <!-- PRODUCTS AREA -->
+    <div class="products-area">
+      
+      <!-- Sort Bar -->
+      <div class="sort-bar">
+        <div class="results-count">
+          Showing <strong id="showingStart">0</strong> - <strong id="showingEnd">0</strong> of <strong id="totalResults">0</strong> products
+        </div>
+        <div class="sort-options">
+          <select class="sort-dropdown" id="sortDropdown" onchange="sortProducts()">
+            <option value="popularity">Sort by: Popularity</option>
+            <option value="price-low">Price: Low to High</option>
+            <option value="price-high">Price: High to Low</option>
+            <option value="rating">Rating</option>
+          </select>
+        </div>
+      </div>
 
-  /* ======= Mini Cart (slide-in style without heavy animation) ======= */
-  .mini-cart{
-    position:fixed;right:20px;top:88px;width:380px;max-height:72vh;overflow:auto;
-    background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);border-radius:12px;padding:12px;
-    border:1px solid rgba(255,255,255,0.03);box-shadow:var(--shadow-strong);z-index:1500;
-    transform:translateX(12px);opacity:0;pointer-events:none;
-  }
-  .mini-cart.open{transform:translateX(0);opacity:1;pointer-events:auto}
-  .cart-item{display:flex;gap:10px;align-items:center;padding:8px;border-radius:8px;border-bottom:1px dashed rgba(255,255,255,0.02)}
-  .cart-item img{width:54px;height:54px;object-fit:cover;border-radius:8px}
+      <!-- Product Grid -->
+      <div class="product-grid" id="productGrid">
+        <!-- Generated by JS -->
+      </div>
 
-  /* ======= Toast (snappy) ======= */
-  .toast{position:fixed;right:24px;bottom:24px;background:linear-gradient(90deg,var(--accent1),var(--accent2));color:var(--panel);padding:10px 14px;border-radius:10px;box-shadow:0 12px 32px rgba(0,0,0,0.45);z-index:1600;transform:translateY(12px);opacity:0}
-  .toast.show{transform:translateY(0);opacity:1}
+      <!-- Pagination -->
+      <div class="pagination" id="pagination">
+        <!-- Generated by JS -->
+      </div>
+    </div>
+  </div>
 
-  /* responsive */
-  @media (max-width:980px){
-    .main{flex-direction:column;padding:18px}
-    .sidebar{position:relative; width:100%; top:0}
-    .hero-right{width:100%;height:200px}
-    .mini-cart{right:12px;top:auto;bottom:80px;width:320px}
-  }
+<script src="js/sports.js" defer></script>
+
 </style>
 </head>
 <body data-theme="sports">
   <!-- Header -->
   <header>
     <div style="display:flex;align-items:center;gap:12px">
-      <div class="brand"><img src="https://cdn-icons-png.flaticon.com/512/2965/2965567.png" alt="logo"><span style="margin-left:8px">ShopEase</span></div>
-      <div class="searchbar" role="search" aria-label="Search site">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="opacity:.7"><path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <input id="globalSearch" placeholder="Search sports gear, e.g., 'cricket bat'">
+      <div class="brand">
+        <img src="https://cdn-icons-png.flaticon.com/512/2965/2965567.png" alt="logo">
+        <span style="margin-left:8px">ShopEase — Sports</span>
+      </div>
+      <div class="searchbar">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="opacity:.7">
+          <path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <input id="globalSearch" placeholder="Search sports gear...">
       </div>
     </div>
-
     <div class="controls">
-      <select id="themePreview" class="theme-switch" title="Preview themes">
-        <option value="sports">Sports</option>
-        <option value="music">Music</option>
-        <option value="health">Health</option>
-        <option value="auto">Auto</option>
-        <option value="gifts">Gifts</option>
-        <option value="books">Books</option>
-      </select>
-
-      <button id="cartToggle" class="theme-switch">🛒 Cart <span id="cartCount">0</span></button>
+      <button id="cartToggle" class="theme-switch">
+        🛒 <span id="cartCount">0</span>
+      </button>
       <button id="openQuick" class="theme-switch">Quick View</button>
     </div>
   </header>
@@ -207,131 +211,138 @@
   <!-- Main -->
   <main class="main">
     <!-- Sidebar -->
-    <aside class="sidebar" aria-label="Filters">
-      <h3>Filters</h3>
-
+    <aside class="sidebar">
+      <h3>⚽ Filters</h3>
       <div class="filter-group">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
           <strong>Categories</strong>
-          <button id="clearFilters" style="background:transparent;border:0;color:var(--muted);cursor:pointer">Clear</button>
+          <button id="clearFilters" style="background:none;border:0;color:var(--muted);cursor:pointer;font-size:13px">Clear all</button>
         </div>
         <div id="categoryFilters"></div>
       </div>
-
       <div class="filter-group">
-        <strong>Price</strong>
-        <div class="chip-row" style="margin-top:8px">
-          <button class="chip" data-price="0-999">Under ₹999</button>
-          <button class="chip" data-price="1000-4999">₹1k–4.9k</button>
-          <button class="chip" data-price="5000-19999">₹5k–19.9k</button>
+        <strong>Price Range</strong>
+        <div class="chip-row">
+          <button class="chip" data-price="0-999">Under ₹1k</button>
+          <button class="chip" data-price="1000-4999">₹1k-5k</button>
+          <button class="chip" data-price="5000-14999">₹5k-15k</button>
+          <button class="chip" data-price="15000+">₹15k+</button>
         </div>
       </div>
-
       <div class="filter-group">
-        <strong>Material / Type</strong>
+        <strong>Sport Type</strong>
         <div id="materialFilters"></div>
       </div>
-
       <div style="margin-top:14px">
-        <button id="applyBtn" class="chip" style="background:linear-gradient(90deg,var(--accent1),var(--accent2));color:#07121a;border:0">Apply Filters</button>
+        <button id="applyBtn" class="chip" style="background:linear-gradient(90deg,var(--accent1),var(--accent2));color:#07121a;border:0;width:100%;padding:10px">Apply (25 items)</button>
       </div>
     </aside>
 
     <!-- Content -->
-    <section class="content" aria-live="polite">
-      <div class="hero" role="banner">
+    <section class="content">
+      <div class="hero">
         <div class="hero-left">
-          <h1 class="hero-title" id="heroTitle">Sports & Fitness</h1>
-          <p class="hero-sub" id="heroSub">Performance gear for athletes, trainers & weekend warriors.</p>
+          <h1 class="hero-title" id="heroTitle">Sports & Fitness Gear</h1>
+          <p class="hero-sub" id="heroSub">Premium equipment for every sport — train like a pro!</p>
           <div style="margin-top:12px;display:flex;gap:10px">
-            <button id="heroShop" class="btn add">Shop Collection</button>
-            <button id="heroExplore" class="btn wish">Explore</button>
+            <button id="heroShop" class="btn add">Shop Now</button>
+            <button id="heroExplore" class="btn wish">View All</button>
           </div>
         </div>
-        <div class="hero-right"><img id="heroImg" src="https://images.pexels.com/photos/274973/pexels-photo-274973.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="sports hero"></div>
+        <div class="hero-right">
+          <img id="heroImg" src="https://images.pexels.com/photos/274973/pexels-photo-274973.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="sports gear">
+        </div>
       </div>
 
       <div class="topbar">
-        <div style="display:flex;align-items:center;gap:10px">
-          <div id="activeChips" class="chip-row"></div>
-        </div>
-
-        <div style="display:flex;gap:8px;align-items:center">
+        <div id="activeChips" class="chip-row" style="flex-wrap:wrap"></div>
+        <div style="display:flex;gap:12px;align-items:center">
           <select id="sort" class="sort">
-            <option value="default">Recommended</option>
-            <option value="low-high">Price: Low → High</option>
-            <option value="high-low">Price: High → Low</option>
-            <option value="popular">Most Popular</option>
+            <option value="default">Featured</option>
+            <option value="low-high">Price Low-High</option>
+            <option value="high-low">Price High-Low</option>
+            <option value="popular">Best Selling</option>
+            <option value="new">Newest</option>
           </select>
-          <div style="color:var(--muted)">Grid</div>
+          <span style="color:var(--muted);font-size:13px">Grid View</span>
         </div>
       </div>
 
-      <section id="productsGrid" class="grid" aria-live="polite"></section>
-
-      <div style="text-align:center;margin-top:8px">
-        <button id="loadMore" class="chip">Load more</button>
+      <section id="productsGrid" class="grid"></section>
+      <div style="text-align:center;padding:40px 0">
+        <button id="loadMore" class="chip" style="font-size:15px;padding:12px 24px">⚡ Load More Gear</button>
       </div>
     </section>
   </main>
 
-  <!-- Quick View -->
+  <!-- Quick View Modal -->
   <div id="quickModal" class="modal" aria-hidden="true">
-    <div class="modal-card" role="dialog" aria-modal="true">
-      <div style="flex:1;min-width:320px">
-        <div style="width:100%;height:320px;border-radius:12px;overflow:hidden"><img id="modalImg" src="" style="width:100%;height:100%;object-fit:cover"></div>
-      </div>
-      <div style="flex:1.1;display:flex;flex-direction:column;gap:8px">
-        <h3 id="modalTitle">Product Title</h3>
-        <div style="color:var(--muted)" id="modalDesc">Product description — features and quick facts.</div>
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:6px">
-          <div style="font-weight:800;color:var(--accent1)" id="modalPrice">₹0</div>
-          <div><button id="modalAdd" class="btn add">Add to cart</button></div>
+    <div class="modal-card">
+      <img id="modalImg" src="" alt="Product">
+      <div style="flex:1;display:flex;flex-direction:column;gap:12px">
+        <h2 id="modalTitle" style="margin:0;font-size:24px">Product Name</h2>
+        <div id="modalDesc" style="color:var(--muted);line-height:1.5">High quality sports gear description.</div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline">
+          <div id="modalPrice" style="font-size:28px;font-weight:800;color:var(--accent1)">₹0</div>
+          <div style="font-size:14px;color:var(--muted)">Free Shipping</div>
         </div>
-        <div style="margin-top:auto;display:flex;gap:8px">
-          <button id="modalWish" class="btn wish">♡ Wishlist</button>
+        <button id="modalAdd" class="btn add" style="font-size:16px;padding:14px">Add to Cart</button>
+        <div style="display:flex;gap:12px">
+          <button id="modalWish" class="btn wish">♡ Add to Wishlist</button>
           <button id="modalClose" class="chip">Close</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Mini cart -->
-  <div id="miniCart" class="mini-cart" aria-hidden="true">
-    <h4>Cart</h4>
-    <div id="cartItems" style="display:flex;flex-direction:column;gap:8px;margin-bottom:8px"></div>
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px">
-      <div style="font-weight:800">Total</div><div id="cartTotal" style="font-weight:800">₹0</div>
+  <!-- Mini Cart -->
+  <div id="miniCart" class="mini-cart">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+      <h3 style="margin:0">Shopping Cart</h3>
+      <button id="closeCart" class="chip">✕</button>
     </div>
-    <div style="margin-top:12px;display:flex;gap:8px">
-      <button id="checkout" class="btn add">Checkout</button>
-      <button id="closeCart" class="chip">Close</button>
+    <div id="cartItems" style="max-height:350px;overflow:auto"></div>
+    <div style="padding-top:16px;border-top:1px solid rgba(255,255,255,0.05)">
+      <div style="display:flex;justify-content:space-between;font-weight:700;margin-bottom:12px">
+        <span>Total:</span>
+        <span id="cartTotal">₹0</span>
+      </div>
+      <div style="display:flex;gap:8px">
+        <button id="viewCart" class="btn add" style="flex:1">View Cart</button>
+        <button id="checkout" class="btn" style="flex:1;background:var(--accent2);color:#07121a">Checkout</button>
+      </div>
     </div>
   </div>
 
-  <!-- Toast -->
-  <div id="toast" class="toast" aria-hidden="true">Added to cart</div>
+  <!-- Toast Notification -->
+  <div id="toast" class="toast">Item added to cart!</div>
 
   <script>
-    /* ========================
-       Clean Dark Neon Sports Page JS
-       - no large fades/parallax
-       - crisp, snappy interactions
-       ======================== */
-
     const DATA = {
-      key: 'sports',
-      title: "Sports & Fitness",
-      sub: "Performance gear for athletes, trainers & weekend warriors.",
+      title: "Sports & Fitness Gear",
+      sub: "Premium equipment for every sport — train like a pro! 🏆",
       hero: "https://images.pexels.com/photos/274973/pexels-photo-274973.jpeg?auto=compress&cs=tinysrgb&w=1600",
-      categories: ["Cricket","Fitness","Racquets","Apparel"],
-      materials: ["Graphite","Metal","Fabric","Willow","Rubber"],
+      categories: ["Cricket", "Fitness", "Racquets", "Apparel", "Outdoor", "Team Sports"],
+      materials: ["Graphite", "Willow", "Metal", "Rubber", "Fabric", "Leather", "PU", "Carbon"],
       products: [
-        {id:101,title:"Pro Tennis Racquet",price:8999,category:"Racquets",material:"Graphite",img:"https://images.pexels.com/photos/39323/tennis-ball-sport-racket-39323.jpeg?auto=compress&cs=tinysrgb&w=1600",badge:"Bestseller"},
-        {id:102,title:"Adjustable Dumbbell 20kg",price:5999,category:"Fitness",material:"Metal",img:"https://images.pexels.com/photos/416778/pexels-photo-416778.jpeg?auto=compress&cs=tinysrgb&w=1600",badge:"Popular"},
-        {id:103,title:"Cricket Bat (English Willow)",price:12999,category:"Cricket",material:"Willow",img:"https://images.pexels.com/photos/209671/pexels-photo-209671.jpeg?auto=compress&cs=tinysrgb&w=1600",badge:"Hot"},
-        {id:104,title:"Pro Running Shoes",price:6999,category:"Apparel",material:"Fabric",img:"https://images.pexels.com/photos/2529148/pexels-photo-2529148.jpeg?auto=compress&cs=tinysrgb&w=1600",badge:"New"},
-        {id:105,title:"Yoga Mat (Non-slip)",price:1299,category:"Fitness",material:"Rubber",img:"https://images.pexels.com/photos/4056723/pexels-photo-4056723.jpeg?auto=compress&cs=tinysrgb&w=1600",badge:"Top"}
+        // Original 5
+        {id:101,title:"Pro Tennis Racquet - Carbon Fiber",price:8999,category:"Racquets",material:"Carbon",img:"https://images.pexels.com/photos/39323/tennis-ball-sport-racket-39323.jpeg?auto=compress&cs=tinysrgb&w=1600",badge:"Bestseller"},
+        {id:102,title:"Adjustable Dumbbell Set 20kg",price:5999,category:"Fitness",material:"Metal",img:"https://images.pexels.com/photos/416778/pexels-photo-416778.jpeg?auto=compress&cs=tinysrgb&w=1600",badge:"Popular"},
+        {id:103,title:"English Willow Cricket Bat SG",price:12999,category:"Cricket",material:"Willow",img:"https://images.pexels.com/photos/209671/pexels-photo-209671.jpeg?auto=compress&cs=tinysrgb&w=1600",badge:"🏏 Hot"},
+        {id:104,title:"Nike Air Zoom Running Shoes",price:6999,category:"Apparel",material:"Fabric",img:"https://images.pexels.com/photos/2529148/pexels-photo-2529148.jpeg?auto=compress&cs=tinysrgb&w=1600",badge:"New"},
+        {id:105,title:"Anti-Slip Yoga Mat Premium",price:1299,category:"Fitness",material:"Rubber",img:"https://images.pexels.com/photos/4056723/pexels-photo-4056723.jpeg?auto=compress&cs=tinysrgb&w=1600",badge:"Top Rated"},
+
+        // Added 10 more (total 15)
+        {id:106,title:"Badminton Racket Yonex",price:3499,category:"Racquets",material:"Graphite",img:"https://images.unsplash.com/photo-1572497925045-5c6367045c91?w=400",badge:"Sale"},
+        {id:107,title:"Treadmill Motorized 5HP",price:34999,category:"Fitness",material:"Metal",img:"https://images.pexels.com/photos/247376/pexels-photo-247376.jpg?w=400",badge:"Pro"},
+        {id:108,title:"Football Adidas UCL",price:2999,category:"Team Sports",material:"PU",img:"https://images.pexels.com/photos/5595725/pexels-photo-5595725.jpeg?w=400",badge:"Official"},
+        {id:109,title:"Gym Bench Adjustable",price:8999,category:"Fitness",material:"Steel",img:"https://images.unsplash.com/photo-1574249279827-40f42d6e9425?w=400",badge:"Strength"},
+        {id:110,title:"Cricket Helmet SG",price:2499,category:"Cricket",material:"PU",img:"https://images.pexels.com/photos/3430417/pexels-photo-3430417.jpeg?w=400",badge:"Safety"},
+        {id:111,title:"Basketball Spalding",price:1999,category:"Team Sports",material:"Rubber",img:"https://images.pexels.com/photos/7198187/pexels-photo-7198187.jpeg?w=400",badge:"Street"},
+        {id:112,title:"Cycling Helmet Pro",price:3999,category:"Outdoor",material:"Carbon",img:"https://images.unsplash.com/photo-1558618047-3c8c76bbb17e?w=400",badge:"Cycle"},
+        {id:113,title:"Gym Gloves Weightlifting",price:999,category:"Fitness",material:"Leather",img:"https://images.pexels.com/photos/236973/pexels-photo-236973.jpeg?w=400",badge:"Grip"},
+        {id:114,title:"Squash Racket Head",price:4999,category:"Racquets",material:"Graphite",img:"https://images.unsplash.com/photo-1577720117076-02e1484406f9?w=400",badge:"Pro"},
+        {id:115,title:"Skipping Rope Speed",price:499,category:"Fitness",material:"PU",img:"https://images.pexels.com/photos/325153/pexels-photo-325153.jpeg?w=400",badge:"Cardio"}
       ]
     };
 
@@ -339,238 +350,266 @@
     let CART = JSON.parse(localStorage.getItem('shopease_cart') || '[]');
     let WISH = JSON.parse(localStorage.getItem('shopease_wish') || '[]');
 
-    const q = s => document.querySelector(s);
-    const grid = q('#productsGrid'), catEl = q('#categoryFilters'), matEl = q('#materialFilters');
-    const heroTitle = q('#heroTitle'), heroSub = q('#heroSub'), heroImg = q('#heroImg');
-    const activeChipsEl = q('#activeChips'), toastEl = q('#toast');
-    const miniCartEl = q('#miniCart'), cartItemsEl = q('#cartItems'), cartTotalEl = q('#cartTotal'), cartCountEl = q('#cartCount');
+    const elements = {
+      grid: document.getElementById('productsGrid'),
+      cats: document.getElementById('categoryFilters'),
+      mats: document.getElementById('materialFilters'),
+      search: document.getElementById('globalSearch'),
+      chips: document.getElementById('activeChips'),
+      sort: document.getElementById('sort'),
+      heroTitle: document.getElementById('heroTitle'),
+      heroSub: document.getElementById('heroSub'),
+      heroImg: document.getElementById('heroImg'),
+      toast: document.getElementById('toast'),
+      cartCount: document.getElementById('cartCount'),
+      cartItems: document.getElementById('cartItems'),
+      cartTotal: document.getElementById('cartTotal'),
+      miniCart: document.getElementById('miniCart'),
+      quickModal: document.getElementById('quickModal')
+    };
 
-    function init(){
-      // hero
-      heroTitle.textContent = DATA.title;
-      heroSub.textContent = DATA.sub;
-      heroImg.src = DATA.hero;
-
-      // filters
+    function init() {
+      elements.heroTitle.textContent = DATA.title;
+      elements.heroSub.textContent = DATA.sub;
+      elements.heroImg.src = DATA.hero;
+      
       renderFilters();
-      applyFiltersAndRender();
-
-      // UI hooks
-      q('#themePreview').addEventListener('change', e => document.body.setAttribute('data-theme', e.target.value));
-      q('#globalSearch').addEventListener('input', debounce(()=> applyFiltersAndRender(), 200));
-      q('#sort').addEventListener('change', applyFiltersAndRender);
-      q('#clearFilters').addEventListener('click', clearAllFilters);
-      q('#applyBtn').addEventListener('click', applyFiltersAndRender);
-      document.querySelectorAll('.chip[data-price]').forEach(b=> b.addEventListener('click', ()=> { b.classList.toggle('active'); applyFiltersAndRender(); }));
-      q('#cartToggle').addEventListener('click', ()=> { miniCartEl.classList.toggle('open'); updateCartUI(); });
-      q('#closeCart').addEventListener('click', ()=> miniCartEl.classList.remove('open'));
-      q('#checkout').addEventListener('click', ()=> alert('Checkout demo — integrate gateway.'));
-      q('#openQuick').addEventListener('click', ()=> openQuick(PRODUCTS[0]));
-      q('#loadMore').addEventListener('click', ()=> { const appended = DATA.products.map(p => ({ ...p, id: p.id + Math.floor(Math.random()*1000) })); PRODUCTS.push(...appended); applyFiltersAndRender(); });
-      q('#modalClose').addEventListener('click', closeQuick);
-      q('#modalAdd').addEventListener('click', (e)=> addToCartById(Number(e.target.dataset.id)));
-      q('#modalWish').addEventListener('click', (e)=> toggleWishById(Number(e.target.dataset.id)));
-
-      // grid delegation
-      grid.addEventListener('click', gridHandler);
-
-      // initial cart UI
+      applyFilters();
+      
+      // Event listeners
+      elements.search.addEventListener('input', debounce(applyFilters, 250));
+      elements.sort.addEventListener('change', applyFilters);
+      document.getElementById('clearFilters').onclick = clearFilters;
+      document.querySelectorAll('.chip[data-price]').forEach(btn => btn.onclick = () => toggleChip(btn));
+      document.getElementById('cartToggle').onclick = () => elements.miniCart.classList.toggle('open');
+      document.getElementById('closeCart').onclick = () => elements.miniCart.classList.remove('open');
+      document.getElementById('loadMore').onclick = loadMore;
+      document.getElementById('checkout').onclick = () => location.href = 'cart.html';
+      
+      elements.grid.onclick = handleGridClick;
+      elements.quickModal.onclick = e => e.target.classList.contains('modal') && closeModal();
+      
       updateCartUI();
+      applyFilters();
     }
 
-    function renderFilters(){
-      catEl.innerHTML = '';
-      matEl.innerHTML = '';
-      DATA.categories.forEach(c => catEl.insertAdjacentHTML('beforeend', `<label><input type="checkbox" data-filter="${c}"> ${c}</label>`));
-      const mats = Array.from(new Set([...DATA.materials, ...DATA.products.map(p=>p.material)]));
-      mats.forEach(m => matEl.insertAdjacentHTML('beforeend', `<label><input type="checkbox" data-material="${m}"> ${m}</label>`));
-      catEl.addEventListener('change', applyFiltersAndRender);
-      matEl.addEventListener('change', applyFiltersAndRender);
+    function renderFilters() {
+      elements.cats.innerHTML = DATA.categories.map(c => `<label><input type="checkbox" data-type="cat" data-val="${c}"> ${c}</label>`).join('');
+      const allMats = [...new Set(DATA.products.map(p => p.material))];
+      elements.mats.innerHTML = allMats.map(m => `<label><input type="checkbox" data-type="mat" data-val="${m}"> ${m}</label>`).join('');
+      
+      elements.cats.onchange = elements.mats.onchange = applyFilters;
     }
 
-    function renderProducts(items){
-      grid.innerHTML = '';
-      if(!items.length){ grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;color:var(--muted);padding:40px">No items match your filters.</div>`; return; }
-      items.forEach(p=>{
-        const card = document.createElement('article');
-        card.className = 'card';
-        card.innerHTML = `
-          <div class="img">
-            <img src="${p.img}" alt="${escape(p.title)}" loading="lazy">
-            ${p.badge?`<div class="ribbon">${escape(p.badge)}</div>`:''}
-          </div>
-          <div class="body">
-            <div class="title">${escape(p.title)}</div>
-            <div class="meta"><div class="price">₹${format(p.price)}</div><div style="color:var(--muted)">${escape(p.material)}</div></div>
-            <div class="actions">
-              <button class="btn add" data-id="${p.id}">Add</button>
-              <button class="btn wish" data-id="${p.id}">${WISH.includes(p.id)?'♥':'♡'} Wish</button>
-            </div>
-          </div>`;
-        grid.appendChild(card);
-      });
-    }
-
-    function getActiveFilters(){
-      const cats = Array.from(catEl.querySelectorAll('input:checked')).map(i=>i.dataset.filter).filter(Boolean);
-      const mats = Array.from(matEl.querySelectorAll('input:checked')).map(i=>i.dataset.material).filter(Boolean);
-      const priceChips = Array.from(document.querySelectorAll('.chip[data-price].active')).map(b => b.dataset.price);
-      const qText = q('#globalSearch').value.trim().toLowerCase();
-      return {cats,mats,priceChips,qText};
-    }
-
-    function applyFiltersAndRender(){
-      const f = getActiveFilters();
-      updateActiveChips(f);
-      let res = PRODUCTS.filter(p=>{
-        const catMatch = !f.cats.length || f.cats.includes(p.category);
-        const matMatch = !f.mats.length || f.mats.includes(p.material);
-        const priceMatch = !f.priceChips.length || f.priceChips.some(range => {
-          const [lo,hi] = range.split('-').map(Number); return p.price >= lo && p.price <= hi;
+    function applyFilters() {
+      const filters = getFilters();
+      let results = PRODUCTS.filter(product => {
+        const matchesCat = !filters.cats.length || filters.cats.includes(product.category);
+        const matchesMat = !filters.mats.length || filters.mats.includes(product.material);
+        const matchesPrice = !filters.prices.length || filters.prices.some(range => {
+          const [min, max] = range.split('-').map(n => max === '+' ? Infinity : Number(n));
+          return product.price >= min && product.price <= max;
         });
-        const searchMatch = !f.qText || p.title.toLowerCase().includes(f.qText) || (p.material && p.material.toLowerCase().includes(f.qText));
-        return catMatch && matMatch && priceMatch && searchMatch;
+        const matchesSearch = !filters.search || 
+          product.title.toLowerCase().includes(filters.search) || 
+          product.material.toLowerCase().includes(filters.search);
+        return matchesCat && matchesMat && matchesPrice && matchesSearch;
       });
-      const sort = q('#sort').value;
-      if(sort==='low-high') res.sort((a,b)=>a.price-b.price);
-      else if(sort==='high-low') res.sort((a,b)=>b.price-a.price);
-      else if(sort==='popular') res.sort((a,b)=> (b.id - a.id));
-      renderProducts(res);
+
+      // Sort
+      const sort = elements.sort.value;
+      if (sort === 'low-high') results.sort((a, b) => a.price - b.price);
+      if (sort === 'high-low') results.sort((a, b) => b.price - a.price);
+      if (sort === 'popular') results.sort((a, b) => b.id - a.id);
+
+      renderProducts(results);
+      updateActiveChips(filters);
     }
 
-    function updateActiveChips(f){
-      activeChipsEl.innerHTML = '';
-      if(f.qText) activeChipsEl.insertAdjacentHTML('beforeend', `<div class="chip">${escape(f.qText)} <span data-remove="q">✕</span></div>`);
-      f.cats.forEach(c => activeChipsEl.insertAdjacentHTML('beforeend', `<div class="chip">${escape(c)} <span data-remove="cat" data-val="${escape(c)}">✕</span></div>`));
-      f.mats.forEach(m => activeChipsEl.insertAdjacentHTML('beforeend', `<div class="chip">${escape(m)} <span data-remove="mat" data-val="${escape(m)}">✕</span></div>`));
+    function getFilters() {
+      return {
+        cats: Array.from(elements.cats.querySelectorAll('input:checked')).map(i => i.dataset.val),
+        mats: Array.from(elements.mats.querySelectorAll('input:checked')).map(i => i.dataset.val),
+        prices: Array.from(document.querySelectorAll('.chip[data-price].active')).map(b => b.dataset.price),
+        search: elements.search.value.toLowerCase().trim()
+      };
     }
 
-    activeChipsEl.addEventListener('click', (e)=>{
-      const rem = e.target.closest('[data-remove]');
-      if(!rem) return;
-      const type = rem.dataset.remove;
-      if(type === 'q'){ q('#globalSearch').value=''; applyFiltersAndRender(); }
-      else if(type === 'cat'){ const val = rem.dataset.val; Array.from(catEl.querySelectorAll('input')).find(i=>i.dataset.filter===val).checked=false; applyFiltersAndRender(); }
-      else if(type === 'mat'){ const val = rem.dataset.val; Array.from(matEl.querySelectorAll('input')).find(i=>i.dataset.material===val).checked=false; applyFiltersAndRender(); }
-    });
+    function renderProducts(items) {
+      elements.grid.innerHTML = items.length ? 
+        items.map(p => `
+          <article class="card" tabindex="0">
+            <div class="img">
+              <img src="${p.img}" alt="${p.title}" loading="lazy">
+              ${p.badge ? `<div class="ribbon">${p.badge}</div>` : ''}
+            </div>
+            <div class="body">
+              <h3 class="title">${p.title}</h3>
+              <div class="meta">
+                <span class="price">₹${p.price.toLocaleString('en-IN')}</span>
+                <span>${p.material}</span>
+              </div>
+              <div class="actions">
+                <button class="btn add" data-id="${p.id}">Add Cart</button>
+                <button class="btn wish" data-id="${p.id}">${WISH.includes(p.id) ? '♥' : '♡'}</button>
+              </div>
+            </div>
+          </article>
+        `).join('') : 
+        `<div style="grid-column:1/-1;text-align:center;color:var(--muted);padding:60px 20px">
+          <div style="font-size:3rem;margin-bottom:1rem">⚽</div>
+          <h2>No gear found</h2>
+          <p>Try different filters</p>
+        </div>`;
+    }
 
-    function gridHandler(e){
-      const addBtn = e.target.closest('.btn.add');
-      const wishBtn = e.target.closest('.btn.wish');
-      const card = e.target.closest('.card');
-      if(addBtn){
-        const id = Number(addBtn.dataset.id);
-        addToCartById(id);
-        addBtn.textContent = 'Added ✓'; addBtn.disabled = true;
-        setTimeout(()=>{ addBtn.textContent = 'Add'; addBtn.disabled = false; }, 800);
-        updateCartUI();
-      } else if(wishBtn){
-        const id = Number(wishBtn.dataset.id);
-        toggleWishById(id, wishBtn);
-      } else if(card){
-        if(!e.target.closest('button')){
-          const img = card.querySelector('.img img');
-          const title = card.querySelector('.title').textContent;
-          const price = card.querySelector('.price').textContent.replace(/[^0-9]/g,'');
-          openQuick({ img: img.src, title, price: Number(price), category:'—', material:'—', id: Number(card.querySelector('.btn.add')?.dataset.id || 0) });
-        }
+    function updateActiveChips(filters) {
+      elements.chips.innerHTML = [
+        ...(filters.search ? [`<div class="chip">${filters.search} <span data-clear="search">✕</span></div>`] : []),
+        ...filters.cats.map(c => `<div class="chip">${c} <span data-clear="cat:${c}">✕</span></div>`),
+        ...filters.mats.map(m => `<div class="chip">${m} <span data-clear="mat:${m}">✕</span></div>`),
+        ...filters.prices.map(p => `<div class="chip">${p.replace('-','–')} <span data-clear="price:${p}">✕</span></div>`)
+      ].join('');
+    }
+
+    elements.chips.onclick = e => {
+      const clear = e.target.dataset.clear;
+      if (!clear) return;
+      const [type, val] = clear.split(':');
+      if (type === 'search') elements.search.value = '';
+      else if (type === 'cat') elements.cats.querySelector(`[data-val="${val}"]`).checked = false;
+      else if (type === 'mat') elements.mats.querySelector(`[data-val="${val}"]`).checked = false;
+      else if (type === 'price') e.target.closest('.chip').classList.remove('active');
+      applyFilters();
+    };
+
+    function handleGridClick(e) {
+      const id = Number(e.target.dataset.id);
+      if (e.target.classList.contains('add')) {
+        addToCart(id);
+        e.target.textContent = 'Added ✓';
+        e.target.disabled = true;
+        setTimeout(() => { e.target.textContent = 'Add Cart'; e.target.disabled = false; }, 1200);
+      } else if (e.target.classList.contains('wish')) {
+        toggleWishlist(id, e.target);
+      } else {
+        const card = e.target.closest('.card');
+        if (card && !e.target.closest('button')) openQuickView(card);
       }
     }
 
-    /* Cart / Wishlist */
-    function saveCart(){ localStorage.setItem('shopease_cart', JSON.stringify(CART)) }
-    function saveWish(){ localStorage.setItem('shopease_wish', JSON.stringify(WISH)) }
-    function updateCartUI(){
-      cartCountEl.textContent = CART.length;
-      cartItemsEl.innerHTML = '';
-      let total = 0;
-      CART.forEach((it, idx) => {
-        total += it.price;
-        cartItemsEl.insertAdjacentHTML('beforeend', `
-          <div class="cart-item">
-            <img src="${it.img}" alt="" />
-            <div style="flex:1">
-              <div style="font-weight:700">${escape(it.title)}</div>
-              <div style="color:var(--muted);font-size:13px">₹${format(it.price)}</div>
-            </div>
-            <div><button onclick="removeFromCart(${idx})" class="chip">Remove</button></div>
+    function toggleChip(chip) {
+      chip.classList.toggle('active');
+      applyFilters();
+    }
+
+    function clearFilters() {
+      elements.cats.querySelectorAll('input').forEach(i => i.checked = false);
+      elements.mats.querySelectorAll('input').forEach(i => i.checked = false);
+      document.querySelectorAll('.chip[data-price]').forEach(c => c.classList.remove('active'));
+      elements.search.value = '';
+      applyFilters();
+    }
+
+    function addToCart(id) {
+      const product = PRODUCTS.find(p => p.id === id);
+      if (!product) return;
+      const cartItem = CART.find(item => item.id === id);
+      if (cartItem) cartItem.qty = (cartItem.qty || 1) + 1;
+      else CART.push({...product, qty: 1});
+      localStorage.setItem('shopease_cart', JSON.stringify(CART));
+      updateCartUI();
+      showToast(`${product.title} added!`);
+    }
+
+    function toggleWishlist(id, btn) {
+      const index = WISH.indexOf(id);
+      if (index > -1) {
+        WISH.splice(index, 1);
+        showToast('Removed from wishlist');
+      } else {
+        WISH.push(id);
+        showToast('Added to wishlist');
+      }
+      btn.textContent = WISH.includes(id) ? '♥' : '♡';
+      localStorage.setItem('shopease_wish', JSON.stringify(WISH));
+    }
+
+    function updateCartUI() {
+      const totalItems = CART.reduce((sum, item) => sum + (item.qty || 1), 0);
+      elements.cartCount.textContent = totalItems;
+      
+      elements.cartItems.innerHTML = CART.map((item, index) => `
+        <div class="cart-item">
+          <img src="${item.img}" alt="${item.title}">
+          <div style="flex:1;min-width:0">
+            <div style="font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${item.title}</div>
+            <div style="color:var(--muted);font-size:13px">₹${item.price.toLocaleString('en-IN')}</div>
           </div>
-        `);
-      });
-      cartTotalEl.textContent = `₹${format(total)}`;
-    }
-    function addToCartById(id){
-      const p = PRODUCTS.find(x=>x.id==id);
-      if(!p) return;
-      CART.push(p); saveCart(); updateCartUI(); showToast(`${p.title} added to cart`);
-    }
-    function removeFromCart(index){ CART.splice(index,1); saveCart(); updateCartUI(); }
-    function toggleWishById(id, btn){
-      const idx = WISH.indexOf(id);
-      if(idx === -1){ WISH.push(id); if(btn) btn.textContent='♥ Wish'; showToast('Added to wishlist') }
-      else { WISH.splice(idx,1); if(btn) btn.textContent='♡ Wish'; showToast('Removed from wishlist') }
-      saveWish();
+          <button onclick="removeCartItem(${index})" class="chip" style="padding:4px 8px">✕</button>
+        </div>
+      `).join('') || '<div style="text-align:center;color:var(--muted);padding:20px">Cart is empty</div>';
+      
+      const total = CART.reduce((sum, item) => sum + item.price * (item.qty || 1), 0);
+      elements.cartTotal.textContent = `₹${total.toLocaleString('en-IN')}`;
     }
 
-    /* Quick view */
-    function openQuick(p){
-      q('#modalImg').src = p.img;
-      q('#modalTitle').textContent = p.title;
-      q('#modalDesc').textContent = `${p.category} • ${p.material} — premium quality.`;
-      q('#modalPrice').textContent = `₹${format(p.price)}`;
-      q('#modalAdd').dataset.id = p.id;
-      q('#modalWish').dataset.id = p.id;
-      q('#quickModal').classList.add('show');
-      q('#quickModal').setAttribute('aria-hidden','false');
-    }
-    function closeQuick(){
-      q('#quickModal').classList.remove('show');
-      q('#quickModal').setAttribute('aria-hidden','true');
-    }
+    window.removeCartItem = index => {
+      CART.splice(index, 1);
+      localStorage.setItem('shopease_cart', JSON.stringify(CART));
+      updateCartUI();
+    };
 
-    /* Toast */
-    let toastTimeout;
-    function showToast(msg){
-      toastEl.textContent = msg;
-      toastEl.classList.add('show');
-      clearTimeout(toastTimeout);
-      toastTimeout = setTimeout(()=> toastEl.classList.remove('show'), 2000);
+    function openQuickView(card) {
+      const img = card.querySelector('img');
+      const title = card.querySelector('.title').textContent;
+      const price = parseInt(card.querySelector('.price').textContent.replace(/[^\d]/g, ''));
+      const id = Number(card.querySelector('.btn').dataset.id);
+      document.getElementById('modalImg').src = img.src;
+      document.getElementById('modalTitle').textContent = title;
+      document.getElementById('modalDesc').textContent = `Premium ${card.querySelector('.meta span:last-child').textContent} gear`;
+      document.getElementById('modalPrice').textContent = `₹${price.toLocaleString('en-IN')}`;
+      document.getElementById('modalAdd').dataset.id = id;
+      document.getElementById('modalWish').dataset.id = id;
+      elements.quickModal.classList.add('show');
     }
 
-    /* Helpers */
-    function format(n){ return Number(n).toLocaleString('en-IN') }
-    function escape(s){ return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])) }
-    function debounce(fn, t=200){ let to; return function(...a){ clearTimeout(to); to = setTimeout(()=>fn(...a), t) } }
-
-    // modal overlay close
-    q('#quickModal').addEventListener('click', (e)=>{ if(e.target===q('#quickModal')) closeQuick(); });
-
-    // modal actions
-    q('#modalClose').addEventListener('click', closeQuick);
-    q('#modalAdd').addEventListener('click', (e)=> addToCartById(Number(e.target.dataset.id)));
-    q('#modalWish').addEventListener('click', (e)=> toggleWishById(Number(e.target.dataset.id)));
-
-    // active chip removal
-    activeChipsEl.addEventListener('click', (e)=>{
-      const rem = e.target.closest('[data-remove]'); if(!rem) return;
-      const type = rem.dataset.remove;
-      if(type === 'q'){ q('#globalSearch').value=''; applyFiltersAndRender(); }
-      else if(type === 'cat'){ const val = rem.dataset.val; Array.from(catEl.querySelectorAll('input')).find(i=>i.dataset.filter===val).checked=false; applyFiltersAndRender(); }
-      else if(type === 'mat'){ const val = rem.dataset.val; Array.from(matEl.querySelectorAll('input')).find(i=>i.dataset.material===val).checked=false; applyFiltersAndRender(); }
-    });
-
-    function clearAllFilters(){
-      document.querySelectorAll('.sidebar input[type="checkbox"]').forEach(i=>i.checked=false);
-      document.querySelectorAll('.chip[data-price]').forEach(b=>b.classList.remove('active'));
-      q('#globalSearch').value='';
-      applyFiltersAndRender();
+    function closeModal() {
+      elements.quickModal.classList.remove('show');
     }
 
-    // init
+    function loadMore() {
+      const newItems = Array.from({length: 5}, (_, i) => ({
+        id: DATA.products[DATA.products.length - 1].id + i + 1,
+        title: `Pro Gear ${i + 1}`,
+        price: 2000 + Math.random() * 5000,
+        category: DATA.categories[Math.floor(Math.random() * DATA.categories.length)],
+        material: DATA.materials[Math.floor(Math.random() * DATA.materials.length)],
+        img: 'https://images.pexels.com/photos/274973/pexels-photo-274973.jpeg?w=400',
+        badge: ['New', 'Hot', 'Sale'][Math.floor(Math.random() * 3)]
+      }));
+      PRODUCTS.push(...newItems);
+      showToast('Loaded 5 more products!');
+      applyFilters();
+    }
+
+    function showToast(msg) {
+      elements.toast.textContent = msg;
+      elements.toast.classList.add('show');
+      setTimeout(() => elements.toast.classList.remove('show'), 2500);
+    }
+
+    function debounce(fn, delay) {
+      let timeout;
+      return (...args) => {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => fn(...args), delay);
+      };
+    }
+
+    // Initialize
     init();
-
-    // expose removeFromCart for inline onclick
-    window.removeFromCart = removeFromCart;
   </script>
 </body>
 </html>
+

@@ -3,94 +3,365 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Accessories — ShopEase</title>
+  <title>Mobile & Tablet Accessories - ShopEase</title>
+
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
   <style>
+    /* ================= RESET & BASE ================= */
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
     body { background: #f4f6fb; color: #333; }
     a { text-decoration: none; color: inherit; }
-    .header { background: #fff; padding: 12px 5%; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 2px 15px rgba(0,0,0,0.06); position: sticky; top: 0; z-index: 1000; }
+    ul { list-style: none; }
+
+    /* ================= HEADER ================= */
+    .header {
+      background: #fff;
+      padding: 12px 5%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 15px rgba(0,0,0,0.06);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
     .logo { font-size: 28px; font-weight: 700; color: #ff3f6c; cursor: pointer; }
     .logo span { color: #333; }
-    .search-bar { flex: 1; max-width: 500px; margin: 0 30px; display: flex; }
-    .search-bar input { flex: 1; padding: 12px 15px; border: 2px solid #eee; border-radius: 8px 0 0 8px; outline: none; font-size: 14px; transition: border-color 0.3s; }
+    .search-bar { flex: 1; max-width: 500px; margin: 0 30px; display: flex; position: relative; }
+    .search-bar input {
+      flex: 1; padding: 12px 15px; border: 2px solid #eee;
+      border-radius: 8px 0 0 8px; outline: none; font-size: 14px; transition: border-color 0.3s;
+    }
     .search-bar input:focus { border-color: #ff3f6c; }
-    .search-bar button { padding: 12px 20px; border: none; background: #ff3f6c; color: #fff; border-radius: 0 8px 8px 0; cursor: pointer; transition: background 0.3s; }
+    .search-bar button {
+      padding: 12px 20px; border: none; background: #ff3f6c; color: #fff;
+      border-radius: 0 8px 8px 0; cursor: pointer; transition: background 0.3s;
+    }
     .search-bar button:hover { background: #e6365c; }
     .header-actions { display: flex; align-items: center; gap: 25px; }
     .cart-icon { position: relative; font-size: 22px; cursor: pointer; color: #333; transition: color 0.3s; }
     .cart-icon:hover { color: #ff3f6c; }
-    .cart-badge { position: absolute; top: -8px; right: -10px; background: #ff3f6c; color: #fff; font-size: 11px; font-weight: 600; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+    .cart-badge {
+      position: absolute; top: -8px; right: -10px; background: #ff3f6c; color: #fff;
+      font-size: 11px; font-weight: 600; width: 20px; height: 20px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .cart-badge:empty, .cart-badge[data-count="0"] { display: none; }
+
+    /* ================= BREADCRUMB ================= */
     .breadcrumb { padding: 15px 5%; font-size: 13px; color: #888; }
     .breadcrumb a { color: #ff3f6c; font-weight: 500; }
-    .hero { margin: 0 5% 30px; background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%); border-radius: 20px; padding: 40px 50px; display: flex; justify-content: space-between; align-items: center; position: relative; overflow: hidden; }
-    .hero::before { content: ''; position: absolute; top: -50%; right: -10%; width: 400px; height: 400px; background: radial-gradient(circle, rgba(156,39,176,0.1) 0%, transparent 70%); border-radius: 50%; }
+
+    /* ================= HERO ================= */
+    .hero {
+      margin: 0 5% 30px;
+      background: linear-gradient(135deg, #fff5f6 0%, #f0f4ff 60%, #f5fff5 100%);
+      border-radius: 20px;
+      padding: 40px 50px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; top: -50%; right: -10%; width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(255,63,108,0.1) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .hero::after {
+      content: '📱';
+      position: absolute; bottom: -15px; right: 185px;
+      font-size: 130px; opacity: 0.07; pointer-events: none;
+    }
     .hero-text { position: relative; z-index: 1; }
-    .hero-text h2 { font-size: 36px; font-weight: 700; margin-bottom: 12px; color: #1a1a1a; }
-    .hero-text p { color: #666; font-size: 15px; margin-bottom: 20px; }
+    .hero-text h2 { font-size: 36px; font-weight: 700; margin-bottom: 12px; color: #1a1a1a; line-height: 1.2; }
+    .hero-text h2 span { color: #ff3f6c; }
+    .hero-text p { color: #666; font-size: 15px; margin-bottom: 20px; max-width: 480px; }
+    .hero-tags { display: flex; gap: 8px; margin-bottom: 22px; flex-wrap: wrap; }
+    .hero-tag {
+      padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 500;
+      background: rgba(255,63,108,0.08); color: #ff3f6c; border: 1px solid rgba(255,63,108,0.2);
+    }
     .hero-stats { display: flex; gap: 30px; }
-    .stat { text-center: center; }
-    .stat-number { font-size: 24px; font-weight: 700; color: #9c27b0; }
+    .stat { text-align: center; }
+    .stat-number { font-size: 24px; font-weight: 700; color: #ff3f6c; }
     .stat-label { font-size: 12px; color: #888; }
     .hero-image { position: relative; z-index: 1; }
-    .hero-image img { width: 320px; height: auto; border-radius: 15px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+    .hero-image img { width: 320px; height: auto; border-radius: 15px; box-shadow: 0 20px 40px rgba(0,0,0,0.12); }
+
+    /* ================= COMPATIBILITY BANNER ================= */
+    .compat-bar {
+      margin: 0 5% 25px;
+      background: #fff;
+      border-radius: 14px;
+      padding: 16px 25px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 3px 15px rgba(0,0,0,0.05);
+      flex-wrap: wrap;
+    }
+    .compat-bar span.label { font-size: 13px; font-weight: 600; color: #1a1a1a; white-space: nowrap; }
+    .compat-bar span.label i { color: #ff3f6c; margin-right: 6px; }
+    .compat-chips { display: flex; gap: 8px; flex-wrap: wrap; }
+    .compat-chip {
+      padding: 6px 16px; border: 1.5px solid #eee; border-radius: 20px;
+      font-size: 12px; font-weight: 500; color: #555; cursor: pointer; transition: all 0.2s; background: #fafafa;
+    }
+    .compat-chip:hover, .compat-chip.active { border-color: #ff3f6c; color: #ff3f6c; background: #fff5f7; }
+
+    /* ================= MAIN LAYOUT ================= */
     .main-container { display: flex; gap: 30px; padding: 0 5% 50px; }
-    .sidebar { width: 280px; background: #fff; padding: 25px; border-radius: 16px; box-shadow: 0 5px 25px rgba(0,0,0,0.05); height: fit-content; position: sticky; top: 90px; }
-    .sidebar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #eee; }
+
+    /* ================= SIDEBAR ================= */
+    .sidebar {
+      width: 280px; background: #fff; padding: 25px; border-radius: 16px;
+      box-shadow: 0 5px 25px rgba(0,0,0,0.05); height: fit-content;
+      position: sticky; top: 90px;
+    }
+    .sidebar-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #eee;
+    }
     .sidebar-header h3 { font-size: 18px; font-weight: 600; }
     .clear-all-btn { font-size: 13px; color: #ff3f6c; cursor: pointer; font-weight: 500; }
+    .clear-all-btn:hover { text-decoration: underline; }
     .filter-section { margin-bottom: 25px; border-bottom: 1px solid #f0f0f0; padding-bottom: 20px; }
     .filter-section:last-child { border-bottom: none; }
     .filter-header { display: flex; justify-content: space-between; align-items: center; cursor: pointer; margin-bottom: 15px; }
     .filter-header h4 { font-size: 14px; font-weight: 600; color: #1a1a1a; }
+    .filter-header i { font-size: 12px; color: #888; transition: transform 0.3s; }
+    .filter-header.collapsed i { transform: rotate(-90deg); }
     .filter-options { display: flex; flex-direction: column; gap: 10px; }
+    .filter-options.collapsed { display: none; }
     .filter-option { display: flex; align-items: center; gap: 10px; cursor: pointer; }
     .filter-option input[type="checkbox"] { width: 18px; height: 18px; accent-color: #ff3f6c; cursor: pointer; }
-    .filter-option span { font-size: 13px; color: #444; }
+    .filter-option span { font-size: 13px; color: #444; transition: color 0.2s; }
     .filter-option:hover span { color: #ff3f6c; }
     .filter-option .count { margin-left: auto; font-size: 11px; color: #999; background: #f5f5f5; padding: 2px 8px; border-radius: 10px; }
-    .products-area { flex: 1; }
-    .sort-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; background: #fff; padding: 15px 20px; border-radius: 12px; box-shadow: 0 2px 15px rgba(0,0,0,0.05); }
+    .color-options { display: flex; flex-wrap: wrap; gap: 10px; }
+    .color-option {
+      width: 32px; height: 32px; border-radius: 50%; cursor: pointer;
+      border: 2px solid transparent; transition: all 0.2s; position: relative;
+    }
+    .color-option:hover, .color-option.active { border-color: #ff3f6c; transform: scale(1.1); }
+    .color-option.active::after {
+      content: '\2713'; position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%,-50%); color: #fff; font-size: 14px; font-weight: bold;
+    }
+    .active-filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 15px; }
+    .active-filter {
+      display: flex; align-items: center; gap: 6px; padding: 6px 12px;
+      background: #fff5f7; border: 1px solid #ff3f6c; border-radius: 20px; font-size: 12px; color: #ff3f6c;
+    }
+    .active-filter i { cursor: pointer; }
+    .active-filter i:hover { color: #e6365c; }
+    .rating-option { display: flex; align-items: center; gap: 8px; cursor: pointer; padding: 6px 8px; border-radius: 8px; transition: background 0.2s; }
+    .rating-option:hover { background: #fff5f7; }
+    .rating-option .stars { color: #ffb800; font-size: 13px; }
+
+    /* ================= PRODUCTS AREA ================= */
+    .products-area { flex: 1; min-width: 0; }
+    .category-tabs { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+    .tab-btn {
+      padding: 10px 20px; border: none; background: #fff; border-radius: 25px; cursor: pointer;
+      font-size: 13px; font-weight: 500; color: #666; transition: all 0.3s;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+    .tab-btn:hover { color: #ff3f6c; }
+    .tab-btn.active { background: #ff3f6c; color: #fff; }
+
+    /* ================= SORT BAR ================= */
+    .sort-bar {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 20px; background: #fff; padding: 15px 20px;
+      border-radius: 12px; box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+    }
     .results-count { font-size: 14px; color: #666; }
     .results-count strong { color: #1a1a1a; }
     .sort-options { display: flex; align-items: center; gap: 15px; }
     .sort-dropdown { padding: 8px 15px; border: 1px solid #ddd; border-radius: 8px; font-size: 13px; color: #333; cursor: pointer; background: #fff; }
+    .view-toggle { display: flex; gap: 8px; }
+    .view-btn {
+      width: 36px; height: 36px; border: 1px solid #ddd; border-radius: 8px; background: #fff;
+      cursor: pointer; display: flex; align-items: center; justify-content: center; color: #666; transition: all 0.2s;
+    }
+    .view-btn:hover, .view-btn.active { border-color: #ff3f6c; color: #ff3f6c; background: #fff5f7; }
+
+    /* ================= PRODUCT GRID ================= */
     .product-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; }
-    .product-card { background: #fff; border-radius: 16px; overflow: hidden; box-shadow: 0 5px 25px rgba(0,0,0,0.05); transition: all 0.3s ease; cursor: pointer; }
+    .product-grid.list-view { grid-template-columns: 1fr; }
+
+    .product-card {
+      background: #fff; border-radius: 16px; overflow: hidden;
+      box-shadow: 0 5px 25px rgba(0,0,0,0.05); transition: all 0.3s ease; cursor: pointer;
+      display: flex; flex-direction: column;
+    }
     .product-card:hover { transform: translateY(-8px); box-shadow: 0 15px 40px rgba(0,0,0,0.12); }
-    .product-image { position: relative; overflow: hidden; background: #f9f9f9; display: flex; align-items: center; justify-content: center; min-height: 200px; }
-    .product-image img { width: 100%; height: 200px; object-fit: contain; transition: transform 0.5s; }
-    .product-card:hover .product-image img { transform: scale(1.05); }
-    .wishlist-btn { position: absolute; top: 12px; right: 12px; width: 36px; height: 36px; background: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 2px 10px rgba(0,0,0,0.1); transition: all 0.3s; border: none; font-size: 16px; color: #666; }
+    .product-card.list-view { flex-direction: row; }
+
+    /* Connector type indicator strip */
+    .connector-strip {
+      background: #1a1a1a;
+      display: flex; gap: 0; overflow: hidden;
+    }
+    .conn-item {
+      flex: 1; text-align: center; padding: 7px 4px;
+      font-size: 10px; font-weight: 600; letter-spacing: 0.3px;
+      color: rgba(255,255,255,0.5); border-right: 1px solid rgba(255,255,255,0.08);
+      transition: all 0.2s;
+    }
+    .conn-item:last-child { border-right: none; }
+    .conn-item.active-conn { color: #ff3f6c; background: rgba(255,63,108,0.12); }
+    .conn-item .conn-icon { display: block; font-size: 13px; margin-bottom: 2px; }
+
+    .product-image { position: relative; overflow: hidden; background: #f8f9fa; }
+    .product-card.list-view .product-image { width: 200px; flex-shrink: 0; }
+    .product-image img { width: 100%; height: 240px; object-fit: contain; padding: 16px; transition: transform 0.5s; }
+    .product-card.list-view .product-image img { height: 100%; }
+    .product-card:hover .product-image img { transform: scale(1.06); }
+
+    .wishlist-btn {
+      position: absolute; top: 12px; right: 12px; width: 36px; height: 36px;
+      background: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      cursor: pointer; box-shadow: 0 2px 10px rgba(0,0,0,0.1); transition: all 0.3s;
+      border: none; font-size: 16px; color: #666; z-index: 2;
+    }
     .wishlist-btn:hover { color: #ff3f6c; transform: scale(1.1); }
     .wishlist-btn.active { color: #ff3f6c; }
-    .badge { position: absolute; top: 12px; left: 12px; background: #ff3f6c; color: #fff; padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: 600; }
-    .product-info { padding: 18px; }
-    .product-brand { font-size: 12px; color: #888; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 5px; }
-    .product-title { font-size: 14px; font-weight: 500; color: #1a1a1a; margin-bottom: 8px; line-height: 1.4; }
-    .product-pricing { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; }
+
+    .badge { position: absolute; top: 12px; left: 12px; background: #ff3f6c; color: #fff; padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: 600; z-index: 2; }
+    .badge.new    { background: #28a745; }
+    .badge.deal   { background: #ff8c00; }
+    .badge.cert   { background: #1565c0; }
+
+    .product-info { padding: 16px 18px 18px; flex: 1; display: flex; flex-direction: column; }
+    .product-brand { font-size: 12px; color: #888; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+    .product-title { font-size: 14px; font-weight: 500; color: #1a1a1a; margin-bottom: 8px; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+    .product-meta { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
+    .meta-tag { padding: 3px 10px; background: #fff5f7; color: #ff3f6c; border-radius: 4px; font-size: 11px; font-weight: 500; }
+    .meta-tag.blue  { background: #e8f4fd; color: #1565c0; }
+    .meta-tag.green { background: #e8f5e9; color: #2e7d32; }
+    .meta-tag.dark  { background: #f5f5f5; color: #555; }
+
+    .product-pricing { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
     .current-price { font-size: 18px; font-weight: 700; color: #1a1a1a; }
     .original-price { font-size: 14px; color: #999; text-decoration: line-through; }
     .discount { font-size: 12px; color: #ff3f6c; font-weight: 600; }
-    .add-to-cart-btn { width: 100%; padding: 12px; border: none; background: #ff3f6c; color: #fff; border-radius: 10px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; justify-content: center; gap: 8px; }
+
+    .product-rating { display: flex; align-items: center; gap: 6px; margin-bottom: 10px; }
+    .rating-stars { color: #ffb800; font-size: 13px; }
+    .rating-count { font-size: 12px; color: #888; }
+
+    /* Spec grid — key tech specs */
+    .spec-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 14px; }
+    .spec-item { background: #f8f9fa; border-radius: 8px; padding: 7px 10px; }
+    .spec-key { font-size: 10px; color: #aaa; text-transform: uppercase; letter-spacing: 0.3px; display: block; }
+    .spec-val { font-size: 12px; font-weight: 600; color: #333; display: block; margin-top: 1px; }
+
+    .color-dots { display: flex; gap: 6px; align-items: center; margin-bottom: 14px; }
+    .color-dots span { font-size: 11px; color: #888; }
+    .cdot { width: 16px; height: 16px; border-radius: 50%; border: 1.5px solid #ddd; cursor: pointer; transition: transform 0.2s; }
+    .cdot:hover { transform: scale(1.2); }
+
+    .available-sizes { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+    .size-chip {
+      padding: 5px 10px; border: 1px solid #ddd; border-radius: 6px;
+      font-size: 11px; color: #666; cursor: pointer; transition: all 0.2s;
+    }
+    .size-chip:hover { border-color: #ff3f6c; color: #ff3f6c; }
+
+    .add-to-cart-btn {
+      width: 100%; padding: 12px; border: none; background: #ff3f6c; color: #fff;
+      border-radius: 10px; font-size: 13px; font-weight: 600; cursor: pointer;
+      transition: all 0.3s; display: flex; align-items: center; justify-content: center; gap: 8px;
+      margin-top: auto;
+    }
     .add-to-cart-btn:hover { background: #e6365c; }
     .add-to-cart-btn.added { background: #28a745; }
+
+    /* ================= PROMO BANNER ================= */
+    .promo-banner {
+      grid-column: 1 / -1;
+      background: linear-gradient(135deg, #ff3f6c 0%, #ff6b35 55%, #ffa41b 100%);
+      border-radius: 16px; padding: 28px 40px;
+      display: flex; align-items: center; justify-content: space-between; color: #fff;
+    }
+    .promo-banner-text h3 { font-size: 22px; font-weight: 700; margin-bottom: 6px; }
+    .promo-banner-text p  { font-size: 14px; opacity: 0.9; }
+    .promo-banner-btn {
+      padding: 12px 28px; background: #fff; color: #ff3f6c; border: none;
+      border-radius: 25px; font-size: 14px; font-weight: 600; cursor: pointer;
+      transition: all 0.3s; white-space: nowrap; margin-left: 20px;
+    }
+    .promo-banner-btn:hover { transform: scale(1.05); box-shadow: 0 5px 20px rgba(0,0,0,0.2); }
+
+    /* ================= PAGINATION ================= */
     .pagination { display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: 40px; }
-    .page-btn { min-width: 40px; height: 40px; border: 1px solid #ddd; background: #fff; border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 14px; color: #666; transition: all 0.2s; }
+    .page-btn {
+      min-width: 40px; height: 40px; border: 1px solid #ddd; background: #fff;
+      border-radius: 8px; display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-size: 14px; color: #666; transition: all 0.2s;
+    }
     .page-btn:hover { border-color: #ff3f6c; color: #ff3f6c; }
     .page-btn.active { background: #ff3f6c; border-color: #ff3f6c; color: #fff; }
+    .page-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .page-ellipsis { padding: 0 5px; color: #888; }
+
+    /* ================= NO RESULTS ================= */
+    .no-results { text-align: center; padding: 60px 20px; background: #fff; border-radius: 16px; grid-column: 1/-1; }
+    .no-results i { font-size: 60px; color: #ddd; margin-bottom: 20px; }
+    .no-results h3 { font-size: 20px; color: #333; margin-bottom: 10px; }
+    .no-results p { color: #888; }
+
+    /* ================= TOAST ================= */
+    .toast {
+      position: fixed; bottom: 30px; right: 30px; background: #1a1a1a; color: #fff;
+      padding: 14px 22px; border-radius: 10px; font-size: 14px; font-weight: 500;
+      display: flex; align-items: center; gap: 10px; z-index: 9999;
+      transform: translateY(100px); opacity: 0; transition: all 0.4s cubic-bezier(0.34,1.56,0.64,1);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+    .toast.show { transform: translateY(0); opacity: 1; }
+    .toast i { color: #ff3f6c; font-size: 18px; }
+
+    /* ================= RESPONSIVE ================= */
     @media (max-width: 1200px) { .product-grid { grid-template-columns: repeat(2, 1fr); } }
-    @media (max-width: 992px) { .main-container { flex-direction: column; } .sidebar { width: 100%; position: static; } .hero { padding: 30px; } .hero-image img { width: 220px; } }
-    @media (max-width: 768px) { .header { padding: 12px 4%; } .search-bar { margin: 0 15px; } .hero { flex-direction: column; text-align: center; gap: 25px; } .hero-stats { justify-content: center; } .hero-image img { width: 200px; } .product-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; } }
-    @media (max-width: 480px) { .product-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 992px) {
+      .main-container { flex-direction: column; }
+      .sidebar { width: 100%; position: static; }
+      .hero { padding: 30px; }
+      .hero-image img { width: 200px; }
+    }
+    @media (max-width: 768px) {
+      .hero { flex-direction: column; text-align: center; gap: 25px; }
+      .hero-stats { justify-content: center; }
+      .hero-text p { max-width: 100%; }
+      .product-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; }
+      .product-image img { height: 180px; }
+      .promo-banner { flex-direction: column; gap: 15px; text-align: center; }
+      .promo-banner-btn { margin-left: 0; }
+      .compat-bar { gap: 8px; }
+    }
+    @media (max-width: 480px) {
+      .product-grid { grid-template-columns: 1fr; }
+      .header-actions { gap: 15px; }
+      .tab-btn { padding: 8px 14px; font-size: 12px; }
+    }
   </style>
 </head>
 <body>
+
+  <!-- HEADER -->
   <header class="header">
     <div class="logo" onclick="window.location.href='index.html'">Shop<span>Ease</span></div>
     <div class="search-bar">
-      <input type="text" id="searchInput" placeholder="Search accessories...">
+      <input type="text" id="searchInput" placeholder="Search cases, chargers, cables, power banks...">
       <button><i class="fas fa-search"></i></button>
     </div>
     <div class="header-actions">
@@ -100,145 +371,643 @@
       </div>
     </div>
   </header>
+
+  <!-- BREADCRUMB -->
   <div class="breadcrumb">
-    <a href="index.html">Home</a> <i class="fas fa-chevron-right"></i> 
-    <span>Accessories</span>
+    <a href="index.html">Home</a> <i class="fas fa-chevron-right"></i>
+    <a href="#">Electronics</a> <i class="fas fa-chevron-right"></i>
+    <span>Mobile &amp; Tablet Accessories</span>
   </div>
+
+  <!-- HERO -->
   <div class="hero">
     <div class="hero-text">
-      <h2>Mobile Accessories</h2>
-      <p>Enhance your devices with premium chargers, cases, headphones and more.</p>
+      <h2>Mobile &amp; Tablet <span>Accessories</span></h2>
+      <p>Protect, power, and connect your devices. Premium cases, fast chargers, cables & more — all in one place.</p>
+      <div class="hero-tags">
+        <span class="hero-tag">📱 Cases & Covers</span>
+        <span class="hero-tag">⚡ Fast Chargers</span>
+        <span class="hero-tag">🔋 Power Banks</span>
+        <span class="hero-tag">🔌 Cables</span>
+        <span class="hero-tag">🎧 Adapters</span>
+      </div>
       <div class="hero-stats">
         <div class="stat"><div class="stat-number" id="totalProducts">0</div><div class="stat-label">Products</div></div>
-        <div class="stat"><div class="stat-number">10+</div><div class="stat-label">Brands</div></div>
-        <div class="stat"><div class="stat-number">40%</div><div class="stat-label">Off</div></div>
+        <div class="stat"><div class="stat-number">50+</div><div class="stat-label">Brands</div></div>
+        <div class="stat"><div class="stat-number">70%</div><div class="stat-label">Off</div></div>
       </div>
     </div>
     <div class="hero-image">
-      <img src="https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?w=500" alt="Accessories">
+      <img src="https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?w=500" alt="Mobile Accessories">
     </div>
   </div>
+
+  <!-- COMPATIBILITY QUICK FILTER -->
+  <div class="compat-bar">
+    <span class="label"><i class="fas fa-mobile-alt"></i>Compatible with</span>
+    <div class="compat-chips" id="compatChips">
+      <div class="compat-chip" data-compat="iPhone">iPhone</div>
+      <div class="compat-chip" data-compat="Samsung">Samsung</div>
+      <div class="compat-chip" data-compat="OnePlus">OnePlus</div>
+      <div class="compat-chip" data-compat="Xiaomi">Xiaomi</div>
+      <div class="compat-chip" data-compat="iPad">iPad</div>
+      <div class="compat-chip" data-compat="Android">Android</div>
+      <div class="compat-chip" data-compat="Universal">Universal</div>
+    </div>
+  </div>
+
+  <!-- MAIN CONTAINER -->
   <div class="main-container">
+
+    <!-- SIDEBAR -->
     <aside class="sidebar">
       <div class="sidebar-header">
         <h3><i class="fas fa-filter"></i> Filters</h3>
         <span class="clear-all-btn" onclick="clearAllFilters()">Clear All</span>
       </div>
+      <div class="active-filters" id="activeFilters"></div>
+
+      <!-- Category -->
       <div class="filter-section">
-        <div class="filter-header"><h4>Category</h4></div>
+        <div class="filter-header" onclick="toggleFilter(this)"><h4>Category</h4><i class="fas fa-chevron-down"></i></div>
         <div class="filter-options" id="categoryFilters"></div>
       </div>
+
+      <!-- Brand -->
+      <div class="filter-section">
+        <div class="filter-header" onclick="toggleFilter(this)"><h4>Brand</h4><i class="fas fa-chevron-down"></i></div>
+        <div class="filter-options" id="brandFilters"></div>
+      </div>
+
+      <!-- Connector Type -->
+      <div class="filter-section">
+        <div class="filter-header" onclick="toggleFilter(this)"><h4>Connector Type</h4><i class="fas fa-chevron-down"></i></div>
+        <div class="filter-options" id="connectorFilters">
+          <label class="filter-option"><input type="checkbox" value="USB-C" onchange="applyFilters()"><span>USB-C</span></label>
+          <label class="filter-option"><input type="checkbox" value="Lightning" onchange="applyFilters()"><span>Lightning (Apple)</span></label>
+          <label class="filter-option"><input type="checkbox" value="Micro USB" onchange="applyFilters()"><span>Micro USB</span></label>
+          <label class="filter-option"><input type="checkbox" value="USB-A" onchange="applyFilters()"><span>USB-A</span></label>
+          <label class="filter-option"><input type="checkbox" value="3.5mm" onchange="applyFilters()"><span>3.5mm Jack</span></label>
+          <label class="filter-option"><input type="checkbox" value="Wireless" onchange="applyFilters()"><span>Wireless</span></label>
+        </div>
+      </div>
+
+      <!-- Wattage (Chargers/Power Banks) -->
+      <div class="filter-section">
+        <div class="filter-header" onclick="toggleFilter(this)"><h4>Wattage / Power</h4><i class="fas fa-chevron-down"></i></div>
+        <div class="filter-options" id="wattageFilters">
+          <label class="filter-option"><input type="checkbox" value="upto18W" onchange="applyFilters()"><span>Up to 18W</span></label>
+          <label class="filter-option"><input type="checkbox" value="20-33W" onchange="applyFilters()"><span>20W – 33W</span></label>
+          <label class="filter-option"><input type="checkbox" value="45-65W" onchange="applyFilters()"><span>45W – 65W</span></label>
+          <label class="filter-option"><input type="checkbox" value="above65W" onchange="applyFilters()"><span>Above 65W</span></label>
+        </div>
+      </div>
+
+      <!-- Color -->
+      <div class="filter-section">
+        <div class="filter-header" onclick="toggleFilter(this)"><h4>Color</h4><i class="fas fa-chevron-down"></i></div>
+        <div class="filter-options">
+          <div class="color-options" id="colorFilters"></div>
+        </div>
+      </div>
+
+      <!-- Price Range -->
+      <div class="filter-section">
+        <div class="filter-header" onclick="toggleFilter(this)"><h4>Price Range</h4><i class="fas fa-chevron-down"></i></div>
+        <div class="filter-options">
+          <label class="filter-option"><input type="checkbox" value="under299" onchange="applyFilters()"><span>Under ₹299</span></label>
+          <label class="filter-option"><input type="checkbox" value="299-799" onchange="applyFilters()"><span>₹299 – ₹799</span></label>
+          <label class="filter-option"><input type="checkbox" value="799-1999" onchange="applyFilters()"><span>₹799 – ₹1,999</span></label>
+          <label class="filter-option"><input type="checkbox" value="above1999" onchange="applyFilters()"><span>Above ₹1,999</span></label>
+        </div>
+      </div>
+
+      <!-- Rating -->
+      <div class="filter-section">
+        <div class="filter-header" onclick="toggleFilter(this)"><h4>Rating</h4><i class="fas fa-chevron-down"></i></div>
+        <div class="filter-options">
+          <label class="filter-option rating-option"><input type="checkbox" value="4" onchange="applyFilters()"><span class="stars">★★★★☆</span><span>& above</span></label>
+          <label class="filter-option rating-option"><input type="checkbox" value="3" onchange="applyFilters()"><span class="stars">★★★☆☆</span><span>& above</span></label>
+        </div>
+      </div>
+
+      <!-- Offers -->
+      <div class="filter-section">
+        <div class="filter-header" onclick="toggleFilter(this)"><h4>Offers</h4><i class="fas fa-chevron-down"></i></div>
+        <div class="filter-options" id="offerFilters">
+          <label class="filter-option"><input type="checkbox" value="Free Delivery" onchange="applyFilters()"><span>Free Delivery</span></label>
+          <label class="filter-option"><input type="checkbox" value="Buy 1 Get 1" onchange="applyFilters()"><span>Buy 1 Get 1</span></label>
+          <label class="filter-option"><input type="checkbox" value="Special Price" onchange="applyFilters()"><span>Special Price</span></label>
+          <label class="filter-option"><input type="checkbox" value="Combo Pack" onchange="applyFilters()"><span>Combo Pack</span></label>
+        </div>
+      </div>
     </aside>
+
+    <!-- PRODUCTS AREA -->
     <div class="products-area">
+
+      <!-- Category Tabs -->
+      <div class="category-tabs">
+        <button class="tab-btn active" data-category="all">All</button>
+        <button class="tab-btn" data-category="Cases & Covers">Cases</button>
+        <button class="tab-btn" data-category="Chargers">Chargers</button>
+        <button class="tab-btn" data-category="Power Banks">Power Banks</button>
+        <button class="tab-btn" data-category="Cables">Cables</button>
+        <button class="tab-btn" data-category="Adapters">Adapters</button>
+        <button class="tab-btn" data-category="Screen Protectors">Screen Guards</button>
+        <button class="tab-btn" data-category="Stands & Mounts">Stands</button>
+        <button class="tab-btn" data-category="Wireless Accessories">Wireless</button>
+      </div>
+
+      <!-- Sort Bar -->
       <div class="sort-bar">
-        <div class="results-count">Showing <strong id="showingStart">0</strong> - <strong id="showingEnd">0</strong> of <strong id="totalResults">0</strong> products</div>
+        <div class="results-count">
+          Showing <strong id="showingStart">0</strong> – <strong id="showingEnd">0</strong> of <strong id="totalResults">0</strong> products
+        </div>
         <div class="sort-options">
           <select class="sort-dropdown" id="sortDropdown" onchange="sortProducts()">
             <option value="popularity">Sort by: Popularity</option>
             <option value="price-low">Price: Low to High</option>
             <option value="price-high">Price: High to Low</option>
+            <option value="rating">Rating</option>
           </select>
+          <div class="view-toggle">
+            <button class="view-btn active" id="gridViewBtn" onclick="setView('grid')"><i class="fas fa-th"></i></button>
+            <button class="view-btn" id="listViewBtn" onclick="setView('list')"><i class="fas fa-list"></i></button>
+          </div>
         </div>
       </div>
+
+      <!-- Product Grid -->
       <div class="product-grid" id="productGrid"></div>
+
+      <!-- Pagination -->
       <div class="pagination" id="pagination"></div>
     </div>
   </div>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast"><i class="fas fa-check-circle"></i><span id="toastMsg">Added to cart!</span></div>
+
   <script>
+    // ============================================================
+    //  PRODUCT DATA
+    // ============================================================
     const products = [
-      {id:1,name:"Fast Charger 30W",category:"Charger",price:899,originalPrice:1299,img:"https://media.tatacroma.com/Croma%20Assets/Communication/Chargers%20and%20Batteries/Images/250260_0_xfmnsv.png"},
-      {id:2,name:"Wireless Charger Pad",category:"Charger",price:1499,originalPrice:2499,img:"https://png.pngtree.com/png-clipart/20211014/ourmid/pngtree-wireless-charger-base-black-png-image_3976232.png"},
-      {id:3,name:"Silicone Back Case",category:"Case",price:499,originalPrice:799,img:"https://m.media-amazon.com/images/I/51sbkoGpldL._AC_UF1000,1000_QL80_.jpg"},
-      {id:4,name:"Premium Leather Case",category:"Case",price:1999,originalPrice:2999,img:"https://www.poloc.in/wp-content/uploads/2025/01/1-5-840x898.png"},
-      {id:5,name:"Bluetooth Headphones",category:"Headphones",price:2499,originalPrice:3999,img:"https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400"},
-      {id:6,name:"Wired Earphones",category:"Headphones",price:699,originalPrice:999,img:"https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=400"},
-      {id:7,name:"Car Charger",category:"Charger",price:799,originalPrice:1199,img:"https://images.unsplash.com/photo-1618423696803-12d8a4a48a4e?w=400"},
-      {id:8,name:"Transparent Case",category:"Case",price:399,originalPrice:599,img:"https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?w=400"}
+
+      // ── Cases & Covers ─────────────────────────────────────────
+      { id:1,  brand:"Spigen",        title:"Spigen Tough Armor iPhone 15 Pro Max Case",                 category:"Cases & Covers",     connector:[], wattage:"",       compat:["iPhone"],   colors:["Black","Silver"],            specs:{material:"TPU+PC",protection:"Military Grade",fit:"iPhone 15 Pro Max",ports:"All Ports"},                 price:999,  originalPrice:1999,  discount:50, rating:4.7, reviewCount:18240, badge:"",         offer:"Free Delivery",  image:"https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?w=400" },
+      { id:2,  brand:"Ringke",        title:"Ringke Fusion Clear Case Samsung Galaxy S24 Ultra",         category:"Cases & Covers",     connector:[], wattage:"",       compat:["Samsung"],  colors:["Clear","Matte Clear"],       specs:{material:"PC+TPU",protection:"Scratch Resist",fit:"S24 Ultra",ports:"All Ports"},                          price:799,  originalPrice:1499,  discount:47, rating:4.6, reviewCount:14320, badge:"",         offer:"Special Price",  image:"https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=400" },
+      { id:3,  brand:"Caseology",     title:"Caseology Vault Slim Case OnePlus 12",                     category:"Cases & Covers",     connector:[], wattage:"",       compat:["OnePlus"],  colors:["Black","Navy Blue"],         specs:{material:"TPU",protection:"Drop Tested",fit:"OnePlus 12",ports:"All Ports"},                                price:649,  originalPrice:1299,  discount:50, rating:4.5, reviewCount:9870,  badge:"",         offer:"Free Delivery",  image:"https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?w=400" },
+      { id:4,  brand:"Nillkin",       title:"Nillkin Frosted Shield Pro Case Xiaomi 14",                category:"Cases & Covers",     connector:[], wattage:"",       compat:["Xiaomi"],   colors:["Black","Deep Blue","Red"],   specs:{material:"Polycarbonate",protection:"Anti-Slip",fit:"Xiaomi 14",ports:"All Ports"},                         price:599,  originalPrice:1099,  discount:46, rating:4.4, reviewCount:7650,  badge:"",         offer:"Combo Pack",     image:"https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=400" },
+      { id:5,  brand:"ESR",           title:"ESR Rebound Magnetic Case iPad Air 11\" M2",               category:"Cases & Covers",     connector:[], wattage:"",       compat:["iPad"],     colors:["Black","Blue","Purple"],     specs:{material:"Vegan Leather",protection:"Magnetic",fit:"iPad Air M2",ports:"Apple Pencil Pass-Through"},          price:1299, originalPrice:2499,  discount:48, rating:4.7, reviewCount:12340, badge:"new",      offer:"Free Delivery",  image:"https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?w=400" },
+      { id:6,  brand:"Ghostek",       title:"Ghostek Nautical Waterproof Case iPhone 15",               category:"Cases & Covers",     connector:[], wattage:"",       compat:["iPhone"],   colors:["Black","Clear"],             specs:{material:"Aluminum+PC",protection:"IP68 Waterproof",fit:"iPhone 15",ports:"Sealed"},                          price:1799, originalPrice:3499,  discount:49, rating:4.6, reviewCount:5430,  badge:"",         offer:"Special Price",  image:"https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=400" },
+      { id:7,  brand:"Spigen",        title:"Spigen Ultra Hybrid Case Samsung S23 FE",                  category:"Cases & Covers",     connector:[], wattage:"",       compat:["Samsung"],  colors:["Crystal Clear","Frost Black"],specs:{material:"TPU+PC",protection:"Air Cushion",fit:"Samsung S23 FE",ports:"All Ports"},                        price:699,  originalPrice:1399,  discount:50, rating:4.7, reviewCount:21340, badge:"bestseller",offer:"Buy 1 Get 1",    image:"https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?w=400" },
+      { id:8,  brand:"OtterBox",      title:"OtterBox Defender Series Case iPhone 15 Plus",             category:"Cases & Covers",     connector:[], wattage:"",       compat:["iPhone"],   colors:["Black","Blue"],              specs:{material:"Polycarbonate+Rubber",protection:"Multi-Layer",fit:"iPhone 15 Plus",ports:"Port Cover"},              price:2499, originalPrice:4999,  discount:50, rating:4.8, reviewCount:8760,  badge:"",         offer:"Free Delivery",  image:"https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=400" },
+
+      // ── Chargers ───────────────────────────────────────────────
+      { id:9,  brand:"Anker",         title:"Anker 67W USB-C GaN Charger – 3 Ports",                    category:"Chargers",           connector:["USB-C","USB-A"], wattage:"45-65W", compat:["Universal"],colors:["Black","White"],  specs:{wattage:"67W",ports:"2×USB-C + 1×USB-A",tech:"GaN II",size:"Compact"},                                     price:1999, originalPrice:3499,  discount:43, rating:4.8, reviewCount:32540, badge:"bestseller",offer:"Free Delivery",  image:"https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=400" },
+      { id:10, brand:"Baseus",        title:"Baseus 100W GaN Pro Desktop Charger 4-Port",               category:"Chargers",           connector:["USB-C","USB-A"], wattage:"above65W",compat:["Universal"],colors:["Black","White"],  specs:{wattage:"100W",ports:"2×USB-C + 2×USB-A",tech:"GaN III",size:"Desktop"},                                    price:2999, originalPrice:5499,  discount:45, rating:4.7, reviewCount:18920, badge:"",         offer:"Special Price",  image:"https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=400" },
+      { id:11, brand:"Apple",         title:"Apple 20W USB-C Power Adapter",                            category:"Chargers",           connector:["USB-C"],         wattage:"20-33W", compat:["iPhone","iPad"],colors:["White"],         specs:{wattage:"20W",ports:"1×USB-C",tech:"Fast Charge",size:"Compact"},                                            price:1499, originalPrice:1900,  discount:21, rating:4.7, reviewCount:54320, badge:"",         offer:"Free Delivery",  image:"https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=400" },
+      { id:12, brand:"OnePlus",       title:"OnePlus SUPERVOOC 80W Charger",                            category:"Chargers",           connector:["USB-C"],         wattage:"45-65W", compat:["OnePlus","Android"],colors:["Black"],     specs:{wattage:"80W",ports:"1×USB-C",tech:"SUPERVOOC",size:"Compact"},                                              price:999,  originalPrice:1799,  discount:44, rating:4.8, reviewCount:28760, badge:"",         offer:"Buy 1 Get 1",    image:"https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=400" },
+      { id:13, brand:"Xiaomi",        title:"Xiaomi 33W Fast Charger USB-C",                            category:"Chargers",           connector:["USB-C"],         wattage:"20-33W", compat:["Xiaomi","Android"],colors:["Black","White"], specs:{wattage:"33W",ports:"1×USB-C",tech:"Turbo Charge",size:"Compact"},                                         price:699,  originalPrice:1299,  discount:46, rating:4.6, reviewCount:21340, badge:"",         offer:"Free Delivery",  image:"https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=400" },
+      { id:14, brand:"Belkin",        title:"Belkin BoostCharge 18W Quick Charge 3.0",                  category:"Chargers",           connector:["USB-A"],         wattage:"upto18W",compat:["Universal"],colors:["Black","White"],   specs:{wattage:"18W",ports:"1×USB-A",tech:"QC 3.0",size:"Compact"},                                                price:1099, originalPrice:1999,  discount:45, rating:4.5, reviewCount:14320, badge:"",         offer:"Combo Pack",     image:"https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=400" },
+      { id:15, brand:"Samsung",       title:"Samsung 45W PD Super-Fast Charger",                        category:"Chargers",           connector:["USB-C"],         wattage:"45-65W", compat:["Samsung","Android"],colors:["Black"],     specs:{wattage:"45W",ports:"1×USB-C",tech:"Super Fast 2.0",size:"Slim"},                                            price:1299, originalPrice:2199,  discount:41, rating:4.7, reviewCount:32100, badge:"new",      offer:"Special Price",  image:"https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=400" },
+
+      // ── Power Banks ────────────────────────────────────────────
+      { id:16, brand:"Anker",         title:"Anker PowerCore 26800mAh PD Power Bank",                   category:"Power Banks",        connector:["USB-C","USB-A"], wattage:"20-33W", compat:["Universal"],colors:["Black","Blue"],    specs:{capacity:"26800mAh",output:"30W PD",ports:"1×USB-C + 2×USB-A",weight:"485g"},                               price:3499, originalPrice:5999,  discount:42, rating:4.8, reviewCount:18240, badge:"bestseller",offer:"Free Delivery",  image:"https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?w=400" },
+      { id:17, brand:"Mi",            title:"Mi Power Bank 3 20000mAh 18W",                             category:"Power Banks",        connector:["USB-C","Micro USB","USB-A"], wattage:"upto18W", compat:["Universal"],colors:["Silver","Black"], specs:{capacity:"20000mAh",output:"18W",ports:"2×USB-A + 1×USB-C",weight:"440g"},                   price:1499, originalPrice:2499,  discount:40, rating:4.7, reviewCount:45670, badge:"",         offer:"Free Delivery",  image:"https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?w=400" },
+      { id:18, brand:"Baseus",        title:"Baseus Blade 100W Laptop Power Bank 20000mAh",             category:"Power Banks",        connector:["USB-C","USB-A"], wattage:"above65W",compat:["Universal"],colors:["Black","White"],  specs:{capacity:"20000mAh",output:"100W",ports:"2×USB-C + 2×USB-A",weight:"389g"},                                price:4999, originalPrice:8999,  discount:44, rating:4.7, reviewCount:9870,  badge:"new",      offer:"Special Price",  image:"https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?w=400" },
+      { id:19, brand:"Realme",        title:"Realme Power Bank 2 10000mAh 22.5W",                       category:"Power Banks",        connector:["USB-C","USB-A"], wattage:"20-33W", compat:["Android"],  colors:["Silver","Black"],    specs:{capacity:"10000mAh",output:"22.5W",ports:"1×USB-C + 1×USB-A",weight:"210g"},                               price:999,  originalPrice:1799,  discount:44, rating:4.5, reviewCount:28760, badge:"",         offer:"Buy 1 Get 1",    image:"https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?w=400" },
+      { id:20, brand:"Ambrane",       title:"Ambrane Magnetic Wireless Power Bank 10000mAh",            category:"Power Banks",        connector:["Wireless","USB-C"], wattage:"upto18W", compat:["iPhone","Android"], colors:["White","Black","Purple"], specs:{capacity:"10000mAh",output:"15W Wireless",ports:"MagSafe + USB-C",weight:"220g"},         price:1799, originalPrice:2999,  discount:40, rating:4.6, reviewCount:7650,  badge:"new",      offer:"Free Delivery",  image:"https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?w=400" },
+      { id:21, brand:"OnePlus",       title:"OnePlus SUPERVOOC 10000mAh 80W Power Bank",                category:"Power Banks",        connector:["USB-C"],         wattage:"45-65W", compat:["OnePlus","Android"],colors:["Black"],     specs:{capacity:"10000mAh",output:"80W",ports:"1×USB-C",weight:"219g"},                                             price:2499, originalPrice:4499,  discount:44, rating:4.7, reviewCount:12340, badge:"",         offer:"Combo Pack",     image:"https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?w=400" },
+
+      // ── Cables ─────────────────────────────────────────────────
+      { id:22, brand:"Anker",         title:"Anker 240W USB-C to USB-C Cable 1.8m",                     category:"Cables",             connector:["USB-C"],         wattage:"above65W",compat:["Universal"],colors:["Black","White"],  specs:{length:"1.8m",maxWatt:"240W",dataSpeed:"USB 2.0",material:"Braided Nylon"},                                 price:699,  originalPrice:1299,  discount:46, rating:4.8, reviewCount:21340, badge:"",         offer:"Free Delivery",  image:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400" },
+      { id:23, brand:"Belkin",        title:"Belkin USB-C to Lightning Cable MFi 1m",                   category:"Cables",             connector:["USB-C","Lightning"], wattage:"20-33W", compat:["iPhone","iPad"],colors:["White"],     specs:{length:"1m",maxWatt:"30W",dataSpeed:"USB 2.0",material:"PVC"},                                               price:1499, originalPrice:2499,  discount:40, rating:4.7, reviewCount:32100, badge:"",         offer:"Special Price",  image:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400" },
+      { id:24, brand:"Baseus",        title:"Baseus 100W USB-C Cable 2m Braided",                       category:"Cables",             connector:["USB-C"],         wattage:"45-65W", compat:["Universal"],colors:["Black","Blue","Orange"], specs:{length:"2m",maxWatt:"100W",dataSpeed:"USB 2.0",material:"Nylon Braided"},                                  price:499,  originalPrice:899,   discount:44, rating:4.7, reviewCount:18920, badge:"bestseller",offer:"Buy 1 Get 1",    image:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400" },
+      { id:25, brand:"Mi",            title:"Mi Type-C to Type-C 6A Cable 1.5m",                       category:"Cables",             connector:["USB-C"],         wattage:"45-65W", compat:["Android"],  colors:["Black","White"],     specs:{length:"1.5m",maxWatt:"67W",dataSpeed:"USB 2.0",material:"Braided"},                                        price:349,  originalPrice:599,   discount:42, rating:4.6, reviewCount:28760, badge:"",         offer:"Free Delivery",  image:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400" },
+      { id:26, brand:"Ugreen",        title:"Ugreen Micro USB Cable 3-Pack 2m",                         category:"Cables",             connector:["Micro USB","USB-A"], wattage:"upto18W", compat:["Android"],colors:["Black","White"], specs:{length:"2m (×3)",maxWatt:"18W",dataSpeed:"480 Mbps",material:"Nylon"},                                        price:299,  originalPrice:599,   discount:50, rating:4.5, reviewCount:14320, badge:"",         offer:"Combo Pack",     image:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400" },
+      { id:27, brand:"Anker",         title:"Anker Powerline III USB-C to Lightning 1m MFi",            category:"Cables",             connector:["USB-C","Lightning"], wattage:"20-33W", compat:["iPhone","iPad"],colors:["Black","White"], specs:{length:"1m",maxWatt:"30W",dataSpeed:"USB 2.0",material:"Aramid Fiber"},                                   price:1299, originalPrice:2299,  discount:43, rating:4.8, reviewCount:9870,  badge:"",         offer:"Special Price",  image:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400" },
+
+      // ── Adapters ───────────────────────────────────────────────
+      { id:28, brand:"Apple",         title:"Apple USB-C to 3.5mm Headphone Adapter",                   category:"Adapters",           connector:["USB-C","3.5mm"], wattage:"",       compat:["iPhone","iPad"],colors:["White"],         specs:{input:"USB-C",output:"3.5mm",chipset:"Apple DAC",compatibility:"iOS"},                                       price:999,  originalPrice:1500,  discount:33, rating:4.5, reviewCount:32100, badge:"",         offer:"Free Delivery",  image:"https://images.unsplash.com/photo-1583394838336-acd977736f90?w=400" },
+      { id:29, brand:"Ugreen",        title:"Ugreen USB-C to USB-A OTG Adapter",                        category:"Adapters",           connector:["USB-C","USB-A"], wattage:"",       compat:["Android","Universal"],colors:["Silver","Black"], specs:{input:"USB-C",output:"USB-A 3.0",dataSpeed:"5 Gbps",compatibility:"Universal"},                           price:299,  originalPrice:599,   discount:50, rating:4.7, reviewCount:21340, badge:"",         offer:"Free Delivery",  image:"https://images.unsplash.com/photo-1583394838336-acd977736f90?w=400" },
+      { id:30, brand:"Baseus",        title:"Baseus USB-C Hub 6-in-1 for Tablets",                      category:"Adapters",           connector:["USB-C","USB-A","3.5mm"], wattage:"", compat:["iPad","Android","Universal"],colors:["Silver","Gray"], specs:{input:"USB-C",output:"HDMI+USB3.0+USB-C PD+SD",dataSpeed:"4K 60Hz",compatibility:"iPad Pro/Air"},       price:1999, originalPrice:3499,  discount:43, rating:4.7, reviewCount:12340, badge:"new",      offer:"Special Price",  image:"https://images.unsplash.com/photo-1583394838336-acd977736f90?w=400" },
+      { id:31, brand:"Anker",         title:"Anker 332 USB-C Hub 5-in-1",                               category:"Adapters",           connector:["USB-C","USB-A"], wattage:"",       compat:["Universal"],colors:["Silver","Black"],    specs:{input:"USB-C",output:"4K HDMI+2×USB-A+PD",dataSpeed:"4K 30Hz",compatibility:"Universal"},                   price:1499, originalPrice:2499,  discount:40, rating:4.6, reviewCount:8760,  badge:"",         offer:"Free Delivery",  image:"https://images.unsplash.com/photo-1583394838336-acd977736f90?w=400" },
+      { id:32, brand:"Belkin",        title:"Belkin Lightning to 3.5mm Audio Adapter",                  category:"Adapters",           connector:["Lightning","3.5mm"], wattage:"",   compat:["iPhone"],   colors:["White","Black"],     specs:{input:"Lightning",output:"3.5mm",chipset:"Belkin DAC",compatibility:"iPhone 7+"},                            price:1299, originalPrice:2499,  discount:48, rating:4.4, reviewCount:18920, badge:"",         offer:"Combo Pack",     image:"https://images.unsplash.com/photo-1583394838336-acd977736f90?w=400" },
+      { id:33, brand:"Ugreen",        title:"Ugreen Micro HDMI to HDMI Adapter 4K",                     category:"Adapters",           connector:["Micro USB"],     wattage:"",       compat:["Universal"],colors:["Silver"],            specs:{input:"Micro HDMI",output:"HDMI",dataSpeed:"4K 60Hz",compatibility:"Universal"},                             price:499,  originalPrice:899,   discount:44, rating:4.6, reviewCount:7650,  badge:"",         offer:"Free Delivery",  image:"https://images.unsplash.com/photo-1583394838336-acd977736f90?w=400" },
+
+      // ── Screen Protectors ──────────────────────────────────────
+      { id:34, brand:"Spigen",        title:"Spigen Tempered Glass iPhone 15 Pro 2-Pack",               category:"Screen Protectors",  connector:[], wattage:"",       compat:["iPhone"],   colors:["Clear"],                     specs:{hardness:"9H",thickness:"0.3mm",oleophobic:"Yes",fit:"Precise"},                                             price:799,  originalPrice:1499,  discount:47, rating:4.7, reviewCount:32100, badge:"",         offer:"Free Delivery",  image:"https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?w=400" },
+      { id:35, brand:"Whitestone",    title:"Whitestone Dome Glass Samsung S24 Ultra",                  category:"Screen Protectors",  connector:[], wattage:"",       compat:["Samsung"],  colors:["Clear"],                     specs:{hardness:"9H",thickness:"0.33mm",oleophobic:"Yes",fit:"UV Liquid"},                                          price:1999, originalPrice:3499,  discount:43, rating:4.8, reviewCount:9870,  badge:"bestseller",offer:"Special Price",  image:"https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?w=400" },
+      { id:36, brand:"Nillkin",       title:"Nillkin Amazing H+ Pro Glass OnePlus 12",                  category:"Screen Protectors",  connector:[], wattage:"",       compat:["OnePlus"],  colors:["Clear"],                     specs:{hardness:"9H",thickness:"0.2mm",oleophobic:"Yes",fit:"Anti-Explosion"},                                     price:449,  originalPrice:799,   discount:44, rating:4.6, reviewCount:7650,  badge:"",         offer:"Free Delivery",  image:"https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?w=400" },
+      { id:37, brand:"ESR",           title:"ESR iPad Air 11\" M2 Paper-Feel Film",                     category:"Screen Protectors",  connector:[], wattage:"",       compat:["iPad"],     colors:["Matte"],                     specs:{hardness:"3H",thickness:"0.1mm",oleophobic:"No",fit:"Anti-Glare"},                                           price:999,  originalPrice:1799,  discount:44, rating:4.6, reviewCount:5430,  badge:"new",      offer:"Combo Pack",     image:"https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?w=400" },
+
+      // ── Stands & Mounts ────────────────────────────────────────
+      { id:38, brand:"Lamicall",      title:"Lamicall Adjustable Phone Stand – Desk",                   category:"Stands & Mounts",   connector:[], wattage:"",       compat:["Universal"],colors:["Silver","Black","Rose Gold"], specs:{material:"Aluminum",rotation:"360°",height:"Adjustable",fit:"4-12 inch"},                                   price:799,  originalPrice:1499,  discount:47, rating:4.7, reviewCount:21340, badge:"",         offer:"Free Delivery",  image:"https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=400" },
+      { id:39, brand:"Anker",         title:"Anker 3-in-1 MagSafe Charging Stand",                      category:"Stands & Mounts",   connector:["Wireless","USB-C"], wattage:"upto18W", compat:["iPhone"],colors:["White","Black"],  specs:{material:"Aluminum+PC",rotation:"N/A",height:"Fixed",fit:"iPhone+AW+AirPods"},                              price:3499, originalPrice:5999,  discount:42, rating:4.8, reviewCount:12340, badge:"new",      offer:"Special Price",  image:"https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=400" },
+      { id:40, brand:"Belkin",        title:"Belkin Car Vent Mount PRO MagSafe",                         category:"Stands & Mounts",   connector:["Wireless"],      wattage:"upto18W",compat:["iPhone"],   colors:["Black"],             specs:{material:"ABS",rotation:"360°",height:"Vent Clip",fit:"MagSafe iPhones"},                                   price:2499, originalPrice:4499,  discount:44, rating:4.6, reviewCount:9870,  badge:"",         offer:"Free Delivery",  image:"https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=400" },
+      { id:41, brand:"Ugreen",        title:"Ugreen Tablet Stand Foldable Aluminum",                    category:"Stands & Mounts",   connector:[], wattage:"",       compat:["iPad","Universal"],colors:["Silver","Space Gray"],  specs:{material:"Aluminum",rotation:"360°",height:"0–35cm Adjustable",fit:"4-13 inch"},                           price:999,  originalPrice:1799,  discount:44, rating:4.6, reviewCount:7650,  badge:"",         offer:"Buy 1 Get 1",    image:"https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=400" },
+
+      // ── Wireless Accessories ───────────────────────────────────
+      { id:42, brand:"Apple",         title:"Apple MagSafe Charger 1m USB-C",                           category:"Wireless Accessories",connector:["Wireless","USB-C"],wattage:"upto18W",compat:["iPhone"],colors:["White"],           specs:{type:"MagSafe",maxWatt:"15W",standard:"Qi2",compatibility:"iPhone 12+"},                                    price:3500, originalPrice:4500,  discount:22, rating:4.7, reviewCount:43210, badge:"",         offer:"Free Delivery",  image:"https://images.unsplash.com/photo-1583394838336-acd977736f90?w=400" },
+      { id:43, brand:"Belkin",        title:"Belkin BoostCharge 15W Wireless Charging Pad",             category:"Wireless Accessories",connector:["Wireless","USB-A"],wattage:"upto18W",compat:["Android","iPhone"],colors:["Black","White"], specs:{type:"Qi Pad",maxWatt:"15W",standard:"Qi",compatibility:"Qi Devices"},                                   price:1299, originalPrice:2299,  discount:43, rating:4.6, reviewCount:18920, badge:"",         offer:"Free Delivery",  image:"https://images.unsplash.com/photo-1583394838336-acd977736f90?w=400" },
+      { id:44, brand:"Anker",         title:"Anker Qi2 15W Wireless Charging Stand",                    category:"Wireless Accessories",connector:["Wireless","USB-C"],wattage:"upto18W",compat:["iPhone","Android"],colors:["White","Black"],specs:{type:"Qi2 Stand",maxWatt:"15W",standard:"Qi2",compatibility:"iPhone 12+ & Qi2 Android"},             price:2499, originalPrice:4499,  discount:44, rating:4.8, reviewCount:9870,  badge:"new",      offer:"Special Price",  image:"https://images.unsplash.com/photo-1583394838336-acd977736f90?w=400" },
+      { id:45, brand:"Samsung",       title:"Samsung 15W Wireless Charger Duo Pad",                     category:"Wireless Accessories",connector:["Wireless","USB-A"],wattage:"upto18W",compat:["Samsung","Android"],colors:["Black","White"],specs:{type:"Duo Pad",maxWatt:"15W",standard:"Qi",compatibility:"Samsung Galaxy / Qi Devices"},              price:1999, originalPrice:3499,  discount:43, rating:4.7, reviewCount:14320, badge:"",         offer:"Combo Pack",     image:"https://images.unsplash.com/photo-1583394838336-acd977736f90?w=400" },
     ];
+
+    // ============================================================
+    //  STATE
+    // ============================================================
     let filteredProducts = [...products];
     let currentPage = 1;
     const productsPerPage = 12;
-    function getCart() { return JSON.parse(localStorage.getItem('shopease_cart')) || []; }
+    let currentView = 'grid';
+    let activeFilters = { categories:[], brands:[], connectors:[], wattages:[], offers:[] };
+    let activeCompat = [];
+
+    // ============================================================
+    //  CART
+    // ============================================================
+    function getCart() { try { return JSON.parse(localStorage.getItem('shopease_cart')) || []; } catch(e) { return []; } }
     function saveCart(cart) { localStorage.setItem('shopease_cart', JSON.stringify(cart)); updateCartBadge(); }
     function addToCart(product) {
       const cart = getCart();
-      const existing = cart.find(item => item.id === product.id);
-      if (existing) { existing.qty += 1; } else { cart.push({ id: product.id, title: product.name, brand: product.category, price: product.price, image: product.img, qty: 1 }); }
+      const ex = cart.find(i => i.id === product.id);
+      if (ex) { ex.qty += 1; } else { cart.push({ id:product.id, title:product.title, brand:product.brand, price:product.price, image:product.image, qty:1 }); }
       saveCart(cart);
     }
     function updateCartBadge() {
+      const cart = getCart();
+      const total = cart.reduce((s,i) => s+i.qty, 0);
       const badge = document.getElementById('cartBadge');
-      badge.textContent = getCart().reduce((sum, item) => sum + item.qty, 0);
+      badge.textContent = total;
+      badge.setAttribute('data-count', total);
     }
+
+    // ============================================================
+    //  TOAST
+    // ============================================================
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      document.getElementById('toastMsg').textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 2500);
+    }
+
+    // ============================================================
+    //  INIT
+    // ============================================================
     document.addEventListener('DOMContentLoaded', () => {
-      initializeFilters();
+      initFilters();
+      initEventListeners();
       updateCartBadge();
       renderProducts();
       document.getElementById('totalProducts').textContent = products.length;
     });
-    function initializeFilters() {
-      const categories = [...new Set(products.map(p => p.category))].sort();
-      document.getElementById('categoryFilters').innerHTML = categories.map(cat => {
-        const count = products.filter(p => p.category === cat).length;
-        return '<label class="filter-option"><input type="checkbox" value="' + cat + '" onchange="applyFilters()"><span>' + cat + '</span><span class="count">' + count + '</span></label>';
+
+    function initFilters() {
+      // Categories
+      const cats = [...new Set(products.map(p => p.category))];
+      document.getElementById('categoryFilters').innerHTML = cats.map(c => {
+        const count = products.filter(p => p.category === c).length;
+        return `<label class="filter-option"><input type="checkbox" value="${c}" onchange="applyFilters()"><span>${c}</span><span class="count">${count}</span></label>`;
+      }).join('');
+
+      // Brands
+      const brands = [...new Set(products.map(p => p.brand))].sort();
+      document.getElementById('brandFilters').innerHTML = brands.map(b => {
+        const count = products.filter(p => p.brand === b).length;
+        return `<label class="filter-option"><input type="checkbox" value="${b}" onchange="applyFilters()"><span>${b}</span><span class="count">${count}</span></label>`;
+      }).join('');
+
+      // Colors
+      const colorMap = { 'Black':'#1a1a1a','White':'#f5f5f5','Silver':'#c0c0c0','Clear':'rgba(200,230,255,0.6)','Matte Clear':'#e0e8f0','Navy Blue':'#003366','Blue':'#1565c0','Deep Blue':'#00008b','Red':'#e53935','Orange':'#e65100','Purple':'#7b1fa2','Rose Gold':'#b76e79','Space Gray':'#636366','Gray':'#9e9e9e','Green':'#2e7d32','Yellow':'#f9a825','Frost Black':'#2c2c2c','Crystal Clear':'#d0eaff','Matte':'#d0d0d0' };
+      const allColors = [...new Set(products.flatMap(p => p.colors))];
+      document.getElementById('colorFilters').innerHTML = allColors.map(c => {
+        const hex = colorMap[c] || '#ccc';
+        const border = (c === 'White' || c === 'Clear' || c === 'Matte Clear' || c === 'Crystal Clear') ? 'border:1.5px solid #ddd;' : '';
+        return `<div class="color-option" style="background:${hex};${border}" title="${c}" data-color="${c}" onclick="toggleColorFilter('${c}')"></div>`;
       }).join('');
     }
+
+    function initEventListeners() {
+      // Category tabs
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          const cat = btn.dataset.category;
+          if (cat === 'all') {
+            document.querySelectorAll('#categoryFilters input').forEach(cb => cb.checked = false);
+          } else {
+            document.querySelectorAll('#categoryFilters input').forEach(cb => { cb.checked = cb.value === cat; });
+          }
+          applyFilters();
+        });
+      });
+
+      // Compatibility chips
+      document.querySelectorAll('.compat-chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+          chip.classList.toggle('active');
+          activeCompat = [...document.querySelectorAll('.compat-chip.active')].map(c => c.dataset.compat);
+          applyFilters();
+        });
+      });
+
+      document.getElementById('searchInput').addEventListener('input', applyFilters);
+    }
+
+    function toggleColorFilter(color) {
+      const el = document.querySelector(`.color-option[data-color="${color}"]`);
+      if (el) { el.classList.toggle('active'); applyFilters(); }
+    }
+
     function applyFilters() {
-      const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-      const selectedCategories = [...document.querySelectorAll('#categoryFilters input:checked')].map(i => i.value);
-      filteredProducts = products.filter(product => {
-        if (searchTerm && !product.name.toLowerCase().includes(searchTerm)) return false;
-        if (selectedCategories.length > 0 && !selectedCategories.includes(product.category)) return false;
+      const search = document.getElementById('searchInput').value.toLowerCase();
+      activeFilters.categories  = [...document.querySelectorAll('#categoryFilters input:checked')].map(i => i.value);
+      activeFilters.brands      = [...document.querySelectorAll('#brandFilters input:checked')].map(i => i.value);
+      activeFilters.connectors  = [...document.querySelectorAll('#connectorFilters input:checked')].map(i => i.value);
+      activeFilters.wattages    = [...document.querySelectorAll('#wattageFilters input:checked')].map(i => i.value);
+      activeFilters.offers      = [...document.querySelectorAll('#offerFilters input:checked')].map(i => i.value);
+      const selectedColors      = [...document.querySelectorAll('.color-option.active')].map(el => el.dataset.color);
+      const priceRanges         = [...document.querySelectorAll('[value="under299"]:checked,[value="299-799"]:checked,[value="799-1999"]:checked,[value="above1999"]:checked')].map(i => i.value);
+      const minRatings          = [...document.querySelectorAll('.filter-section input[value="4"]:checked,.filter-section input[value="3"]:checked')].map(i => parseInt(i.value));
+
+      filteredProducts = products.filter(p => {
+        if (search && !p.title.toLowerCase().includes(search) && !p.brand.toLowerCase().includes(search)) return false;
+        if (activeFilters.categories.length && !activeFilters.categories.includes(p.category)) return false;
+        if (activeFilters.brands.length && !activeFilters.brands.includes(p.brand)) return false;
+        if (activeFilters.connectors.length && !activeFilters.connectors.some(c => p.connector.includes(c))) return false;
+        if (activeFilters.wattages.length && !activeFilters.wattages.includes(p.wattage)) return false;
+        if (activeFilters.offers.length && !activeFilters.offers.includes(p.offer)) return false;
+        if (selectedColors.length && !p.colors.some(c => selectedColors.includes(c))) return false;
+        if (activeCompat.length && !activeCompat.some(c => p.compat.includes(c))) return false;
+        if (priceRanges.length) {
+          const ok = priceRanges.some(r => {
+            if (r === 'under299')   return p.price < 299;
+            if (r === '299-799')    return p.price >= 299  && p.price <= 799;
+            if (r === '799-1999')   return p.price >= 799  && p.price <= 1999;
+            if (r === 'above1999')  return p.price > 1999;
+          });
+          if (!ok) return false;
+        }
+        if (minRatings.length && !minRatings.some(r => p.rating >= r)) return false;
         return true;
       });
+
       currentPage = 1;
-      renderProducts();
+      updateActiveFiltersDisplay();
+      updateTabSelection();
+      sortProducts();
     }
+
+    function updateTabSelection() {
+      const activeCats = [...document.querySelectorAll('#categoryFilters input:checked')].map(i => i.value);
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        if (btn.dataset.category === 'all') btn.classList.toggle('active', activeCats.length === 0);
+        else btn.classList.toggle('active', activeCats.includes(btn.dataset.category));
+      });
+    }
+
+    function updateActiveFiltersDisplay() {
+      const container = document.getElementById('activeFilters');
+      const all = [
+        ...activeFilters.categories.map(v => ({ type:'category', value:v })),
+        ...activeFilters.brands.map(v => ({ type:'brand', value:v })),
+        ...activeFilters.connectors.map(v => ({ type:'connector', value:v })),
+        ...activeFilters.wattages.map(v => ({ type:'wattage', value:v })),
+        ...activeFilters.offers.map(v => ({ type:'offer', value:v })),
+        ...activeCompat.map(v => ({ type:'compat', value:v })),
+        ...[...document.querySelectorAll('.color-option.active')].map(el => ({ type:'color', value:el.dataset.color })),
+      ];
+      if (!all.length) { container.innerHTML = ''; return; }
+      container.innerHTML = all.map(f =>
+        `<div class="active-filter"><span>${f.value}</span><i class="fas fa-times" onclick="removeFilter('${f.type}','${f.value}')"></i></div>`
+      ).join('');
+    }
+
+    function removeFilter(type, value) {
+      if (type === 'color') {
+        const el = document.querySelector(`.color-option[data-color="${value}"]`);
+        if (el) el.classList.remove('active');
+      } else if (type === 'compat') {
+        const el = document.querySelector(`.compat-chip[data-compat="${value}"]`);
+        if (el) el.classList.remove('active');
+        activeCompat = activeCompat.filter(c => c !== value);
+      } else {
+        const map = { category:'categoryFilters', brand:'brandFilters', connector:'connectorFilters', wattage:'wattageFilters', offer:'offerFilters' };
+        const el = document.querySelector(`#${map[type]} input[value="${value}"]`);
+        if (el) el.checked = false;
+      }
+      applyFilters();
+    }
+
     function clearAllFilters() {
       document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
+      document.querySelectorAll('.color-option').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelector('.tab-btn[data-category="all"]').classList.add('active');
+      document.querySelectorAll('.compat-chip').forEach(c => c.classList.remove('active'));
       document.getElementById('searchInput').value = '';
+      activeCompat = [];
       filteredProducts = [...products];
       currentPage = 1;
-      renderProducts();
+      updateActiveFiltersDisplay();
+      sortProducts();
     }
+
+    function toggleFilter(header) {
+      header.classList.toggle('collapsed');
+      const opts = header.nextElementSibling;
+      if (opts) opts.classList.toggle('collapsed');
+    }
+
     function sortProducts() {
-      const sortValue = document.getElementById('sortDropdown').value;
-      if (sortValue === 'price-low') filteredProducts.sort((a, b) => a.price - b.price);
-      else if (sortValue === 'price-high') filteredProducts.sort((a, b) => b.price - a.price);
+      const val = document.getElementById('sortDropdown').value;
+      if (val === 'price-low')  filteredProducts.sort((a,b) => a.price - b.price);
+      else if (val === 'price-high') filteredProducts.sort((a,b) => b.price - a.price);
+      else if (val === 'rating') filteredProducts.sort((a,b) => b.rating - a.rating);
+      else filteredProducts.sort((a,b) => b.reviewCount - a.reviewCount);
       renderProducts();
     }
+
+    function setView(view) {
+      currentView = view;
+      const grid = document.getElementById('productGrid');
+      document.getElementById('gridViewBtn').classList.toggle('active', view === 'grid');
+      document.getElementById('listViewBtn').classList.toggle('active', view === 'list');
+      grid.classList.toggle('list-view', view === 'list');
+    }
+
+    function getStars(rating) {
+      const full = Math.floor(rating), half = rating % 1 >= 0.5;
+      let s = '';
+      for (let i = 0; i < full; i++) s += '★';
+      if (half) s += '★';
+      for (let i = full + (half ? 1 : 0); i < 5; i++) s += '☆';
+      return s;
+    }
+
+    function getBadgeHTML(p) {
+      if (p.badge === 'bestseller') return `<span class="badge deal">BESTSELLER</span>`;
+      if (p.badge === 'new')        return `<span class="badge new">NEW</span>`;
+      if (p.badge === 'cert')       return `<span class="badge cert">CERTIFIED</span>`;
+      if (p.discount >= 50)         return `<span class="badge">${p.discount}% OFF</span>`;
+      return '';
+    }
+
+    // Build the connector strip (shows which connector types the product supports)
+    function getConnectorStrip(p) {
+      if (!p.connector || p.connector.length === 0) return '';
+      const all = ['USB-C','Lightning','Micro USB','USB-A','3.5mm','Wireless'];
+      const items = all.map(c => {
+        const icons = { 'USB-C':'⚡','Lightning':'','Micro USB':'🔌','USB-A':'💡','3.5mm':'🎧','Wireless':'📡' };
+        const fa = { 'USB-C':'bolt','Lightning':'apple','Micro USB':'plug','USB-A':'usb','3.5mm':'headphones','Wireless':'wifi' };
+        const isActive = p.connector.includes(c);
+        if (!isActive) return '';
+        return `<div class="conn-item active-conn"><span class="conn-icon"><i class="fas fa-${fa[c]}"></i></span>${c}</div>`;
+      }).filter(Boolean).join('');
+      return items ? `<div class="connector-strip">${items}</div>` : '';
+    }
+
+    // Build spec grid
+    function getSpecGrid(p) {
+      const entries = Object.entries(p.specs);
+      if (!entries.length) return '';
+      return `<div class="spec-grid">${entries.slice(0,4).map(([k,v]) =>
+        `<div class="spec-item"><span class="spec-key">${k}</span><span class="spec-val">${v}</span></div>`
+      ).join('')}</div>`;
+    }
+
     function renderProducts() {
       const grid = document.getElementById('productGrid');
       const start = (currentPage - 1) * productsPerPage;
-      const end = start + productsPerPage;
-      const pageProducts = filteredProducts.slice(start, end);
-      document.getElementById('showingStart').textContent = filteredProducts.length > 0 ? start + 1 : 0;
-      document.getElementById('showingEnd').textContent = Math.min(end, filteredProducts.length);
+      const end   = start + productsPerPage;
+      const pageProds = filteredProducts.slice(start, end);
+
+      document.getElementById('showingStart').textContent = filteredProducts.length ? start + 1 : 0;
+      document.getElementById('showingEnd').textContent   = Math.min(end, filteredProducts.length);
       document.getElementById('totalResults').textContent = filteredProducts.length;
-      if (pageProducts.length === 0) {
-        grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px;"><i class="fas fa-headphones" style="font-size:60px;color:#ddd;margin-bottom:20px;"></i><h3>No products found</h3></div>';
-        document.getElementById('pagination').innerHTML = '';
+
+      if (!pageProds.length) {
+        grid.innerHTML = `<div class="no-results"><i class="fas fa-mobile-alt"></i><h3>No products found</h3><p>Try adjusting your filters or search term</p></div>`;
+        renderPagination();
         return;
       }
-      grid.innerHTML = pageProducts.map(product => {
-        const discount = product.originalPrice ? Math.round((1 - product.price / product.originalPrice) * 100) : 0;
-        return '<div class="product-card"><div class="product-image"><img src="' + product.img + '" alt="' + product.name + '"><button class="wishlist-btn" onclick="toggleWishlist(' + product.id + ')"><i class="far fa-heart"></i></button>' + (discount >= 20 ? '<span class="badge">' + discount + '% OFF</span>' : '') + '</div><div class="product-info"><div class="product-brand">' + product.category + '</div><h3 class="product-title">' + product.name + '</h3><div class="product-pricing"><span class="current-price">₹' + product.price.toLocaleString() + '</span><span class="original-price">₹' + (product.originalPrice || 0).toLocaleString() + '</span></div><button class="add-to-cart-btn" onclick="addToCartFromList(' + product.id + ')"><i class="fas fa-shopping-cart"></i> Add to Cart</button></div></div>';
-      }).join('');
+
+      const colorHexMap = { 'Black':'#1a1a1a','White':'#f5f5f5','Silver':'#c0c0c0','Clear':'#b0d4f1','Matte Clear':'#dce8f0','Navy Blue':'#003366','Blue':'#1565c0','Deep Blue':'#00008b','Red':'#e53935','Orange':'#e65100','Purple':'#7b1fa2','Rose Gold':'#b76e79','Space Gray':'#636366','Gray':'#9e9e9e','Green':'#2e7d32','Yellow':'#f9a825','Frost Black':'#2c2c2c','Crystal Clear':'#c8e6fa','Matte':'#d0d0d0' };
+
+      let html = '';
+      pageProds.forEach((p, idx) => {
+        if (currentPage === 1 && idx === 5) {
+          html += `
+            <div class="promo-banner" style="grid-column:1/-1">
+              <div class="promo-banner-text">
+                <h3>⚡ Tech Week — Up to 70% Off!</h3>
+                <p>Certified chargers, premium cables, power banks & cases for all your devices. Shop before it ends!</p>
+              </div>
+              <button class="promo-banner-btn" onclick="clearAllFilters()">Shop All Deals</button>
+            </div>`;
+        }
+
+        const compatBadges = p.compat.slice(0,3).map(c => {
+          const cls = c === 'iPhone' || c === 'iPad' ? 'blue' : c === 'Universal' ? 'green' : 'dark';
+          return `<span class="meta-tag ${cls}">${c}</span>`;
+        }).join('');
+
+        const colorDots = p.colors.slice(0,5).map(c => {
+          const hex = colorHexMap[c] || '#ccc';
+          const border = (c === 'White' || c === 'Clear' || c === 'Crystal Clear') ? 'border:1.5px solid #ddd;' : '';
+          return `<div class="cdot" style="background:${hex};${border}" title="${c}"></div>`;
+        }).join('');
+
+        html += `
+          <div class="product-card ${currentView === 'list' ? 'list-view' : ''}">
+            <div class="product-image">
+              <img src="${p.image}" alt="${p.title}" loading="lazy">
+              <button class="wishlist-btn" onclick="toggleWishlist(${p.id})"><i class="far fa-heart"></i></button>
+              ${getBadgeHTML(p)}
+            </div>
+            ${getConnectorStrip(p)}
+            <div class="product-info">
+              <div class="product-brand">${p.brand}</div>
+              <h3 class="product-title">${p.title}</h3>
+              <div class="product-meta">
+                <span class="meta-tag">${p.category}</span>
+                ${compatBadges}
+              </div>
+              <div class="product-pricing">
+                <span class="current-price">₹${p.price.toLocaleString()}</span>
+                <span class="original-price">₹${p.originalPrice.toLocaleString()}</span>
+                <span class="discount">${p.discount}% off</span>
+              </div>
+              <div class="product-rating">
+                <span class="rating-stars">${getStars(p.rating)}</span>
+                <span class="rating-count">(${p.reviewCount.toLocaleString()})</span>
+              </div>
+              ${getSpecGrid(p)}
+              ${colorDots ? `<div class="color-dots"><span>Colors:</span>${colorDots}</div>` : ''}
+              <button class="add-to-cart-btn" onclick="addToCartClick(event,${p.id})">
+                <i class="fas fa-shopping-cart"></i> Add to Cart
+              </button>
+            </div>
+          </div>`;
+      });
+
+      grid.innerHTML = html;
       renderPagination();
     }
+
+    function addToCartClick(e, productId) {
+      const product = products.find(p => p.id === productId);
+      if (!product) return;
+      addToCart(product);
+      const btn = e.target.closest('.add-to-cart-btn');
+      btn.classList.add('added');
+      btn.innerHTML = '<i class="fas fa-check"></i> Added!';
+      showToast(`"${product.title}" added to cart`);
+      setTimeout(() => { btn.classList.remove('added'); btn.innerHTML = '<i class="fas fa-shopping-cart"></i> Add to Cart'; }, 1500);
+    }
+
+    function toggleWishlist(productId) {
+      let wishlist = JSON.parse(localStorage.getItem('shopease_wishlist')) || [];
+      const idx = wishlist.findIndex(i => i.id === productId);
+      const product = products.find(p => p.id === productId);
+      if (idx > -1) { wishlist.splice(idx, 1); } else { wishlist.push({ id:product.id, title:product.title, brand:product.brand, price:product.price, image:product.image }); }
+      localStorage.setItem('shopease_wishlist', JSON.stringify(wishlist));
+      const btn = document.querySelector(`.wishlist-btn[onclick="toggleWishlist(${productId})"]`);
+      if (btn) {
+        btn.classList.toggle('active');
+        btn.innerHTML = btn.classList.contains('active') ? '<i class="fas fa-heart"></i>' : '<i class="far fa-heart"></i>';
+      }
+    }
+
     function renderPagination() {
       const pagination = document.getElementById('pagination');
       const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
       if (totalPages <= 1) { pagination.innerHTML = ''; return; }
-      let html = '<button class="page-btn" onclick="goToPage(' + (currentPage - 1) + ')" ' + (currentPage === 1 ? 'disabled' : '') + '><i class="fas fa-chevron-left"></i></button>';
-      for (let i = 1; i <= totalPages; i++) { html += '<button class="page-btn ' + (i === currentPage ? 'active' : '') + '" onclick="goToPage(' + i + ')">' + i + '</button>'; }
-      html += '<button class="page-btn" onclick="goToPage(' + (currentPage + 1) + ')" ' + (currentPage === totalPages ? 'disabled' : '') + '><i class="fas fa-chevron-right"></i></button>';
+      let html = `<button class="page-btn" onclick="goToPage(${currentPage-1})" ${currentPage===1?'disabled':''}><i class="fas fa-chevron-left"></i></button>`;
+      for (let i = 1; i <= totalPages; i++) {
+        if (i===1 || i===totalPages || (i>=currentPage-1 && i<=currentPage+1)) {
+          html += `<button class="page-btn ${i===currentPage?'active':''}" onclick="goToPage(${i})">${i}</button>`;
+        } else if (i===currentPage-2 || i===currentPage+2) {
+          html += `<span class="page-ellipsis">...</span>`;
+        }
+      }
+      html += `<button class="page-btn" onclick="goToPage(${currentPage+1})" ${currentPage===totalPages?'disabled':''}><i class="fas fa-chevron-right"></i></button>`;
       pagination.innerHTML = html;
     }
-    function goToPage(page) { const totalPages = Math.ceil(filteredProducts.length / productsPerPage); if (page < 1 || page > totalPages) return; currentPage = page; renderProducts(); window.scrollTo({ top: 0, behavior: 'smooth' }); }
-    function toggleWishlist(productId) { const btn = document.querySelector('.wishlist-btn[onclick="toggleWishlist(' + productId + ')"]'); if (btn) { btn.classList.toggle('active'); btn.innerHTML = btn.classList.contains('active') ? '<i class="fas fa-heart"></i>' : '<i class="far fa-heart"></i>'; } }
-    function addToCartFromList(productId) { const product = products.find(p => p.id === productId); if (!product) return; addToCart(product); const btn = event.target.closest('.add-to-cart-btn'); btn.classList.add('added'); btn.innerHTML = '<i class="fas fa-check"></i> Added'; setTimeout(() => { btn.classList.remove('added'); btn.innerHTML = '<i class="fas fa-shopping-cart"></i> Add to Cart'; }, 1500); }
-    document.getElementById('searchInput').addEventListener('input', applyFilters);
+
+    function goToPage(page) {
+      const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
+      if (page < 1 || page > totalPages) return;
+      currentPage = page;
+      renderProducts();
+      window.scrollTo({ top:0, behavior:'smooth' });
+    }
   </script>
 </body>
 </html>

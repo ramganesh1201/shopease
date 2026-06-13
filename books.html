@@ -1,262 +1,847 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Books & Stationery — ReadMore Store</title>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600&display=swap');
-
-:root{
-  --bg1:#fff3e0;
-  --bg2:#ffe0b2;
-  --card-bg:rgba(255,255,255,0.25);
-  --text:#2c1810;
-  --accent1:#f9a825;
-  --accent2:#ff7043;
-  --accent3:#4caf50;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-body{
-  font-family:'Quicksand',sans-serif;
-  background:linear-gradient(160deg,var(--bg1),var(--bg2));
-  overflow-x:hidden;
-  color:var(--text);
-  min-height:100vh;
-  position:relative;
-}
-
-/* Floating papers and pencils */
-.floating{
-  position:absolute;opacity:0.25;animation:float 18s linear infinite;
-}
-.floating img{width:60px;filter:drop-shadow(0 0 4px rgba(0,0,0,0.2))}
-.floating:nth-child(1){top:20%;left:-15%;animation-delay:0s}
-.floating:nth-child(2){top:50%;left:-20%;animation-delay:6s}
-.floating:nth-child(3){top:70%;left:-10%;animation-delay:12s}
-@keyframes float{
-  from{transform:translateX(-10%) translateY(0);}
-  to{transform:translateX(110vw) translateY(-20px);}
-}
-
-/* header */
-header{
-  display:flex;justify-content:space-between;align-items:center;
-  padding:20px 28px;position:relative;z-index:2;
-}
-.logo{
-  width:60px;height:60px;border-radius:16px;
-  background:linear-gradient(135deg,var(--accent1),var(--accent2));
-  display:flex;align-items:center;justify-content:center;
-  font-weight:700;font-size:22px;color:white;
-  box-shadow:0 6px 18px rgba(0,0,0,0.25);
-}
-header h1{font-size:24px;margin-left:14px}
-.controls{display:flex;gap:12px;align-items:center}
-.search{
-  padding:10px 14px;border-radius:999px;border:none;
-  background:rgba(255,255,255,0.6);outline:none;min-width:220px;
-}
-.select,.btn{
-  padding:10px 14px;border-radius:10px;border:none;
-  background:rgba(255,255,255,0.6);cursor:pointer;
-}
-.btn:hover{transform:scale(1.05);background:var(--accent1);color:white}
-
-/* banner */
-.banner{
-  margin:20px 28px;padding:24px;
-  background:rgba(255,255,255,0.55);
-  border-radius:16px;display:flex;justify-content:space-between;align-items:center;
-  box-shadow:0 8px 18px rgba(0,0,0,0.15);
-}
-.banner h2{font-size:22px}
-.cta{
-  background:linear-gradient(90deg,var(--accent1),var(--accent2));
-  border:none;padding:10px 18px;border-radius:12px;font-weight:600;color:white;cursor:pointer;transition:.3s;
-}
-.cta:hover{transform:scale(1.05)}
-
-/* grid */
-main{padding:20px 28px;position:relative;z-index:1;}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:22px;}
-.card{
-  background:var(--card-bg);
-  border-radius:18px;padding:16px;
-  backdrop-filter:blur(10px);
-  box-shadow:0 4px 12px rgba(0,0,0,0.2);
-  transition:all .3s ease;
-  position:relative;overflow:hidden;
-}
-.card:hover{transform:translateY(-6px) rotate(-1deg) scale(1.02);box-shadow:0 8px 20px rgba(0,0,0,0.3);}
-.thumb{
-  height:170px;display:flex;align-items:center;justify-content:center;
-  background:rgba(255,255,255,0.4);border-radius:12px;margin-bottom:10px;
-  overflow:hidden;position:relative;
-}
-.thumb img{
-  max-height:160px;border-radius:8px;transition:transform .6s ease;
-}
-.card:hover .thumb img{
-  transform:rotateY(15deg) scale(1.1);
-}
-h3{margin:6px 0;font-size:16px}
-.brand{font-size:13px;color:#5a4032;}
-.desc{font-size:13px;color:#3e2723;min-height:36px;}
-.price{font-weight:700;color:var(--accent2);margin-top:6px;}
-.rating{color:#ffb300;font-size:13px;margin-top:4px;}
-.actions{display:flex;gap:8px;margin-top:10px;}
-.buy{
-  flex:1;padding:10px;border-radius:8px;border:none;
-  background:linear-gradient(90deg,var(--accent1),var(--accent2));
-  color:white;font-weight:600;cursor:pointer;
-}
-.buy:hover{transform:scale(1.05);}
-.wish{
-  padding:10px;border-radius:8px;background:transparent;border:2px solid rgba(0,0,0,0.2);cursor:pointer;
-}
-.footer{text-align:center;padding:18px;color:#5d4037;}
-
-/* modal */
-.modal-bg{
-  position:fixed;inset:0;background:rgba(0,0,0,0.6);
-  display:flex;justify-content:center;align-items:center;
-  backdrop-filter:blur(8px);z-index:100;
-}
-.modal{
-  background:#fff;border-radius:18px;padding:24px;
-  width:90%;max-width:460px;text-align:center;animation:pop .4s ease forwards;
-  color:#3e2723;position:relative;
-}
-@keyframes pop{from{transform:scale(0.8);opacity:0}to{transform:scale(1);opacity:1}}
-.modal img{width:100%;border-radius:10px;margin-bottom:10px;}
-.close{position:absolute;top:10px;right:14px;background:none;border:none;font-size:24px;color:#3e2723;cursor:pointer;}
-.modal h2{font-size:20px;margin-bottom:6px}
-.modal p{font-size:13px;color:#5d4037;margin-bottom:8px}
-.modal .price{font-size:18px;color:var(--accent2);margin-bottom:10px}
-.modal .actions{justify-content:center}
-
-@media(max-width:640px){header{flex-direction:column;align-items:flex-start}.search{min-width:100%}}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Books & Stationery - ShopEase</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    /* ===== RESET & BASE ===== */
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+    body { background: #f4f6fb; color: #333; }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+ 
+    /* ===== HEADER ===== */
+    .header {
+      background: #fff;
+      padding: 12px 5%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 15px rgba(0,0,0,0.06);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    .logo { font-size: 28px; font-weight: 700; color: #6c3eb8; cursor: pointer; }
+    .logo span { color: #333; }
+    .search-bar { flex: 1; max-width: 500px; margin: 0 30px; display: flex; position: relative; }
+    .search-bar input {
+      flex: 1; padding: 12px 15px; border: 2px solid #eee;
+      border-radius: 8px 0 0 8px; outline: none; font-size: 14px; transition: border-color 0.3s;
+    }
+    .search-bar input:focus { border-color: #6c3eb8; }
+    .search-bar button {
+      padding: 12px 20px; border: none; background: #6c3eb8; color: #fff;
+      border-radius: 0 8px 8px 0; cursor: pointer; transition: background 0.3s;
+    }
+    .search-bar button:hover { background: #5a2fa5; }
+    .header-actions { display: flex; align-items: center; gap: 25px; }
+    .cart-icon { position: relative; font-size: 22px; cursor: pointer; color: #333; transition: color 0.3s; }
+    .cart-icon:hover { color: #6c3eb8; }
+    .cart-badge {
+      position: absolute; top: -8px; right: -10px; background: #6c3eb8; color: #fff;
+      font-size: 11px; font-weight: 600; width: 20px; height: 20px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .cart-badge[data-count="0"] { display: none; }
+ 
+    /* ===== BREADCRUMB ===== */
+    .breadcrumb { padding: 15px 5%; font-size: 13px; color: #888; }
+    .breadcrumb a { color: #6c3eb8; font-weight: 500; }
+ 
+    /* ===== HERO ===== */
+    .hero {
+      margin: 0 5% 30px;
+      background: linear-gradient(135deg, #f5f0ff 0%, #fff8f0 50%, #f0f8ff 100%);
+      border-radius: 20px; padding: 40px 50px;
+      display: flex; justify-content: space-between; align-items: center;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; top: -50%; right: -10%; width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(108,62,184,0.1) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .hero::after {
+      content: '📚';
+      position: absolute; bottom: -10px; right: 200px;
+      font-size: 120px; opacity: 0.07; pointer-events: none;
+    }
+    .hero-text { position: relative; z-index: 1; }
+    .hero-text h2 { font-size: 36px; font-weight: 700; margin-bottom: 12px; color: #1a1a1a; font-family: 'Playfair Display', serif; }
+    .hero-text h2 span { color: #6c3eb8; }
+    .hero-text p { color: #666; font-size: 15px; margin-bottom: 20px; }
+    .hero-stats { display: flex; gap: 30px; }
+    .stat { text-align: center; }
+    .stat-number { font-size: 24px; font-weight: 700; color: #6c3eb8; }
+    .stat-label { font-size: 12px; color: #888; }
+    .hero-image { position: relative; z-index: 1; }
+    .hero-image img { width: 320px; height: auto; border-radius: 15px; box-shadow: 0 20px 40px rgba(108,62,184,0.15); }
+    .hero-tags { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+    .hero-tag {
+      padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 500;
+      background: rgba(108,62,184,0.1); color: #6c3eb8; border: 1px solid rgba(108,62,184,0.2);
+    }
+ 
+    /* ===== MAIN LAYOUT ===== */
+    .main-container { display: flex; gap: 30px; padding: 0 5% 50px; }
+ 
+    /* ===== SIDEBAR ===== */
+    .sidebar {
+      width: 280px; background: #fff; padding: 25px; border-radius: 16px;
+      box-shadow: 0 5px 25px rgba(0,0,0,0.05); height: fit-content;
+      position: sticky; top: 90px;
+    }
+    .sidebar-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #eee;
+    }
+    .sidebar-header h3 { font-size: 18px; font-weight: 600; }
+    .clear-all-btn { font-size: 13px; color: #6c3eb8; cursor: pointer; font-weight: 500; }
+    .clear-all-btn:hover { text-decoration: underline; }
+    .filter-section { margin-bottom: 25px; border-bottom: 1px solid #f0f0f0; padding-bottom: 20px; }
+    .filter-section:last-child { border-bottom: none; }
+    .filter-header { display: flex; justify-content: space-between; align-items: center; cursor: pointer; margin-bottom: 15px; }
+    .filter-header h4 { font-size: 14px; font-weight: 600; color: #1a1a1a; }
+    .filter-header i { font-size: 12px; color: #888; transition: transform 0.3s; }
+    .filter-header.collapsed i { transform: rotate(-90deg); }
+    .filter-options { display: flex; flex-direction: column; gap: 10px; }
+    .filter-options.collapsed { display: none; }
+    .filter-option { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+    .filter-option input[type="checkbox"] { width: 18px; height: 18px; accent-color: #6c3eb8; cursor: pointer; }
+    .filter-option span { font-size: 13px; color: #444; transition: color 0.2s; }
+    .filter-option:hover span { color: #6c3eb8; }
+    .filter-option .count { margin-left: auto; font-size: 11px; color: #999; background: #f5f5f5; padding: 2px 8px; border-radius: 10px; }
+    .color-options { display: flex; flex-wrap: wrap; gap: 10px; }
+    .color-option { width: 32px; height: 32px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; transition: all 0.2s; position: relative; }
+    .color-option:hover, .color-option.active { border-color: #6c3eb8; transform: scale(1.1); }
+    .color-option.active::after { content: '\2713'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #fff; font-size: 14px; font-weight: bold; }
+    .active-filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 15px; }
+    .active-filter { display: flex; align-items: center; gap: 6px; padding: 6px 12px; background: #f5f0ff; border: 1px solid #6c3eb8; border-radius: 20px; font-size: 12px; color: #6c3eb8; }
+    .active-filter i { cursor: pointer; }
+    .active-filter i:hover { color: #5a2fa5; }
+ 
+    /* ===== PRICE RANGE ===== */
+    .price-range-inputs { display: flex; gap: 10px; align-items: center; margin-top: 10px; }
+    .price-range-inputs input {
+      flex: 1; padding: 8px 10px; border: 1px solid #ddd; border-radius: 8px;
+      font-size: 13px; outline: none; transition: border-color 0.2s;
+    }
+    .price-range-inputs input:focus { border-color: #6c3eb8; }
+    .price-range-inputs span { color: #888; font-size: 13px; }
+    .price-apply-btn {
+      width: 100%; margin-top: 10px; padding: 8px; border: none; background: #6c3eb8;
+      color: #fff; border-radius: 8px; font-size: 13px; cursor: pointer; font-weight: 500; transition: background 0.3s;
+    }
+    .price-apply-btn:hover { background: #5a2fa5; }
+ 
+    /* ===== RATING OPTION ===== */
+    .rating-option { display: flex; align-items: center; gap: 8px; cursor: pointer; padding: 8px 0; border-radius: 8px; padding: 6px 8px; transition: background 0.2s; }
+    .rating-option:hover { background: #f5f0ff; }
+    .rating-option .stars { color: #ffb800; font-size: 13px; }
+    .rating-option span { font-size: 13px; color: #444; }
+ 
+    /* ===== PRODUCTS AREA ===== */
+    .products-area { flex: 1; }
+    .category-tabs { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+    .tab-btn {
+      padding: 10px 20px; border: none; background: #fff; border-radius: 25px; cursor: pointer;
+      font-size: 13px; font-weight: 500; color: #666; transition: all 0.3s;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+    .tab-btn:hover { color: #6c3eb8; }
+    .tab-btn.active { background: #6c3eb8; color: #fff; }
+ 
+    /* ===== SORT BAR ===== */
+    .sort-bar {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 20px; background: #fff; padding: 15px 20px;
+      border-radius: 12px; box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+    }
+    .results-count { font-size: 14px; color: #666; }
+    .results-count strong { color: #1a1a1a; }
+    .sort-options { display: flex; align-items: center; gap: 15px; }
+    .sort-dropdown { padding: 8px 15px; border: 1px solid #ddd; border-radius: 8px; font-size: 13px; color: #333; cursor: pointer; background: #fff; }
+    .view-toggle { display: flex; gap: 8px; }
+    .view-btn {
+      width: 36px; height: 36px; border: 1px solid #ddd; border-radius: 8px; background: #fff;
+      cursor: pointer; display: flex; align-items: center; justify-content: center; color: #666; transition: all 0.2s;
+    }
+    .view-btn:hover, .view-btn.active { border-color: #6c3eb8; color: #6c3eb8; background: #f5f0ff; }
+ 
+    /* ===== PRODUCT GRID ===== */
+    .product-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; }
+    .product-grid.list-view { grid-template-columns: 1fr; }
+ 
+    .product-card {
+      background: #fff; border-radius: 16px; overflow: hidden;
+      box-shadow: 0 5px 25px rgba(0,0,0,0.05); transition: all 0.3s ease; cursor: pointer;
+    }
+    .product-card:hover { transform: translateY(-8px); box-shadow: 0 15px 40px rgba(108,62,184,0.13); }
+    .product-card.list-view { display: flex; flex-direction: row; }
+ 
+    .product-image { position: relative; overflow: hidden; background: #faf8ff; }
+    .product-card.list-view .product-image { width: 200px; flex-shrink: 0; }
+    .product-image img { width: 100%; height: 260px; object-fit: cover; transition: transform 0.5s; }
+    .product-card.list-view .product-image img { height: 100%; object-fit: contain; padding: 10px; }
+    .product-card:hover .product-image img { transform: scale(1.05); }
+ 
+    /* Book spine effect */
+    .product-image::before {
+      content: '';
+      position: absolute; top: 0; left: 0; width: 6px; height: 100%;
+      background: linear-gradient(180deg, rgba(108,62,184,0.3), rgba(108,62,184,0.1));
+      z-index: 1;
+    }
+ 
+    .wishlist-btn {
+      position: absolute; top: 12px; right: 12px; width: 36px; height: 36px;
+      background: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      cursor: pointer; box-shadow: 0 2px 10px rgba(0,0,0,0.1); transition: all 0.3s; border: none; font-size: 16px; color: #666; z-index: 2;
+    }
+    .wishlist-btn:hover { color: #6c3eb8; transform: scale(1.1); }
+    .wishlist-btn.active { color: #6c3eb8; }
+    .badge { position: absolute; top: 12px; left: 12px; background: #6c3eb8; color: #fff; padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: 600; z-index: 2; }
+    .badge.bestseller { background: #ff8c00; }
+    .badge.new { background: #28a745; }
+ 
+    .product-info { padding: 18px; }
+    .product-brand { font-size: 12px; color: #888; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 5px; }
+    .product-title { font-size: 14px; font-weight: 500; color: #1a1a1a; margin-bottom: 5px; line-height: 1.4; font-family: 'Playfair Display', serif; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .product-author { font-size: 12px; color: #888; margin-bottom: 8px; font-style: italic; }
+    .product-meta { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
+    .meta-tag { padding: 3px 10px; background: #f5f0ff; color: #6c3eb8; border-radius: 4px; font-size: 11px; font-weight: 500; }
+ 
+    .product-pricing { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+    .current-price { font-size: 18px; font-weight: 700; color: #1a1a1a; }
+    .original-price { font-size: 14px; color: #999; text-decoration: line-through; }
+    .discount { font-size: 12px; color: #6c3eb8; font-weight: 600; }
+ 
+    .product-rating { display: flex; align-items: center; gap: 6px; margin-bottom: 12px; }
+    .rating-stars { color: #ffb800; font-size: 13px; }
+    .rating-count { font-size: 12px; color: #888; }
+ 
+    .product-details { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 15px; }
+    .detail-chip { padding: 4px 10px; border: 1px solid #e0d6f7; border-radius: 6px; font-size: 11px; color: #6c3eb8; }
+ 
+    .add-to-cart-btn {
+      width: 100%; padding: 12px; border: none; background: #6c3eb8; color: #fff;
+      border-radius: 10px; font-size: 13px; font-weight: 600; cursor: pointer;
+      transition: all 0.3s; display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .add-to-cart-btn:hover { background: #5a2fa5; }
+    .add-to-cart-btn.added { background: #28a745; }
+ 
+    /* ===== FEATURED BANNER ===== */
+    .featured-banner {
+      grid-column: 1 / -1;
+      background: linear-gradient(135deg, #6c3eb8 0%, #9b59b6 50%, #3498db 100%);
+      border-radius: 16px; padding: 30px 40px;
+      display: flex; align-items: center; justify-content: space-between;
+      color: #fff; margin-bottom: 0;
+    }
+    .featured-banner h3 { font-size: 22px; font-weight: 700; font-family: 'Playfair Display', serif; margin-bottom: 8px; }
+    .featured-banner p { font-size: 14px; opacity: 0.9; }
+    .featured-banner-btn {
+      padding: 12px 28px; background: #fff; color: #6c3eb8; border: none;
+      border-radius: 25px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.3s; white-space: nowrap; margin-left: 20px;
+    }
+    .featured-banner-btn:hover { transform: scale(1.05); box-shadow: 0 5px 20px rgba(0,0,0,0.2); }
+ 
+    /* ===== PAGINATION ===== */
+    .pagination { display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: 40px; }
+    .page-btn {
+      min-width: 40px; height: 40px; border: 1px solid #ddd; background: #fff;
+      border-radius: 8px; display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-size: 14px; color: #666; transition: all 0.2s;
+    }
+    .page-btn:hover { border-color: #6c3eb8; color: #6c3eb8; }
+    .page-btn.active { background: #6c3eb8; border-color: #6c3eb8; color: #fff; }
+    .page-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .page-ellipsis { padding: 0 5px; color: #888; }
+ 
+    /* ===== NO RESULTS ===== */
+    .no-results { text-align: center; padding: 60px 20px; background: #fff; border-radius: 16px; }
+    .no-results i { font-size: 60px; color: #ddd; margin-bottom: 20px; }
+    .no-results h3 { font-size: 20px; color: #333; margin-bottom: 10px; }
+    .no-results p { color: #888; }
+ 
+    /* ===== STATIONERY MINI CARD ===== */
+    .stationery-card .product-image { background: #fff8f0; }
+    .stationery-card .product-image::before { background: linear-gradient(180deg, rgba(255,140,0,0.3), rgba(255,140,0,0.1)); }
+ 
+    /* ===== TOAST ===== */
+    .toast {
+      position: fixed; bottom: 30px; right: 30px; background: #1a1a1a; color: #fff;
+      padding: 14px 22px; border-radius: 10px; font-size: 14px; font-weight: 500;
+      display: flex; align-items: center; gap: 10px; z-index: 9999;
+      transform: translateY(100px); opacity: 0; transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+    .toast.show { transform: translateY(0); opacity: 1; }
+    .toast i { color: #6c3eb8; font-size: 18px; }
+ 
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1200px) { .product-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 992px) {
+      .main-container { flex-direction: column; }
+      .sidebar { width: 100%; position: static; }
+      .hero { padding: 30px; }
+      .hero-image img { width: 220px; }
+    }
+    @media (max-width: 768px) {
+      .hero { flex-direction: column; text-align: center; gap: 25px; }
+      .hero-stats { justify-content: center; }
+      .product-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; }
+      .product-image img { height: 200px; }
+      .featured-banner { flex-direction: column; gap: 15px; text-align: center; }
+    }
+    @media (max-width: 480px) { .product-grid { grid-template-columns: 1fr; } }
+  </style>
 </head>
 <body>
-<!-- floating images -->
-<div class="floating"><img src="https://cdn-icons-png.flaticon.com/512/2921/2921222.png"></div>
-<div class="floating"><img src="https://cdn-icons-png.flaticon.com/512/2972/2972238.png"></div>
-<div class="floating"><img src="https://cdn-icons-png.flaticon.com/512/2972/2972209.png"></div>
-
-<header>
-  <div style="display:flex;align-items:center;gap:14px">
-    <div class="logo">BS</div>
-    <h1>Books & Stationery Store</h1>
-  </div>
-  <div class="controls">
-    <input id="search" class="search" placeholder="Search books, notebooks...">
-    <select id="sort" class="select">
-      <option value="pop">Sort: Popular</option>
-      <option value="price-asc">Price: Low → High</option>
-      <option value="price-desc">Price: High → Low</option>
-    </select>
-    <button id="shuffle" class="btn">Shuffle Glow</button>
-  </div>
-</header>
-
-<div class="banner">
-  <div>
-    <h2>📚 Knowledge Corner</h2>
-    <p>Up to <strong>30% OFF</strong> on books and stationery</p>
-  </div>
-  <button class="cta" onclick="document.getElementById('grid').scrollIntoView({behavior:'smooth'})">Shop Now</button>
-</div>
-
-<main>
-  <section class="grid" id="grid"></section>
-</main>
-<div class="footer">Showing <span id="count">0</span> items • Learn, Write & Create!</div>
-
-<script>
-const grid=document.getElementById('grid');
-const search=document.getElementById('search');
-const sort=document.getElementById('sort');
-const shuffle=document.getElementById('shuffle');
-const count=document.getElementById('count');
-
-const books=[
-  {brand:"Penguin",name:"The Alchemist",desc:"Paulo Coelho • Fiction Bestseller",price:299,rating:4.8,img:"https://m.media-amazon.com/images/I/71aFt4+OTOL._SL1500_.jpg"},
-  {brand:"HarperCollins",name:"Atomic Habits",desc:"James Clear • Self Improvement",price:499,rating:4.9,img:"https://m.media-amazon.com/images/I/91bYsX41DVL._SL1500_.jpg"},
-  {brand:"Classmate",name:"Spiral Notebook A4",desc:"Single Line • 200 pages",price:89,rating:4.6,img:"https://m.media-amazon.com/images/I/61IhKf8qGKL._SL1500_.jpg"},
-  {brand:"Faber-Castell",name:"Color Pencil Set",desc:"24 Shades • Smooth coloring",price:299,rating:4.7,img:"https://m.media-amazon.com/images/I/71uZql5D6uL._SL1500_.jpg"},
-  {brand:"Camlin",name:"Geometry Box",desc:"Durable • Compass, Scale, Pencil",price:149,rating:4.5,img:"https://m.media-amazon.com/images/I/71mVQfDBHfL._SL1500_.jpg"},
-  {brand:"Oxford",name:"English Dictionary",desc:"Pocket Edition • 100K words",price:199,rating:4.6,img:"https://m.media-amazon.com/images/I/71Dy49TjrcL._SL1500_.jpg"},
-  {brand:"Paperkraft",name:"Premium Diary",desc:"Leather cover • 192 pages",price:349,rating:4.8,img:"https://m.media-amazon.com/images/I/61oRU+YvVEL._SL1500_.jpg"},
-  {brand:"Pilot",name:"G2 Gel Pens",desc:"Pack of 5 • Smooth Writing",price:249,rating:4.7,img:"https://m.media-amazon.com/images/I/61Ucvp3a8pL._SL1500_.jpg"},
-  {brand:"Rupa",name:"Rich Dad Poor Dad",desc:"Robert Kiyosaki • Finance Book",price:399,rating:4.8,img:"https://m.media-amazon.com/images/I/71pu++sfEfL._SL1500_.jpg"},
-  {brand:"Nataraj",name:"Pencils & Erasers Set",desc:"12 pencils + 2 erasers",price:69,rating:4.5,img:"https://m.media-amazon.com/images/I/61pTQJm1FPL._SL1500_.jpg"}
-];
-
-function createCard(it){
-  const card=document.createElement('div');
-  card.className='card';
-  card.innerHTML=`
-    <div class="thumb"><img src="${it.img}" alt="${it.name}"></div>
-    <div class="brand">${it.brand}</div>
-    <h3>${it.name}</h3>
-    <div class="desc">${it.desc}</div>
-    <div class="price">₹${it.price.toLocaleString()}</div>
-    <div class="rating">★ ${it.rating}</div>
-    <div class="actions">
-      <button class="buy">Buy Now</button>
-      <button class="wish">♡</button>
-    </div>`;
-  card.querySelector('.buy').onclick=(e)=>{e.stopPropagation();alert('Buying '+it.name)};
-  card.querySelector('.wish').onclick=(e)=>{e.stopPropagation();e.target.textContent='♥'};
-  card.onclick=()=>openModal(it);
-  grid.appendChild(card);
-}
-
-function render(list){grid.innerHTML='';list.forEach(createCard);count.textContent=list.length;}
-
-function openModal(it){
-  const bg=document.createElement('div');
-  bg.className='modal-bg';
-  bg.innerHTML=`
-    <div class="modal">
-      <button class="close">&times;</button>
-      <img src="${it.img}" alt="${it.name}">
-      <h2>${it.name}</h2>
-      <p>${it.desc}</p>
-      <div class="price">₹${it.price.toLocaleString()}</div>
-      <div class="rating">★ ${it.rating}</div>
-      <div class="actions">
-        <button class="buy">Buy Now</button>
-        <button class="wish">♡</button>
+ 
+  <!-- HEADER -->
+  <header class="header">
+    <div class="logo" onclick="window.location.href='index.html'">Shop<span>Ease</span></div>
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Search books, authors, stationery...">
+      <button><i class="fas fa-search"></i></button>
+    </div>
+    <div class="header-actions">
+      <div class="cart-icon" onclick="window.location.href='cart.html'">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="cart-badge" id="cartBadge" data-count="0">0</span>
       </div>
-    </div>`;
-  document.body.appendChild(bg);
-  bg.querySelector('.close').onclick=()=>bg.remove();
-  bg.addEventListener('click',e=>{if(e.target===bg)bg.remove()});
-}
-
-search.addEventListener('input',()=>{
-  const q=search.value.toLowerCase();
-  const filtered=books.filter(it=>it.name.toLowerCase().includes(q)||it.brand.toLowerCase().includes(q));
-  applySort(filtered);
-});
-sort.addEventListener('change',()=>applySort(books.filter(it=>it.name.toLowerCase().includes(search.value.toLowerCase()))));
-function applySort(list){
-  const val=sort.value;
-  const copy=[...list];
-  if(val==='price-asc')copy.sort((a,b)=>a.price-b.price);
-  else if(val==='price-desc')copy.sort((a,b)=>b.price-a.price);
-  render(copy);
-}
-shuffle.onclick=()=>{
-  document.querySelectorAll('.card').forEach(c=>{
-    const glow=`0 0 15px hsl(${Math.random()*360},80%,70%)`;
-    c.style.boxShadow=glow;
-  });
-};
-render(books);
-</script>
+    </div>
+  </header>
+ 
+  <!-- BREADCRUMB -->
+  <div class="breadcrumb">
+    <a href="index.html">Home</a> <i class="fas fa-chevron-right"></i>
+    <a href="#">Categories</a> <i class="fas fa-chevron-right"></i>
+    <span>Books & Stationery</span>
+  </div>
+ 
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-text">
+      <h2>Books &amp; <span>Stationery</span></h2>
+      <p>Curated reads, planners, and everything you need to fuel your creativity and productivity.</p>
+      <div class="hero-tags">
+        <span class="hero-tag">📖 Bestsellers</span>
+        <span class="hero-tag">✏️ Premium Stationery</span>
+        <span class="hero-tag">🎁 Gift Sets</span>
+        <span class="hero-tag">🚀 New Arrivals</span>
+      </div>
+      <div class="hero-stats">
+        <div class="stat">
+          <div class="stat-number" id="totalProducts">0</div>
+          <div class="stat-label">Products</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">50+</div>
+          <div class="stat-label">Authors</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">60%</div>
+          <div class="stat-label">Off</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-image">
+      <img src="https://images.unsplash.com/photo-1512820790803-83ca734da794?w=500" alt="Books & Stationery">
+    </div>
+  </div>
+ 
+  <!-- MAIN CONTAINER -->
+  <div class="main-container">
+ 
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h3><i class="fas fa-filter"></i> Filters</h3>
+        <span class="clear-all-btn" onclick="clearAllFilters()">Clear All</span>
+      </div>
+      <div class="active-filters" id="activeFilters"></div>
+ 
+      <!-- Category -->
+      <div class="filter-section">
+        <div class="filter-header" onclick="toggleFilter(this)"><h4>Category</h4><i class="fas fa-chevron-down"></i></div>
+        <div class="filter-options" id="categoryFilters"></div>
+      </div>
+ 
+      <!-- Genre / Type -->
+      <div class="filter-section">
+        <div class="filter-header" onclick="toggleFilter(this)"><h4>Genre / Type</h4><i class="fas fa-chevron-down"></i></div>
+        <div class="filter-options" id="genreFilters"></div>
+      </div>
+ 
+      <!-- Brand -->
+      <div class="filter-section">
+        <div class="filter-header" onclick="toggleFilter(this)"><h4>Publisher / Brand</h4><i class="fas fa-chevron-down"></i></div>
+        <div class="filter-options" id="brandFilters"></div>
+      </div>
+ 
+      <!-- Language -->
+      <div class="filter-section">
+        <div class="filter-header" onclick="toggleFilter(this)"><h4>Language</h4><i class="fas fa-chevron-down"></i></div>
+        <div class="filter-options" id="languageFilters">
+          <label class="filter-option"><input type="checkbox" value="English" onchange="applyFilters()"><span>English</span></label>
+          <label class="filter-option"><input type="checkbox" value="Hindi" onchange="applyFilters()"><span>Hindi</span></label>
+          <label class="filter-option"><input type="checkbox" value="Regional" onchange="applyFilters()"><span>Regional</span></label>
+        </div>
+      </div>
+ 
+      <!-- Price Range -->
+      <div class="filter-section">
+        <div class="filter-header" onclick="toggleFilter(this)"><h4>Price Range</h4><i class="fas fa-chevron-down"></i></div>
+        <div class="filter-options">
+          <label class="filter-option"><input type="checkbox" value="under299" onchange="applyFilters()"><span>Under ₹299</span></label>
+          <label class="filter-option"><input type="checkbox" value="299-599" onchange="applyFilters()"><span>₹299 – ₹599</span></label>
+          <label class="filter-option"><input type="checkbox" value="599-999" onchange="applyFilters()"><span>₹599 – ₹999</span></label>
+          <label class="filter-option"><input type="checkbox" value="above999" onchange="applyFilters()"><span>Above ₹999</span></label>
+        </div>
+      </div>
+ 
+      <!-- Rating -->
+      <div class="filter-section">
+        <div class="filter-header" onclick="toggleFilter(this)"><h4>Rating</h4><i class="fas fa-chevron-down"></i></div>
+        <div class="filter-options" id="ratingFilters">
+          <label class="filter-option rating-option"><input type="checkbox" value="4" onchange="applyFilters()"><span class="stars">★★★★☆</span><span>& above</span></label>
+          <label class="filter-option rating-option"><input type="checkbox" value="3" onchange="applyFilters()"><span class="stars">★★★☆☆</span><span>& above</span></label>
+        </div>
+      </div>
+ 
+      <!-- Offers -->
+      <div class="filter-section">
+        <div class="filter-header" onclick="toggleFilter(this)"><h4>Offers</h4><i class="fas fa-chevron-down"></i></div>
+        <div class="filter-options" id="offerFilters">
+          <label class="filter-option"><input type="checkbox" value="Free Delivery" onchange="applyFilters()"><span>Free Delivery</span></label>
+          <label class="filter-option"><input type="checkbox" value="Combo Deal" onchange="applyFilters()"><span>Combo Deal</span></label>
+          <label class="filter-option"><input type="checkbox" value="Special Price" onchange="applyFilters()"><span>Special Price</span></label>
+          <label class="filter-option"><input type="checkbox" value="Bestseller" onchange="applyFilters()"><span>Bestseller</span></label>
+        </div>
+      </div>
+    </aside>
+ 
+    <!-- PRODUCTS AREA -->
+    <div class="products-area">
+ 
+      <!-- Category Tabs -->
+      <div class="category-tabs" id="categoryTabs">
+        <button class="tab-btn active" data-category="all">All</button>
+        <button class="tab-btn" data-category="Fiction">Fiction</button>
+        <button class="tab-btn" data-category="Non-Fiction">Non-Fiction</button>
+        <button class="tab-btn" data-category="Self-Help">Self-Help</button>
+        <button class="tab-btn" data-category="Children">Children</button>
+        <button class="tab-btn" data-category="Notebooks">Notebooks</button>
+        <button class="tab-btn" data-category="Pens & Pencils">Pens & Pencils</button>
+        <button class="tab-btn" data-category="Art Supplies">Art Supplies</button>
+        <button class="tab-btn" data-category="Planners">Planners</button>
+      </div>
+ 
+      <!-- Sort Bar -->
+      <div class="sort-bar">
+        <div class="results-count">
+          Showing <strong id="showingStart">0</strong> – <strong id="showingEnd">0</strong> of <strong id="totalResults">0</strong> products
+        </div>
+        <div class="sort-options">
+          <select class="sort-dropdown" id="sortDropdown" onchange="sortProducts()">
+            <option value="popularity">Sort by: Popularity</option>
+            <option value="price-low">Price: Low to High</option>
+            <option value="price-high">Price: High to Low</option>
+            <option value="rating">Rating</option>
+            <option value="newest">Newest First</option>
+          </select>
+          <div class="view-toggle">
+            <button class="view-btn active" id="gridViewBtn" onclick="setView('grid')"><i class="fas fa-th"></i></button>
+            <button class="view-btn" id="listViewBtn" onclick="setView('list')"><i class="fas fa-list"></i></button>
+          </div>
+        </div>
+      </div>
+ 
+      <!-- Product Grid -->
+      <div class="product-grid" id="productGrid"></div>
+ 
+      <!-- Pagination -->
+      <div class="pagination" id="pagination"></div>
+    </div>
+  </div>
+ 
+  <!-- TOAST -->
+  <div class="toast" id="toast"><i class="fas fa-check-circle"></i><span id="toastMsg">Added to cart!</span></div>
+ 
+  <script>
+    // ===== PRODUCT DATA =====
+    const products = [
+      // Fiction
+      { id: 1, brand: "Penguin", title: "Atomic Habits", author: "James Clear", category: "Non-Fiction", genre: "Self-Development", price: 399, originalPrice: 799, discount: 50, rating: 4.8, reviewCount: 28450, format: "Paperback", pages: 320, image: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400", offer: "Bestseller", badge: "bestseller", year: 2023 },
+      { id: 2, brand: "HarperCollins", title: "The Alchemist", author: "Paulo Coelho", category: "Fiction", genre: "Philosophy", price: 299, originalPrice: 499, discount: 40, rating: 4.7, reviewCount: 45230, format: "Paperback", pages: 197, image: "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=400", offer: "Free Delivery", badge: "bestseller", year: 2022 },
+      { id: 3, brand: "Bloomsbury", title: "Harry Potter - Philosopher's Stone", author: "J.K. Rowling", category: "Fiction", genre: "Fantasy", price: 499, originalPrice: 999, discount: 50, rating: 4.9, reviewCount: 67890, format: "Hardcover", pages: 309, image: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=400", offer: "Special Price", badge: "", year: 2021 },
+      { id: 4, brand: "Random House", title: "The Silent Patient", author: "Alex Michaelides", category: "Fiction", genre: "Thriller", price: 449, originalPrice: 899, discount: 50, rating: 4.5, reviewCount: 18920, format: "Paperback", pages: 336, image: "https://images.unsplash.com/photo-1509266272358-7701da638078?w=400", offer: "Free Delivery", badge: "", year: 2023 },
+      { id: 5, brand: "Simon & Schuster", title: "Ikigai", author: "Héctor García", category: "Self-Help", genre: "Wellness", price: 299, originalPrice: 499, discount: 40, rating: 4.6, reviewCount: 32100, format: "Paperback", pages: 208, image: "https://images.unsplash.com/photo-1551029506-0807df4e2031?w=400", offer: "Special Price", badge: "bestseller", year: 2023 },
+      { id: 6, brand: "Scholastic", title: "Diary of a Wimpy Kid", author: "Jeff Kinney", category: "Children", genre: "Humor", price: 349, originalPrice: 599, discount: 42, rating: 4.7, reviewCount: 21340, format: "Hardcover", pages: 217, image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400", offer: "Free Delivery", badge: "", year: 2022 },
+      { id: 7, brand: "Westland", title: "The Immortals of Meluha", author: "Amish Tripathi", category: "Fiction", genre: "Mythology", price: 299, originalPrice: 499, discount: 40, rating: 4.4, reviewCount: 15670, format: "Paperback", pages: 421, image: "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=400", offer: "Free Delivery", badge: "", year: 2022 },
+      { id: 8, brand: "Penguin", title: "Rich Dad Poor Dad", author: "Robert Kiyosaki", category: "Non-Fiction", genre: "Finance", price: 349, originalPrice: 699, discount: 50, rating: 4.5, reviewCount: 34560, format: "Paperback", pages: 336, image: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400", offer: "Bestseller", badge: "bestseller", year: 2021 },
+      { id: 9, brand: "Oxford", title: "To Kill a Mockingbird", author: "Harper Lee", category: "Fiction", genre: "Classic", price: 399, originalPrice: 699, discount: 43, rating: 4.8, reviewCount: 43210, format: "Paperback", pages: 281, image: "https://images.unsplash.com/photo-1589829085413-56de8ae18c73?w=400", offer: "Free Delivery", badge: "", year: 2020 },
+      { id: 10, brand: "HarperCollins", title: "The Power of Now", author: "Eckhart Tolle", category: "Self-Help", genre: "Spirituality", price: 399, originalPrice: 799, discount: 50, rating: 4.6, reviewCount: 19870, format: "Paperback", pages: 229, image: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=400", offer: "Special Price", badge: "", year: 2023 },
+ 
+      // Notebooks
+      { id: 11, brand: "Moleskine", title: "Classic Ruled Notebook – Large", author: "", category: "Notebooks", genre: "Ruled", price: 899, originalPrice: 1499, discount: 40, rating: 4.7, reviewCount: 8765, format: "A5", pages: 240, image: "https://images.unsplash.com/photo-1531346878377-a5be20888e57?w=400", offer: "Free Delivery", badge: "", year: 2023 },
+      { id: 12, brand: "Leuchtturm1917", title: "Dotted Notebook – Medium", author: "", category: "Notebooks", genre: "Dotted", price: 1199, originalPrice: 1999, discount: 40, rating: 4.8, reviewCount: 4321, format: "A5", pages: 251, image: "https://images.unsplash.com/photo-1471107340929-a87cd0f5b5f3?w=400", offer: "Combo Deal", badge: "", year: 2023 },
+      { id: 13, brand: "Classmate", title: "Hardbound Spiral Notebook", author: "", category: "Notebooks", genre: "Spiral", price: 149, originalPrice: 249, discount: 40, rating: 4.2, reviewCount: 12340, format: "A4", pages: 180, image: "https://images.unsplash.com/photo-1593720213428-28a5b9e94613?w=400", offer: "Combo Deal", badge: "", year: 2023 },
+      { id: 14, brand: "Paperage", title: "Dot Grid Journal – Hardcover", author: "", category: "Notebooks", genre: "Dotted", price: 699, originalPrice: 1199, discount: 42, rating: 4.6, reviewCount: 6543, format: "A5", pages: 160, image: "https://images.unsplash.com/photo-1517842645767-c639042777db?w=400", offer: "Free Delivery", badge: "new", year: 2024 },
+      { id: 15, brand: "Rhodia", title: "A5 Graph Pad", author: "", category: "Notebooks", genre: "Graph", price: 549, originalPrice: 899, discount: 39, rating: 4.5, reviewCount: 3210, format: "A5", pages: 80, image: "https://images.unsplash.com/photo-1501504905252-473c47e087f8?w=400", offer: "Special Price", badge: "", year: 2023 },
+ 
+      // Pens & Pencils
+      { id: 16, brand: "Parker", title: "Jotter Fountain Pen – Blue", author: "", category: "Pens & Pencils", genre: "Fountain Pen", price: 799, originalPrice: 1499, discount: 47, rating: 4.7, reviewCount: 9876, format: "Single", pages: 0, image: "https://images.unsplash.com/photo-1585336261022-680e295ce3fe?w=400", offer: "Free Delivery", badge: "", year: 2023 },
+      { id: 17, brand: "Staedtler", title: "Mars Lumograph 12-Pencil Set", author: "", category: "Pens & Pencils", genre: "Pencil Set", price: 499, originalPrice: 899, discount: 44, rating: 4.8, reviewCount: 7654, format: "Set of 12", pages: 0, image: "https://images.unsplash.com/photo-1526243741027-444d633d7365?w=400", offer: "Combo Deal", badge: "bestseller", year: 2023 },
+      { id: 18, brand: "Pilot", title: "G2 Gel Pen – 10 Pack", author: "", category: "Pens & Pencils", genre: "Gel Pen", price: 299, originalPrice: 499, discount: 40, rating: 4.6, reviewCount: 15230, format: "Pack of 10", pages: 0, image: "https://images.unsplash.com/photo-1606189934390-7a7a0a9a1a3c?w=400", offer: "Free Delivery", badge: "", year: 2023 },
+      { id: 19, brand: "Lamy", title: "Al-Star Rollerball Pen", author: "", category: "Pens & Pencils", genre: "Rollerball", price: 1999, originalPrice: 3499, discount: 43, rating: 4.7, reviewCount: 4320, format: "Single", pages: 0, image: "https://images.unsplash.com/photo-1585336261022-680e295ce3fe?w=400", offer: "Special Price", badge: "", year: 2023 },
+      { id: 20, brand: "Faber-Castell", title: "Classic Colour Pencil Set 48", author: "", category: "Pens & Pencils", genre: "Colour Pencils", price: 649, originalPrice: 1099, discount: 41, rating: 4.8, reviewCount: 8901, format: "Set of 48", pages: 0, image: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=400", offer: "Combo Deal", badge: "bestseller", year: 2023 },
+ 
+      // Art Supplies
+      { id: 21, brand: "Winsor & Newton", title: "Cotman Watercolour Set 12", author: "", category: "Art Supplies", genre: "Watercolour", price: 1299, originalPrice: 2199, discount: 41, rating: 4.7, reviewCount: 5432, format: "Set of 12", pages: 0, image: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=400", offer: "Free Delivery", badge: "", year: 2023 },
+      { id: 22, brand: "Camlin", title: "Artist Acrylic Colours 20ml×12", author: "", category: "Art Supplies", genre: "Acrylic", price: 549, originalPrice: 899, discount: 39, rating: 4.5, reviewCount: 6789, format: "Set of 12", pages: 0, image: "https://images.unsplash.com/photo-1582201942988-13e60e4556ee?w=400", offer: "Combo Deal", badge: "", year: 2023 },
+      { id: 23, brand: "Sakura", title: "Pigma Micron Fineliner Set", author: "", category: "Art Supplies", genre: "Fineliners", price: 999, originalPrice: 1699, discount: 41, rating: 4.8, reviewCount: 3456, format: "Set of 8", pages: 0, image: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=400", offer: "Special Price", badge: "bestseller", year: 2024 },
+      { id: 24, brand: "Strathmore", title: "Sketch Pad A4 – 100 Sheets", author: "", category: "Art Supplies", genre: "Sketch Pad", price: 399, originalPrice: 699, discount: 43, rating: 4.6, reviewCount: 4567, format: "A4", pages: 100, image: "https://images.unsplash.com/photo-1460518451285-97b6aa326961?w=400", offer: "Free Delivery", badge: "", year: 2023 },
+ 
+      // Planners
+      { id: 25, brand: "Panda Planner", title: "Daily Productivity Planner 2024", author: "", category: "Planners", genre: "Daily Planner", price: 1099, originalPrice: 1999, discount: 45, rating: 4.7, reviewCount: 7890, format: "A5 Hardcover", pages: 200, image: "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?w=400", offer: "Bestseller", badge: "bestseller", year: 2024 },
+      { id: 26, brand: "Passion Planner", title: "Weekly Planner – Undated", author: "", category: "Planners", genre: "Weekly Planner", price: 899, originalPrice: 1499, discount: 40, rating: 4.6, reviewCount: 5432, format: "A5", pages: 150, image: "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=400", offer: "Free Delivery", badge: "new", year: 2024 },
+      { id: 27, brand: "Leuchtturm1917", title: "Weekly Planner & Notebook 2024", author: "", category: "Planners", genre: "Weekly Planner", price: 1299, originalPrice: 2099, discount: 38, rating: 4.8, reviewCount: 3210, format: "A5 Hardcover", pages: 144, image: "https://images.unsplash.com/photo-1506629082955-511b1aa562c8?w=400", offer: "Special Price", badge: "", year: 2024 },
+      { id: 28, brand: "Artsy Planner", title: "Vision Board & Goal Planner", author: "", category: "Planners", genre: "Goal Planner", price: 799, originalPrice: 1299, discount: 39, rating: 4.5, reviewCount: 4321, format: "A4", pages: 120, image: "https://images.unsplash.com/photo-1471107340929-a87cd0f5b5f3?w=400", offer: "Combo Deal", badge: "", year: 2024 },
+ 
+      // More Books
+      { id: 29, brand: "Vintage", title: "1984", author: "George Orwell", category: "Fiction", genre: "Dystopian", price: 249, originalPrice: 399, discount: 38, rating: 4.8, reviewCount: 52340, format: "Paperback", pages: 328, image: "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=400", offer: "Free Delivery", badge: "", year: 2021 },
+      { id: 30, brand: "S. Chand", title: "Wings of Fire", author: "A.P.J. Abdul Kalam", category: "Non-Fiction", genre: "Autobiography", price: 199, originalPrice: 349, discount: 43, rating: 4.9, reviewCount: 43200, format: "Paperback", pages: 196, image: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=400", offer: "Bestseller", badge: "bestseller", year: 2022 },
+      { id: 31, brand: "Penguin", title: "Sapiens", author: "Yuval Noah Harari", category: "Non-Fiction", genre: "History", price: 549, originalPrice: 999, discount: 45, rating: 4.7, reviewCount: 29870, format: "Paperback", pages: 443, image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400", offer: "Special Price", badge: "bestseller", year: 2023 },
+      { id: 32, brand: "Rupa", title: "Five Point Someone", author: "Chetan Bhagat", category: "Fiction", genre: "Contemporary", price: 199, originalPrice: 349, discount: 43, rating: 4.3, reviewCount: 18900, format: "Paperback", pages: 296, image: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=400", offer: "Free Delivery", badge: "", year: 2022 },
+      { id: 33, brand: "Scholastic", title: "The Very Hungry Caterpillar", author: "Eric Carle", category: "Children", genre: "Picture Book", price: 299, originalPrice: 499, discount: 40, rating: 4.8, reviewCount: 34560, format: "Hardcover", pages: 26, image: "https://images.unsplash.com/photo-1591951425328-48db7404a1ef?w=400", offer: "Combo Deal", badge: "bestseller", year: 2023 },
+      { id: 34, brand: "Penguin", title: "Can't Hurt Me", author: "David Goggins", category: "Self-Help", genre: "Motivation", price: 499, originalPrice: 899, discount: 44, rating: 4.7, reviewCount: 22100, format: "Paperback", pages: 364, image: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400", offer: "Bestseller", badge: "bestseller", year: 2023 },
+      { id: 35, brand: "Manjul", title: "The Psychology of Money", author: "Morgan Housel", category: "Non-Fiction", genre: "Finance", price: 449, originalPrice: 799, discount: 44, rating: 4.8, reviewCount: 27650, format: "Paperback", pages: 256, image: "https://images.unsplash.com/photo-1589829085413-56de8ae18c73?w=400", offer: "Special Price", badge: "bestseller", year: 2023 },
+      { id: 36, brand: "DC Books", title: "Veendum Edukkan Swapnam", author: "Various", category: "Fiction", genre: "Regional", price: 179, originalPrice: 299, discount: 40, rating: 4.5, reviewCount: 9870, format: "Paperback", pages: 280, image: "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=400", offer: "Free Delivery", badge: "", year: 2022 },
+    ];
+ 
+    // ===== STATE =====
+    let filteredProducts = [...products];
+    let currentPage = 1;
+    const productsPerPage = 12;
+    let currentView = 'grid';
+    let activeFilters = { categories: [], genres: [], brands: [], offers: [] };
+ 
+    // ===== CART =====
+    function getCart() { try { return JSON.parse(localStorage.getItem('shopease_cart')) || []; } catch(e) { return []; } }
+    function saveCart(cart) { localStorage.setItem('shopease_cart', JSON.stringify(cart)); updateCartBadge(); }
+    function addToCart(product) {
+      const cart = getCart();
+      const existing = cart.find(item => item.id === product.id);
+      if (existing) { existing.qty += 1; } else { cart.push({ id: product.id, title: product.title, brand: product.brand, price: product.price, image: product.image, qty: 1 }); }
+      saveCart(cart);
+    }
+    function updateCartBadge() {
+      const cart = getCart();
+      const total = cart.reduce((s, i) => s + i.qty, 0);
+      const badge = document.getElementById('cartBadge');
+      badge.textContent = total;
+      badge.setAttribute('data-count', total);
+    }
+ 
+    // ===== TOAST =====
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toastMsg').textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2500);
+    }
+ 
+    // ===== INIT =====
+    document.addEventListener('DOMContentLoaded', () => {
+      initFilters();
+      initEventListeners();
+      updateCartBadge();
+      renderProducts();
+      document.getElementById('totalProducts').textContent = products.length;
+    });
+ 
+    function initFilters() {
+      // Categories
+      const cats = [...new Set(products.map(p => p.category))];
+      document.getElementById('categoryFilters').innerHTML = cats.map(c => {
+        const count = products.filter(p => p.category === c).length;
+        return `<label class="filter-option"><input type="checkbox" value="${c}" onchange="applyFilters()"><span>${c}</span><span class="count">${count}</span></label>`;
+      }).join('');
+ 
+      // Genres
+      const genres = [...new Set(products.map(p => p.genre))].sort();
+      document.getElementById('genreFilters').innerHTML = genres.slice(0, 8).map(g => {
+        const count = products.filter(p => p.genre === g).length;
+        return `<label class="filter-option"><input type="checkbox" value="${g}" onchange="applyFilters()"><span>${g}</span><span class="count">${count}</span></label>`;
+      }).join('');
+ 
+      // Brands / Publishers
+      const brands = [...new Set(products.map(p => p.brand))].sort();
+      document.getElementById('brandFilters').innerHTML = brands.map(b => {
+        const count = products.filter(p => p.brand === b).length;
+        return `<label class="filter-option"><input type="checkbox" value="${b}" onchange="applyFilters()"><span>${b}</span><span class="count">${count}</span></label>`;
+      }).join('');
+    }
+ 
+    function initEventListeners() {
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          const cat = btn.dataset.category;
+          if (cat === 'all') {
+            document.querySelectorAll('#categoryFilters input').forEach(cb => cb.checked = false);
+          } else {
+            document.querySelectorAll('#categoryFilters input').forEach(cb => { cb.checked = cb.value === cat; });
+          }
+          applyFilters();
+        });
+      });
+      document.getElementById('searchInput').addEventListener('input', applyFilters);
+    }
+ 
+    function applyFilters() {
+      const search = document.getElementById('searchInput').value.toLowerCase();
+      activeFilters.categories = [...document.querySelectorAll('#categoryFilters input:checked')].map(i => i.value);
+      activeFilters.genres = [...document.querySelectorAll('#genreFilters input:checked')].map(i => i.value);
+      activeFilters.brands = [...document.querySelectorAll('#brandFilters input:checked')].map(i => i.value);
+      activeFilters.offers = [...document.querySelectorAll('#offerFilters input:checked')].map(i => i.value);
+      const priceRanges = [...document.querySelectorAll('[value="under299"]:checked, [value="299-599"]:checked, [value="599-999"]:checked, [value="above999"]:checked')].map(i => i.value);
+      const minRatings = [...document.querySelectorAll('#ratingFilters input:checked')].map(i => parseInt(i.value));
+ 
+      filteredProducts = products.filter(p => {
+        if (search && !p.title.toLowerCase().includes(search) && !p.brand.toLowerCase().includes(search) && !p.author.toLowerCase().includes(search)) return false;
+        if (activeFilters.categories.length && !activeFilters.categories.includes(p.category)) return false;
+        if (activeFilters.genres.length && !activeFilters.genres.includes(p.genre)) return false;
+        if (activeFilters.brands.length && !activeFilters.brands.includes(p.brand)) return false;
+        if (activeFilters.offers.length && !activeFilters.offers.includes(p.offer)) return false;
+        if (priceRanges.length) {
+          const inRange = priceRanges.some(r => {
+            if (r === 'under299') return p.price < 299;
+            if (r === '299-599') return p.price >= 299 && p.price <= 599;
+            if (r === '599-999') return p.price >= 599 && p.price <= 999;
+            if (r === 'above999') return p.price > 999;
+          });
+          if (!inRange) return false;
+        }
+        if (minRatings.length && !minRatings.some(r => p.rating >= r)) return false;
+        return true;
+      });
+ 
+      currentPage = 1;
+      updateActiveFiltersDisplay();
+      updateTabSelection();
+      sortProducts();
+    }
+ 
+    function updateTabSelection() {
+      const activeCats = [...document.querySelectorAll('#categoryFilters input:checked')].map(i => i.value);
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        if (btn.dataset.category === 'all') btn.classList.toggle('active', activeCats.length === 0);
+        else btn.classList.toggle('active', activeCats.includes(btn.dataset.category));
+      });
+    }
+ 
+    function updateActiveFiltersDisplay() {
+      const container = document.getElementById('activeFilters');
+      const allActive = [
+        ...activeFilters.categories.map(v => ({ type: 'category', value: v })),
+        ...activeFilters.genres.map(v => ({ type: 'genre', value: v })),
+        ...activeFilters.brands.map(v => ({ type: 'brand', value: v })),
+        ...activeFilters.offers.map(v => ({ type: 'offer', value: v })),
+      ];
+      if (!allActive.length) { container.innerHTML = ''; return; }
+      container.innerHTML = allActive.map(f => `
+        <div class="active-filter"><span>${f.value}</span><i class="fas fa-times" onclick="removeFilter('${f.type}', '${f.value}')"></i></div>
+      `).join('');
+    }
+ 
+    function removeFilter(type, value) {
+      const map = { category: 'categoryFilters', genre: 'genreFilters', brand: 'brandFilters', offer: 'offerFilters' };
+      const el = document.querySelector(`#${map[type]} input[value="${value}"]`);
+      if (el) { el.checked = false; applyFilters(); }
+    }
+ 
+    function clearAllFilters() {
+      document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelector('.tab-btn[data-category="all"]').classList.add('active');
+      document.getElementById('searchInput').value = '';
+      filteredProducts = [...products];
+      currentPage = 1;
+      updateActiveFiltersDisplay();
+      sortProducts();
+    }
+ 
+    function toggleFilter(header) {
+      header.classList.toggle('collapsed');
+      const opts = header.nextElementSibling;
+      if (opts) opts.classList.toggle('collapsed');
+    }
+ 
+    function sortProducts() {
+      const val = document.getElementById('sortDropdown').value;
+      if (val === 'price-low') filteredProducts.sort((a, b) => a.price - b.price);
+      else if (val === 'price-high') filteredProducts.sort((a, b) => b.price - a.price);
+      else if (val === 'rating') filteredProducts.sort((a, b) => b.rating - a.rating);
+      else if (val === 'newest') filteredProducts.sort((a, b) => b.year - a.year);
+      else filteredProducts.sort((a, b) => b.reviewCount - a.reviewCount);
+      renderProducts();
+    }
+ 
+    function setView(view) {
+      currentView = view;
+      const grid = document.getElementById('productGrid');
+      document.getElementById('gridViewBtn').classList.toggle('active', view === 'grid');
+      document.getElementById('listViewBtn').classList.toggle('active', view === 'list');
+      grid.classList.toggle('list-view', view === 'list');
+    }
+ 
+    function getStars(rating) {
+      const full = Math.floor(rating);
+      const half = rating % 1 >= 0.5;
+      let s = '';
+      for (let i = 0; i < full; i++) s += '★';
+      if (half) s += '★';
+      for (let i = full + (half ? 1 : 0); i < 5; i++) s += '☆';
+      return s;
+    }
+ 
+    function getBadgeHTML(product) {
+      if (product.badge === 'bestseller') return `<span class="badge bestseller">BESTSELLER</span>`;
+      if (product.badge === 'new') return `<span class="badge new">NEW</span>`;
+      if (product.discount >= 50) return `<span class="badge">${product.discount}% OFF</span>`;
+      return '';
+    }
+ 
+    function renderProducts() {
+      const grid = document.getElementById('productGrid');
+      const start = (currentPage - 1) * productsPerPage;
+      const end = start + productsPerPage;
+      const pageProds = filteredProducts.slice(start, end);
+ 
+      document.getElementById('showingStart').textContent = filteredProducts.length ? start + 1 : 0;
+      document.getElementById('showingEnd').textContent = Math.min(end, filteredProducts.length);
+      document.getElementById('totalResults').textContent = filteredProducts.length;
+ 
+      if (!pageProds.length) {
+        grid.innerHTML = `<div class="no-results" style="grid-column:1/-1"><i class="fas fa-book-open"></i><h3>No products found</h3><p>Try adjusting your filters or search term</p></div>`;
+        renderPagination();
+        return;
+      }
+ 
+      const isStationery = (p) => ['Notebooks','Pens & Pencils','Art Supplies','Planners'].includes(p.category);
+ 
+      const cards = pageProds.map((p, idx) => {
+        // Insert featured banner after 5 products on first page
+        let banner = '';
+        if (currentPage === 1 && idx === 5) {
+          banner = `
+            <div class="featured-banner" style="grid-column:1/-1">
+              <div>
+                <h3>📖 Reading Season Sale</h3>
+                <p>Up to 60% off on bestselling books. Limited time offer — don't miss out!</p>
+              </div>
+              <button class="featured-banner-btn" onclick="clearAllFilters()">Shop All Books</button>
+            </div>
+          `;
+        }
+        const isStatCard = isStationery(p);
+        return `${banner}<div class="product-card ${currentView === 'list' ? 'list-view' : ''} ${isStatCard ? 'stationery-card' : ''}">
+          <div class="product-image">
+            <img src="${p.image}" alt="${p.title}" loading="lazy">
+            <button class="wishlist-btn" onclick="toggleWishlist(${p.id})"><i class="far fa-heart"></i></button>
+            ${getBadgeHTML(p)}
+          </div>
+          <div class="product-info">
+            <div class="product-brand">${p.brand}</div>
+            <h3 class="product-title">${p.title}</h3>
+            ${p.author ? `<div class="product-author">by ${p.author}</div>` : ''}
+            <div class="product-meta">
+              <span class="meta-tag">${p.genre}</span>
+              ${p.format ? `<span class="meta-tag">${p.format}</span>` : ''}
+            </div>
+            <div class="product-pricing">
+              <span class="current-price">₹${p.price.toLocaleString()}</span>
+              <span class="original-price">₹${p.originalPrice.toLocaleString()}</span>
+              <span class="discount">${p.discount}% off</span>
+            </div>
+            <div class="product-rating">
+              <span class="rating-stars">${getStars(p.rating)}</span>
+              <span class="rating-count">(${p.reviewCount.toLocaleString()})</span>
+            </div>
+            ${p.pages ? `<div class="product-details"><span class="detail-chip">📄 ${p.pages} pages</span></div>` : ''}
+            <button class="add-to-cart-btn" onclick="addToCartClick(event, ${p.id})">
+              <i class="fas fa-shopping-cart"></i> Add to Cart
+            </button>
+          </div>
+        </div>`;
+      }).join('');
+ 
+      grid.innerHTML = cards;
+      renderPagination();
+    }
+ 
+    function addToCartClick(e, productId) {
+      const product = products.find(p => p.id === productId);
+      if (!product) return;
+      addToCart(product);
+      const btn = e.target.closest('.add-to-cart-btn');
+      btn.classList.add('added');
+      btn.innerHTML = '<i class="fas fa-check"></i> Added!';
+      showToast(`"${product.title}" added to cart`);
+      setTimeout(() => {
+        btn.classList.remove('added');
+        btn.innerHTML = '<i class="fas fa-shopping-cart"></i> Add to Cart';
+      }, 1500);
+    }
+ 
+    function toggleWishlist(productId) {
+      let wishlist = JSON.parse(localStorage.getItem('shopease_wishlist')) || [];
+      const idx = wishlist.findIndex(i => i.id === productId);
+      const product = products.find(p => p.id === productId);
+      if (idx > -1) { wishlist.splice(idx, 1); }
+      else { wishlist.push({ id: product.id, title: product.title, brand: product.brand, price: product.price, image: product.image }); }
+      localStorage.setItem('shopease_wishlist', JSON.stringify(wishlist));
+      const btn = document.querySelector(`.wishlist-btn[onclick="toggleWishlist(${productId})"]`);
+      if (btn) {
+        btn.classList.toggle('active');
+        btn.innerHTML = btn.classList.contains('active') ? '<i class="fas fa-heart"></i>' : '<i class="far fa-heart"></i>';
+      }
+    }
+ 
+    function renderPagination() {
+      const pagination = document.getElementById('pagination');
+      const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
+      if (totalPages <= 1) { pagination.innerHTML = ''; return; }
+      let html = `<button class="page-btn" onclick="goToPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}><i class="fas fa-chevron-left"></i></button>`;
+      for (let i = 1; i <= totalPages; i++) {
+        if (i === 1 || i === totalPages || (i >= currentPage - 1 && i <= currentPage + 1)) {
+          html += `<button class="page-btn ${i === currentPage ? 'active' : ''}" onclick="goToPage(${i})">${i}</button>`;
+        } else if (i === currentPage - 2 || i === currentPage + 2) {
+          html += `<span class="page-ellipsis">...</span>`;
+        }
+      }
+      html += `<button class="page-btn" onclick="goToPage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}><i class="fas fa-chevron-right"></i></button>`;
+      pagination.innerHTML = html;
+    }
+ 
+    function goToPage(page) {
+      const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
+      if (page < 1 || page > totalPages) return;
+      currentPage = page;
+      renderProducts();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  </script>
 </body>
 </html>

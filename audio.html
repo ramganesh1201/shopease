@@ -1,334 +1,954 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Audio — ShopEase</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Audio & Sound - ShopEase</title>
 
-<style>
-body{
-  margin:0;
-  font-family:Arial, sans-serif;
-  background:#f1f3f6;
-  color:#212121;
-}
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-/* ===== NAVBAR ===== */
-.top-header{
-  background:#fff;
-  border-bottom:1px solid #e5e7eb;
-  padding:12px 0;
-}
-.nav-container{
-  max-width:1200px;
-  margin:auto;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-.brand{
-  font-size:22px;
-  font-weight:700;
-  color:#2874f0;
-  text-decoration:none;
-}
-.cart-btn{
-  position:relative;
-  text-decoration:none;
-  font-size:18px;
-}
-.cart-count{
-  position:absolute;
-  top:-8px;
-  right:-10px;
-  background:#ff6161;
-  color:#fff;
-  font-size:12px;
-  padding:2px 6px;
-  border-radius:50%;
-}
+  <style>
+    /* ================= RESET & BASE ================= */
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
+    body { background:#f4f6fb; color:#333; }
+    a { text-decoration:none; color:inherit; }
+    ul { list-style:none; }
 
-/* ===== BREADCRUMB ===== */
-.breadcrumb{
-  max-width:1200px;
-  margin:15px auto 5px;
-  font-size:14px;
-  color:#6b7280;
-}
-.breadcrumb .active{
-  font-weight:600;
-  color:#212121;
-}
+    /* ================= HEADER ================= */
+    .header {
+      background:#fff;
+      padding:12px 5%;
+      display:flex; align-items:center; justify-content:space-between;
+      box-shadow:0 2px 15px rgba(0,0,0,0.06);
+      position:sticky; top:0; z-index:1000;
+    }
+    .logo { font-size:28px; font-weight:700; color:#ff3f6c; cursor:pointer; }
+    .logo span { color:#333; }
+    .search-bar { flex:1; max-width:500px; margin:0 30px; display:flex; }
+    .search-bar input {
+      flex:1; padding:12px 15px; border:2px solid #eee;
+      border-radius:8px 0 0 8px; outline:none; font-size:14px; transition:border-color 0.3s;
+    }
+    .search-bar input:focus { border-color:#ff3f6c; }
+    .search-bar button {
+      padding:12px 20px; border:none; background:#ff3f6c; color:#fff;
+      border-radius:0 8px 8px 0; cursor:pointer; transition:background 0.3s;
+    }
+    .search-bar button:hover { background:#e6365c; }
+    .header-actions { display:flex; align-items:center; gap:25px; }
+    .cart-icon { position:relative; font-size:22px; cursor:pointer; color:#333; transition:color 0.3s; }
+    .cart-icon:hover { color:#ff3f6c; }
+    .cart-badge {
+      position:absolute; top:-8px; right:-10px; background:#ff3f6c; color:#fff;
+      font-size:11px; font-weight:600; width:20px; height:20px; border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+    }
+    .cart-badge:empty, .cart-badge[data-count="0"] { display:none; }
 
-/* ===== HEADER ===== */
-.page-header{
-  max-width:1200px;
-  margin:5px auto 15px;
-}
-.page-header h1{
-  margin:0;
-  font-size:28px;
-}
-.page-header p{
-  margin-top:6px;
-  color:#6b7280;
-}
+    /* ================= BREADCRUMB ================= */
+    .breadcrumb { padding:15px 5%; font-size:13px; color:#888; }
+    .breadcrumb a { color:#ff3f6c; font-weight:500; }
 
-/* ===== LAYOUT ===== */
-.page-wrap{
-  display:flex;
-  max-width:1200px;
-  margin:20px auto;
-  gap:15px;
-}
+    /* ================= HERO ================= */
+    .hero {
+      margin:0 5% 30px;
+      background:linear-gradient(135deg,#fff5f6 0%,#f5f0ff 40%,#f0f8ff 100%);
+      border-radius:20px; padding:40px 50px;
+      display:flex; justify-content:space-between; align-items:center;
+      position:relative; overflow:hidden;
+    }
+    .hero::before {
+      content:'';
+      position:absolute; top:-50%; right:-10%; width:400px; height:400px;
+      background:radial-gradient(circle,rgba(255,63,108,0.1) 0%,transparent 70%);
+      border-radius:50%;
+    }
+    .hero::after {
+      content:'🎵';
+      position:absolute; bottom:-15px; right:185px;
+      font-size:130px; opacity:0.06; pointer-events:none;
+    }
+    /* Animated sound wave in hero */
+    .sound-wave {
+      position:absolute; bottom:0; left:0; right:0; height:60px;
+      display:flex; align-items:flex-end; gap:3px; padding:0 20px;
+      opacity:0.07; pointer-events:none;
+    }
+    .wave-bar {
+      flex:1; background:#ff3f6c; border-radius:2px 2px 0 0;
+      animation:wavePulse 1.2s ease-in-out infinite;
+    }
+    @keyframes wavePulse {
+      0%,100% { transform:scaleY(0.3); }
+      50%      { transform:scaleY(1); }
+    }
+    .hero-text { position:relative; z-index:1; }
+    .hero-text h2 { font-size:36px; font-weight:700; margin-bottom:12px; color:#1a1a1a; line-height:1.2; }
+    .hero-text h2 span { color:#ff3f6c; }
+    .hero-text p { color:#666; font-size:15px; margin-bottom:20px; max-width:460px; }
+    .hero-tags { display:flex; gap:8px; margin-bottom:22px; flex-wrap:wrap; }
+    .hero-tag {
+      padding:6px 14px; border-radius:20px; font-size:12px; font-weight:500;
+      background:rgba(255,63,108,0.08); color:#ff3f6c; border:1px solid rgba(255,63,108,0.2);
+    }
+    .hero-stats { display:flex; gap:30px; }
+    .stat { text-align:center; }
+    .stat-number { font-size:24px; font-weight:700; color:#ff3f6c; }
+    .stat-label  { font-size:12px; color:#888; }
+    .hero-image  { position:relative; z-index:1; }
+    .hero-image img { width:320px; height:auto; border-radius:15px; box-shadow:0 20px 40px rgba(0,0,0,0.12); }
 
-/* ===== SIDEBAR ===== */
-.sidebar{
-  width:250px;
-  background:#fff;
-  padding:15px;
-  border-radius:4px;
-  box-shadow:0 1px 3px rgba(0,0,0,0.1);
-}
-.sidebar h3{
-  margin-top:0;
-  font-size:16px;
-}
-.filter-group{
-  margin-bottom:15px;
-}
-.filter-group label{
-  display:block;
-  margin:6px 0;
-  font-size:14px;
-}
+    /* ================= FEATURE STRIP ================= */
+    .feature-strip {
+      margin:0 5% 28px;
+      display:grid; grid-template-columns:repeat(4,1fr); gap:16px;
+    }
+    .feature-card {
+      background:#fff; border-radius:14px; padding:18px 20px;
+      display:flex; align-items:center; gap:14px;
+      box-shadow:0 3px 15px rgba(0,0,0,0.05); transition:transform 0.3s;
+    }
+    .feature-card:hover { transform:translateY(-4px); }
+    .feature-icon {
+      width:46px; height:46px; border-radius:12px;
+      background:linear-gradient(135deg,#fff5f7,#ffe4ea);
+      display:flex; align-items:center; justify-content:center;
+      font-size:22px; flex-shrink:0;
+    }
+    .feature-card h4 { font-size:13px; font-weight:600; color:#1a1a1a; margin-bottom:2px; }
+    .feature-card p  { font-size:11px; color:#888; }
 
-/* ===== PRODUCTS ===== */
-.products{
-  flex:1;
-}
-.controls{
-  background:#fff;
-  padding:10px;
-  border-radius:4px;
-  margin-bottom:15px;
-  display:flex;
-  justify-content:space-between;
-  box-shadow:0 1px 3px rgba(0,0,0,0.1);
-}
-.controls input{
-  width:200px;
-  padding:6px;
-}
-.controls select{
-  padding:6px;
-}
+    /* ================= MAIN LAYOUT ================= */
+    .main-container { display:flex; gap:30px; padding:0 5% 50px; }
 
-/* ===== GRID ===== */
-.grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:15px;
-}
+    /* ================= SIDEBAR ================= */
+    .sidebar {
+      width:280px; background:#fff; padding:25px; border-radius:16px;
+      box-shadow:0 5px 25px rgba(0,0,0,0.05); height:fit-content;
+      position:sticky; top:90px;
+    }
+    .sidebar-header {
+      display:flex; justify-content:space-between; align-items:center;
+      margin-bottom:20px; padding-bottom:15px; border-bottom:1px solid #eee;
+    }
+    .sidebar-header h3 { font-size:18px; font-weight:600; }
+    .clear-all-btn { font-size:13px; color:#ff3f6c; cursor:pointer; font-weight:500; }
+    .clear-all-btn:hover { text-decoration:underline; }
+    .filter-section { margin-bottom:25px; border-bottom:1px solid #f0f0f0; padding-bottom:20px; }
+    .filter-section:last-child { border-bottom:none; }
+    .filter-header { display:flex; justify-content:space-between; align-items:center; cursor:pointer; margin-bottom:15px; }
+    .filter-header h4 { font-size:14px; font-weight:600; color:#1a1a1a; }
+    .filter-header i { font-size:12px; color:#888; transition:transform 0.3s; }
+    .filter-header.collapsed i { transform:rotate(-90deg); }
+    .filter-options { display:flex; flex-direction:column; gap:10px; }
+    .filter-options.collapsed { display:none; }
+    .filter-option { display:flex; align-items:center; gap:10px; cursor:pointer; }
+    .filter-option input[type="checkbox"] { width:18px; height:18px; accent-color:#ff3f6c; cursor:pointer; }
+    .filter-option span { font-size:13px; color:#444; transition:color 0.2s; }
+    .filter-option:hover span { color:#ff3f6c; }
+    .filter-option .count { margin-left:auto; font-size:11px; color:#999; background:#f5f5f5; padding:2px 8px; border-radius:10px; }
+    .color-options { display:flex; flex-wrap:wrap; gap:10px; }
+    .color-option {
+      width:32px; height:32px; border-radius:50%; cursor:pointer;
+      border:2px solid transparent; transition:all 0.2s; position:relative;
+    }
+    .color-option:hover,.color-option.active { border-color:#ff3f6c; transform:scale(1.1); }
+    .color-option.active::after {
+      content:'\2713'; position:absolute; top:50%; left:50%;
+      transform:translate(-50%,-50%); color:#fff; font-size:14px; font-weight:bold;
+    }
+    .active-filters { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:15px; }
+    .active-filter {
+      display:flex; align-items:center; gap:6px; padding:6px 12px;
+      background:#fff5f7; border:1px solid #ff3f6c; border-radius:20px; font-size:12px; color:#ff3f6c;
+    }
+    .active-filter i { cursor:pointer; }
+    .active-filter i:hover { color:#e6365c; }
+    .rating-option { display:flex; align-items:center; gap:8px; cursor:pointer; padding:6px 8px; border-radius:8px; transition:background 0.2s; }
+    .rating-option:hover { background:#fff5f7; }
+    .rating-option .stars { color:#ffb800; font-size:13px; }
 
-/* ===== CARD ===== */
-.card{
-  background:#fff;
-  padding:12px;
-  border-radius:4px;
-  box-shadow:0 1px 3px rgba(0,0,0,0.1);
-  transition:.2s;
-}
-.card:hover{
-  box-shadow:0 4px 12px rgba(0,0,0,0.15);
-}
-.thumb{
-  height:160px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-.thumb img{
-  max-height:100%;
-  max-width:100%;
-}
-.title{
-  font-weight:600;
-  margin:6px 0;
-}
-.brand-name{
-  font-size:13px;
-  color:#777;
-}
-.price{
-  font-weight:700;
-}
-.add-btn{
-  margin-top:8px;
-  width:100%;
-  padding:8px;
-  border:none;
-  background:#2874f0;
-  color:#fff;
-  border-radius:3px;
-  cursor:pointer;
-}
-.add-btn:hover{
-  background:#1a5fd1;
-}
+    /* ================= PRODUCTS AREA ================= */
+    .products-area { flex:1; min-width:0; }
+    .category-tabs { display:flex; gap:10px; margin-bottom:20px; flex-wrap:wrap; }
+    .tab-btn {
+      padding:10px 20px; border:none; background:#fff; border-radius:25px; cursor:pointer;
+      font-size:13px; font-weight:500; color:#666; transition:all 0.3s;
+      box-shadow:0 2px 10px rgba(0,0,0,0.05);
+    }
+    .tab-btn:hover { color:#ff3f6c; }
+    .tab-btn.active { background:#ff3f6c; color:#fff; }
 
-footer{
-  max-width:1200px;
-  margin:30px auto;
-  text-align:center;
-  color:#777;
-}
-</style>
+    /* ================= SORT BAR ================= */
+    .sort-bar {
+      display:flex; justify-content:space-between; align-items:center;
+      margin-bottom:20px; background:#fff; padding:15px 20px;
+      border-radius:12px; box-shadow:0 2px 15px rgba(0,0,0,0.05);
+    }
+    .results-count { font-size:14px; color:#666; }
+    .results-count strong { color:#1a1a1a; }
+    .sort-options { display:flex; align-items:center; gap:15px; }
+    .sort-dropdown { padding:8px 15px; border:1px solid #ddd; border-radius:8px; font-size:13px; color:#333; cursor:pointer; background:#fff; }
+    .view-toggle { display:flex; gap:8px; }
+    .view-btn {
+      width:36px; height:36px; border:1px solid #ddd; border-radius:8px; background:#fff;
+      cursor:pointer; display:flex; align-items:center; justify-content:center; color:#666; transition:all 0.2s;
+    }
+    .view-btn:hover,.view-btn.active { border-color:#ff3f6c; color:#ff3f6c; background:#fff5f7; }
+
+    /* ================= PRODUCT GRID ================= */
+    .product-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:25px; }
+    .product-grid.list-view { grid-template-columns:1fr; }
+
+    .product-card {
+      background:#fff; border-radius:16px; overflow:hidden;
+      box-shadow:0 5px 25px rgba(0,0,0,0.05); transition:all 0.3s ease; cursor:pointer;
+      display:flex; flex-direction:column;
+    }
+    .product-card:hover { transform:translateY(-8px); box-shadow:0 15px 40px rgba(0,0,0,0.12); }
+    .product-card.list-view { flex-direction:row; }
+
+    /* Audio wave visualiser strip at card top */
+    .audio-strip {
+      height:36px; background:#1a1a1a;
+      display:flex; align-items:center; justify-content:center; gap:2px;
+      padding:0 16px; overflow:hidden;
+    }
+    .audio-bar {
+      width:3px; border-radius:2px; background:#ff3f6c;
+      animation:audioBar 1.2s ease-in-out infinite;
+      opacity:0.7;
+    }
+    @keyframes audioBar {
+      0%,100% { height:4px; }
+      50%      { height:18px; }
+    }
+    .product-card:hover .audio-bar { opacity:1; }
+
+    .product-image { position:relative; overflow:hidden; background:#f8f8f8; }
+    .product-card.list-view .product-image { width:200px; flex-shrink:0; }
+    .product-image img { width:100%; height:240px; object-fit:contain; padding:16px; transition:transform 0.5s; }
+    .product-card.list-view .product-image img { height:100%; }
+    .product-card:hover .product-image img { transform:scale(1.06); }
+
+    .wishlist-btn {
+      position:absolute; top:12px; right:12px; width:36px; height:36px;
+      background:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center;
+      cursor:pointer; box-shadow:0 2px 10px rgba(0,0,0,0.1); transition:all 0.3s;
+      border:none; font-size:16px; color:#666; z-index:2;
+    }
+    .wishlist-btn:hover { color:#ff3f6c; transform:scale(1.1); }
+    .wishlist-btn.active { color:#ff3f6c; }
+
+    .badge { position:absolute; top:12px; left:12px; background:#ff3f6c; color:#fff; padding:4px 10px; border-radius:4px; font-size:11px; font-weight:600; z-index:2; }
+    .badge.new       { background:#28a745; }
+    .badge.topseller { background:#ff8c00; }
+    .badge.award     { background:#7b1fa2; }
+
+    .product-info { padding:16px 18px 18px; flex:1; display:flex; flex-direction:column; }
+    .product-brand { font-size:12px; color:#888; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:4px; }
+    .product-title { font-size:14px; font-weight:500; color:#1a1a1a; margin-bottom:8px; line-height:1.4; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+
+    .product-meta { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:10px; }
+    .meta-tag { padding:3px 10px; background:#fff5f7; color:#ff3f6c; border-radius:4px; font-size:11px; font-weight:500; }
+    .meta-tag.blue  { background:#e8f4fd; color:#1565c0; }
+    .meta-tag.green { background:#e8f5e9; color:#2e7d32; }
+    .meta-tag.dark  { background:#f5f5f5; color:#555; }
+
+    .product-pricing { display:flex; align-items:center; gap:10px; margin-bottom:10px; }
+    .current-price  { font-size:18px; font-weight:700; color:#1a1a1a; }
+    .original-price { font-size:14px; color:#999; text-decoration:line-through; }
+    .discount       { font-size:12px; color:#ff3f6c; font-weight:600; }
+
+    .product-rating { display:flex; align-items:center; gap:6px; margin-bottom:10px; }
+    .rating-stars   { color:#ffb800; font-size:13px; }
+    .rating-count   { font-size:12px; color:#888; }
+
+    /* Audio spec grid */
+    .spec-grid { display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-bottom:14px; }
+    .spec-item { background:#f8f9fa; border-radius:8px; padding:7px 10px; }
+    .spec-key  { font-size:10px; color:#aaa; text-transform:uppercase; letter-spacing:0.3px; display:block; }
+    .spec-val  { font-size:12px; font-weight:600; color:#333; display:block; margin-top:1px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+
+    .color-dots { display:flex; gap:6px; align-items:center; margin-bottom:14px; }
+    .color-dots span { font-size:11px; color:#888; }
+    .cdot { width:16px; height:16px; border-radius:50%; border:1.5px solid #ddd; }
+
+    .add-to-cart-btn {
+      width:100%; padding:12px; border:none; background:#ff3f6c; color:#fff;
+      border-radius:10px; font-size:13px; font-weight:600; cursor:pointer;
+      transition:all 0.3s; display:flex; align-items:center; justify-content:center; gap:8px;
+      margin-top:auto;
+    }
+    .add-to-cart-btn:hover { background:#e6365c; }
+    .add-to-cart-btn.added { background:#28a745; }
+
+    /* ================= PROMO BANNER ================= */
+    .promo-banner {
+      grid-column:1/-1;
+      background:linear-gradient(135deg,#ff3f6c 0%,#ff6b35 55%,#ffa41b 100%);
+      border-radius:16px; padding:28px 40px;
+      display:flex; align-items:center; justify-content:space-between; color:#fff;
+    }
+    .promo-banner h3 { font-size:22px; font-weight:700; margin-bottom:6px; }
+    .promo-banner p  { font-size:14px; opacity:0.9; }
+    .promo-banner-btn {
+      padding:12px 28px; background:#fff; color:#ff3f6c; border:none;
+      border-radius:25px; font-size:14px; font-weight:600; cursor:pointer;
+      transition:all 0.3s; white-space:nowrap; margin-left:20px;
+    }
+    .promo-banner-btn:hover { transform:scale(1.05); box-shadow:0 5px 20px rgba(0,0,0,0.2); }
+
+    /* ================= PAGINATION ================= */
+    .pagination { display:flex; justify-content:center; align-items:center; gap:8px; margin-top:40px; }
+    .page-btn {
+      min-width:40px; height:40px; border:1px solid #ddd; background:#fff;
+      border-radius:8px; display:flex; align-items:center; justify-content:center;
+      cursor:pointer; font-size:14px; color:#666; transition:all 0.2s;
+    }
+    .page-btn:hover { border-color:#ff3f6c; color:#ff3f6c; }
+    .page-btn.active { background:#ff3f6c; border-color:#ff3f6c; color:#fff; }
+    .page-btn:disabled { opacity:0.5; cursor:not-allowed; }
+    .page-ellipsis { padding:0 5px; color:#888; }
+
+    /* ================= NO RESULTS ================= */
+    .no-results { text-align:center; padding:60px 20px; background:#fff; border-radius:16px; grid-column:1/-1; }
+    .no-results i { font-size:60px; color:#ddd; margin-bottom:20px; }
+    .no-results h3 { font-size:20px; color:#333; margin-bottom:10px; }
+    .no-results p  { color:#888; }
+
+    /* ================= TOAST ================= */
+    .toast {
+      position:fixed; bottom:30px; right:30px; background:#1a1a1a; color:#fff;
+      padding:14px 22px; border-radius:10px; font-size:14px; font-weight:500;
+      display:flex; align-items:center; gap:10px; z-index:9999;
+      transform:translateY(100px); opacity:0; transition:all 0.4s cubic-bezier(0.34,1.56,0.64,1);
+      box-shadow:0 10px 30px rgba(0,0,0,0.3);
+    }
+    .toast.show { transform:translateY(0); opacity:1; }
+    .toast i { color:#ff3f6c; font-size:18px; }
+
+    /* ================= RESPONSIVE ================= */
+    @media (max-width:1200px) { .product-grid { grid-template-columns:repeat(2,1fr); } .feature-strip { grid-template-columns:repeat(2,1fr); } }
+    @media (max-width:992px)  {
+      .main-container { flex-direction:column; }
+      .sidebar { width:100%; position:static; }
+      .hero { padding:30px; }
+      .hero-image img { width:200px; }
+    }
+    @media (max-width:768px)  {
+      .hero { flex-direction:column; text-align:center; gap:25px; }
+      .hero-stats { justify-content:center; }
+      .hero-text p { max-width:100%; }
+      .product-grid { grid-template-columns:repeat(2,1fr); gap:15px; }
+      .product-image img { height:180px; }
+      .promo-banner { flex-direction:column; gap:15px; text-align:center; }
+      .promo-banner-btn { margin-left:0; }
+      .feature-strip { grid-template-columns:repeat(2,1fr); }
+    }
+    @media (max-width:480px)  {
+      .product-grid { grid-template-columns:1fr; }
+      .feature-strip { grid-template-columns:1fr; }
+      .tab-btn { padding:8px 14px; font-size:12px; }
+    }
+  </style>
 </head>
-
 <body>
 
-<header class="top-header">
-  <div class="nav-container">
-    <a href="index.html" class="brand">ShopEase</a>
-    <a href="cart.html" class="cart-btn">
-      🛒
-      <span id="cartCount" class="cart-count">0</span>
-    </a>
+<!-- =================== HEADER =================== -->
+<header class="header">
+  <div class="logo" onclick="window.location.href='index.html'">Shop<span>Ease</span></div>
+  <div class="search-bar">
+    <input type="text" id="searchInput" placeholder="Search earbuds, speakers, home theatre...">
+    <button><i class="fas fa-search"></i></button>
+  </div>
+  <div class="header-actions">
+    <div class="cart-icon" onclick="window.location.href='cart.html'">
+      <i class="fas fa-shopping-cart"></i>
+      <span class="cart-badge" id="cartBadge">0</span>
+    </div>
   </div>
 </header>
 
+<!-- =================== BREADCRUMB =================== -->
 <div class="breadcrumb">
-  Home › <span class="active">Audio</span>
+  <a href="index.html">Home</a> <i class="fas fa-chevron-right"></i>
+  <a href="#">Electronics</a> <i class="fas fa-chevron-right"></i>
+  <span>Audio &amp; Sound</span>
 </div>
 
-<div class="page-header">
-  <h1>Audio</h1>
-  <p><span id="productCount">0</span> Products | Updated Today</p>
+<!-- =================== HERO =================== -->
+<div class="hero">
+  <div class="hero-text">
+    <h2>Audio &amp; <span>Sound</span></h2>
+    <p>Immerse yourself in pure sound. Premium earbuds, headphones, speakers, soundbars & home theatres — all in one place.</p>
+    <div class="hero-tags">
+      <span class="hero-tag">🎧 Earbuds</span>
+      <span class="hero-tag">🎵 Headphones</span>
+      <span class="hero-tag">🔊 Speakers</span>
+      <span class="hero-tag">📺 Soundbars</span>
+      <span class="hero-tag">🏠 Home Theatre</span>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-number" id="totalProducts">0</div><div class="stat-label">Products</div></div>
+      <div class="stat"><div class="stat-number">35+</div><div class="stat-label">Brands</div></div>
+      <div class="stat"><div class="stat-number">60%</div><div class="stat-label">Off</div></div>
+    </div>
+  </div>
+  <div class="hero-image">
+    <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500" alt="Audio & Sound">
+  </div>
+  <!-- Animated bars -->
+  <div class="sound-wave" id="soundWave"></div>
 </div>
 
-<div class="page-wrap">
+<!-- =================== FEATURE STRIP =================== -->
+<div class="feature-strip">
+  <div class="feature-card"><div class="feature-icon">🎵</div><div><h4>Hi-Res Audio</h4><p>Studio-grade sound quality</p></div></div>
+  <div class="feature-card"><div class="feature-icon">🔇</div><div><h4>Active Noise Cancellation</h4><p>Block out the world</p></div></div>
+  <div class="feature-card"><div class="feature-icon">⚡</div><div><h4>Fast Charging</h4><p>Play all day, charge in minutes</p></div></div>
+  <div class="feature-card"><div class="feature-icon">📶</div><div><h4>Wireless Freedom</h4><p>Bluetooth 5.3 & beyond</p></div></div>
+</div>
+
+<!-- =================== MAIN CONTAINER =================== -->
+<div class="main-container">
 
   <!-- SIDEBAR -->
   <aside class="sidebar">
-    <h3>Filters</h3>
+    <div class="sidebar-header">
+      <h3><i class="fas fa-filter"></i> Filters</h3>
+      <span class="clear-all-btn" onclick="clearAllFilters()">Clear All</span>
+    </div>
+    <div class="active-filters" id="activeFilters"></div>
 
-    <div class="filter-group">
-      <strong>Brand</strong>
-      <label><input type="checkbox" class="brand-filter" value="Sony"> Sony</label>
-      <label><input type="checkbox" class="brand-filter" value="JBL"> JBL</label>
-      <label><input type="checkbox" class="brand-filter" value="Apple"> Apple</label>
-      <label><input type="checkbox" class="brand-filter" value="Boat"> Boat</label>
+    <!-- Category -->
+    <div class="filter-section">
+      <div class="filter-header" onclick="toggleFilter(this)"><h4>Category</h4><i class="fas fa-chevron-down"></i></div>
+      <div class="filter-options" id="categoryFilters"></div>
     </div>
 
-    <div class="filter-group">
-      <strong>Price</strong>
-      <label><input type="radio" name="price" value="under5000"> Under ₹5000</label>
-      <label><input type="radio" name="price" value="5000-15000"> ₹5000–₹15000</label>
-      <label><input type="radio" name="price" value="all" checked> All</label>
+    <!-- Brand -->
+    <div class="filter-section">
+      <div class="filter-header" onclick="toggleFilter(this)"><h4>Brand</h4><i class="fas fa-chevron-down"></i></div>
+      <div class="filter-options" id="brandFilters"></div>
     </div>
 
-    <div style="margin-top:10px;font-size:13px">
-      Showing <span id="count">0</span> results
+    <!-- Connectivity -->
+    <div class="filter-section">
+      <div class="filter-header" onclick="toggleFilter(this)"><h4>Connectivity</h4><i class="fas fa-chevron-down"></i></div>
+      <div class="filter-options" id="connectivityFilters">
+        <label class="filter-option"><input type="checkbox" value="Wireless" onchange="applyFilters()"><span>📶 Wireless / Bluetooth</span></label>
+        <label class="filter-option"><input type="checkbox" value="Wired" onchange="applyFilters()"><span>🔌 Wired</span></label>
+        <label class="filter-option"><input type="checkbox" value="Both" onchange="applyFilters()"><span>🔀 Wired + Wireless</span></label>
+        <label class="filter-option"><input type="checkbox" value="Wi-Fi" onchange="applyFilters()"><span>📡 Wi-Fi / Smart</span></label>
+      </div>
+    </div>
+
+    <!-- Features -->
+    <div class="filter-section">
+      <div class="filter-header" onclick="toggleFilter(this)"><h4>Features</h4><i class="fas fa-chevron-down"></i></div>
+      <div class="filter-options" id="featureFilters">
+        <label class="filter-option"><input type="checkbox" value="ANC" onchange="applyFilters()"><span>🔇 Active Noise Cancellation</span></label>
+        <label class="filter-option"><input type="checkbox" value="Hi-Res" onchange="applyFilters()"><span>🎵 Hi-Res Audio</span></label>
+        <label class="filter-option"><input type="checkbox" value="Waterproof" onchange="applyFilters()"><span>💧 Waterproof / IPX</span></label>
+        <label class="filter-option"><input type="checkbox" value="Mic" onchange="applyFilters()"><span>🎙️ Built-in Mic</span></label>
+        <label class="filter-option"><input type="checkbox" value="Voice Assistant" onchange="applyFilters()"><span>🗣️ Voice Assistant</span></label>
+        <label class="filter-option"><input type="checkbox" value="LDAC" onchange="applyFilters()"><span>💎 LDAC / Hi-Fi Codec</span></label>
+        <label class="filter-option"><input type="checkbox" value="Dolby Atmos" onchange="applyFilters()"><span>🔊 Dolby Atmos</span></label>
+      </div>
+    </div>
+
+    <!-- Color -->
+    <div class="filter-section">
+      <div class="filter-header" onclick="toggleFilter(this)"><h4>Color</h4><i class="fas fa-chevron-down"></i></div>
+      <div class="filter-options">
+        <div class="color-options" id="colorFilters"></div>
+      </div>
+    </div>
+
+    <!-- Price Range -->
+    <div class="filter-section">
+      <div class="filter-header" onclick="toggleFilter(this)"><h4>Price Range</h4><i class="fas fa-chevron-down"></i></div>
+      <div class="filter-options">
+        <label class="filter-option"><input type="checkbox" value="under1000" onchange="applyFilters()"><span>Under ₹1,000</span></label>
+        <label class="filter-option"><input type="checkbox" value="1000-3000" onchange="applyFilters()"><span>₹1,000 – ₹3,000</span></label>
+        <label class="filter-option"><input type="checkbox" value="3000-8000" onchange="applyFilters()"><span>₹3,000 – ₹8,000</span></label>
+        <label class="filter-option"><input type="checkbox" value="8000-25000" onchange="applyFilters()"><span>₹8,000 – ₹25,000</span></label>
+        <label class="filter-option"><input type="checkbox" value="above25000" onchange="applyFilters()"><span>Above ₹25,000</span></label>
+      </div>
+    </div>
+
+    <!-- Rating -->
+    <div class="filter-section">
+      <div class="filter-header" onclick="toggleFilter(this)"><h4>Rating</h4><i class="fas fa-chevron-down"></i></div>
+      <div class="filter-options">
+        <label class="filter-option rating-option"><input type="checkbox" value="4" onchange="applyFilters()"><span class="stars">★★★★☆</span><span>& above</span></label>
+        <label class="filter-option rating-option"><input type="checkbox" value="3" onchange="applyFilters()"><span class="stars">★★★☆☆</span><span>& above</span></label>
+      </div>
+    </div>
+
+    <!-- Offers -->
+    <div class="filter-section">
+      <div class="filter-header" onclick="toggleFilter(this)"><h4>Offers</h4><i class="fas fa-chevron-down"></i></div>
+      <div class="filter-options" id="offerFilters">
+        <label class="filter-option"><input type="checkbox" value="Free Delivery" onchange="applyFilters()"><span>Free Delivery</span></label>
+        <label class="filter-option"><input type="checkbox" value="Buy 1 Get 1" onchange="applyFilters()"><span>Buy 1 Get 1</span></label>
+        <label class="filter-option"><input type="checkbox" value="Special Price" onchange="applyFilters()"><span>Special Price</span></label>
+        <label class="filter-option"><input type="checkbox" value="Combo Pack" onchange="applyFilters()"><span>Combo Pack</span></label>
+      </div>
     </div>
   </aside>
 
-  <!-- PRODUCTS -->
-  <section class="products">
-    <div class="controls">
-      <input id="search" placeholder="Search audio...">
-      <select id="sort">
-        <option value="popular">Sort by: Popular</option>
-        <option value="price-asc">Price: Low to High</option>
-        <option value="price-desc">Price: High to Low</option>
-      </select>
+  <!-- PRODUCTS AREA -->
+  <div class="products-area">
+
+    <!-- Category Tabs -->
+    <div class="category-tabs">
+      <button class="tab-btn active" data-category="all">All</button>
+      <button class="tab-btn" data-category="Earbuds">Earbuds</button>
+      <button class="tab-btn" data-category="Headphones">Headphones</button>
+      <button class="tab-btn" data-category="Bluetooth Speakers">BT Speakers</button>
+      <button class="tab-btn" data-category="Soundbars">Soundbars</button>
+      <button class="tab-btn" data-category="Home Theatre">Home Theatre</button>
+      <button class="tab-btn" data-category="Neckbands">Neckbands</button>
+      <button class="tab-btn" data-category="Smart Speakers">Smart Speakers</button>
+      <button class="tab-btn" data-category="Party Speakers">Party Speakers</button>
     </div>
 
-    <div class="grid" id="grid"></div>
-  </section>
+    <!-- Sort Bar -->
+    <div class="sort-bar">
+      <div class="results-count">
+        Showing <strong id="showingStart">0</strong> – <strong id="showingEnd">0</strong> of <strong id="totalResults">0</strong> products
+      </div>
+      <div class="sort-options">
+        <select class="sort-dropdown" id="sortDropdown" onchange="sortProducts()">
+          <option value="popularity">Sort by: Popularity</option>
+          <option value="price-low">Price: Low to High</option>
+          <option value="price-high">Price: High to Low</option>
+          <option value="rating">Rating</option>
+        </select>
+        <div class="view-toggle">
+          <button class="view-btn active" id="gridViewBtn" onclick="setView('grid')"><i class="fas fa-th"></i></button>
+          <button class="view-btn" id="listViewBtn" onclick="setView('list')"><i class="fas fa-list"></i></button>
+        </div>
+      </div>
+    </div>
 
+    <!-- Product Grid -->
+    <div class="product-grid" id="productGrid"></div>
+
+    <!-- Pagination -->
+    <div class="pagination" id="pagination"></div>
+  </div>
 </div>
 
-<footer>© 2025 ShopEase</footer>
+<!-- TOAST -->
+<div class="toast" id="toast"><i class="fas fa-check-circle"></i><span id="toastMsg">Added to cart!</span></div>
 
 <script>
-const products=[
-{id:1,brand:"Sony",name:"WH-1000XM5 Headphones",price:29990,img:"https://m.media-amazon.com/images/I/61d5ZQ2aECL._SL1500_.jpg"},
-{id:2,brand:"JBL",name:"Flip 6 Speaker",price:8999,img:"https://m.media-amazon.com/images/I/71ey+HYcTnL._SL1500_.jpg"},
-{id:3,brand:"Boat",name:"Airdopes 141",price:1499,img:"https://m.media-amazon.com/images/I/61R4yV5D1BL._SL1500_.jpg"},
-{id:4,brand:"Apple",name:"AirPods Pro 2",price:24990,img:"https://m.media-amazon.com/images/I/61SUj2aKoEL._SL1500_.jpg"},
-{id:5,brand:"Sony",name:"SRS-XB23 Speaker",price:7990,img:"https://m.media-amazon.com/images/I/71I7l2Ls0EL._SL1500_.jpg"},
-{id:6,brand:"JBL",name:"Charge 5",price:13999,img:"https://m.media-amazon.com/images/I/61Zzv2f0bLL._SL1500_.jpg"},
-{id:7,brand:"Boat",name:"Stone 620",price:1999,img:"https://m.media-amazon.com/images/I/71C1MZt2EnL._SL1500_.jpg"},
-{id:8,brand:"Apple",name:"AirPods 3rd Gen",price:18990,img:"https://m.media-amazon.com/images/I/61SUj2aKoEL._SL1500_.jpg"}
+// ================================================================
+//  PRODUCT DATA — 48 products across 9 categories
+// ================================================================
+const products = [
+
+  // ── Earbuds ──────────────────────────────────────────────────
+  { id:1,  brand:"Sony",     title:"Sony WF-1000XM5 True Wireless Noise Cancelling Earbuds",       category:"Earbuds",          connectivity:"Wireless",  features:["ANC","Hi-Res","LDAC","Mic","Voice Assistant"], colors:["Black","Silver","Midnight Blue"], specs:{driver:"8.4mm",bt:"BT 5.3",battery:"36h",codec:"LDAC/AAC"},         price:17999, originalPrice:29990, discount:40, rating:4.8, reviewCount:18240, badge:"topseller", offer:"Free Delivery", image:"https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=400" },
+  { id:2,  brand:"Apple",    title:"Apple AirPods Pro (2nd Gen) with H2 Chip",                    category:"Earbuds",          connectivity:"Wireless",  features:["ANC","Mic","Voice Assistant","Hi-Res"],        colors:["White"],                          specs:{driver:"Custom",bt:"BT 5.3",battery:"30h",codec:"AAC"},             price:24900, originalPrice:26900, discount:7,  rating:4.9, reviewCount:54320, badge:"",          offer:"Free Delivery", image:"https://images.unsplash.com/photo-1588423771073-b8903fead85c?w=400" },
+  { id:3,  brand:"Samsung",  title:"Samsung Galaxy Buds3 Pro ANC Earbuds",                        category:"Earbuds",          connectivity:"Wireless",  features:["ANC","Hi-Res","Mic","Voice Assistant"],        colors:["White","Black"],                  specs:{driver:"10.5mm",bt:"BT 5.4",battery:"30h",codec:"SSC HiFi"},        price:14999, originalPrice:22999, discount:35, rating:4.7, reviewCount:12340, badge:"new",        offer:"Special Price", image:"https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=400" },
+  { id:4,  brand:"boAt",     title:"boAt Airdopes 141 ANC TWS Earbuds",                           category:"Earbuds",          connectivity:"Wireless",  features:["ANC","Mic","Waterproof"],                      colors:["Black","White","Blue","Green"],    specs:{driver:"6mm",bt:"BT 5.3",battery:"42h",codec:"SBC"},                price:1299,  originalPrice:4499,  discount:71, rating:4.4, reviewCount:45670, badge:"",          offer:"Free Delivery", image:"https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=400" },
+  { id:5,  brand:"Nothing",  title:"Nothing Ear (2) Hi-Res TWS with ANC",                        category:"Earbuds",          connectivity:"Wireless",  features:["ANC","Hi-Res","LDAC","Mic"],                   colors:["White","Black"],                  specs:{driver:"11.6mm",bt:"BT 5.3",battery:"36h",codec:"LDAC"},            price:8999,  originalPrice:11999, discount:25, rating:4.7, reviewCount:21340, badge:"",          offer:"Special Price", image:"https://images.unsplash.com/photo-1588423771073-b8903fead85c?w=400" },
+  { id:6,  brand:"OnePlus",  title:"OnePlus Buds 3 Adaptive Noise Cancelling",                   category:"Earbuds",          connectivity:"Wireless",  features:["ANC","Hi-Res","LDAC","Mic"],                   colors:["Midnight Black","Splendid Blue"], specs:{driver:"12.4mm",bt:"BT 5.3",battery:"44h",codec:"LHDC"},            price:4999,  originalPrice:5999,  discount:17, rating:4.6, reviewCount:28760, badge:"",          offer:"Free Delivery", image:"https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=400" },
+  { id:7,  brand:"JBL",      title:"JBL Tune 230NC TWS Noise Cancelling",                        category:"Earbuds",          connectivity:"Wireless",  features:["ANC","Mic","Voice Assistant"],                  colors:["Black","White","Blue","Red"],     specs:{driver:"6mm",bt:"BT 5.2",battery:"40h",codec:"SBC/AAC"},            price:3499,  originalPrice:7999,  discount:56, rating:4.5, reviewCount:18920, badge:"",          offer:"Buy 1 Get 1",   image:"https://images.unsplash.com/photo-1588423771073-b8903fead85c?w=400" },
+  { id:8,  brand:"Oppo",     title:"Oppo Enco X2 Hi-Res TWS Earbuds",                            category:"Earbuds",          connectivity:"Wireless",  features:["ANC","Hi-Res","LDAC","Mic"],                   colors:["Black","Gold"],                   specs:{driver:"11mm+6mm",bt:"BT 5.3",battery:"25h",codec:"LDAC"},          price:6999,  originalPrice:12999, discount:46, rating:4.6, reviewCount:9870,  badge:"",          offer:"Combo Pack",    image:"https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=400" },
+
+  // ── Headphones ───────────────────────────────────────────────
+  { id:9,  brand:"Sony",     title:"Sony WH-1000XM5 Wireless Over-Ear Headphones",               category:"Headphones",       connectivity:"Both",      features:["ANC","Hi-Res","LDAC","Mic","Voice Assistant"], colors:["Black","Silver","Midnight Blue"], specs:{driver:"30mm",bt:"BT 5.2",battery:"30h",codec:"LDAC/AAC"},         price:24990, originalPrice:34990, discount:29, rating:4.9, reviewCount:32100, badge:"topseller", offer:"Free Delivery", image:"https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400" },
+  { id:10, brand:"Bose",     title:"Bose QuietComfort 45 Wireless Headphones",                   category:"Headphones",       connectivity:"Both",      features:["ANC","Mic","Voice Assistant"],                  colors:["Black","White"],                  specs:{driver:"40mm",bt:"BT 5.1",battery:"24h",codec:"AAC/SBC"},           price:22900, originalPrice:35000, discount:35, rating:4.8, reviewCount:14320, badge:"",          offer:"Free Delivery", image:"https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400" },
+  { id:11, brand:"JBL",      title:"JBL Live 660NC Wireless Over-Ear",                           category:"Headphones",       connectivity:"Both",      features:["ANC","Mic","Voice Assistant"],                  colors:["Black","Blue","White"],           specs:{driver:"40mm",bt:"BT 5.0",battery:"50h",codec:"SBC/AAC"},           price:5999,  originalPrice:11999, discount:50, rating:4.5, reviewCount:21340, badge:"",          offer:"Special Price", image:"https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400" },
+  { id:12, brand:"Sennheiser",title:"Sennheiser Momentum 4 Wireless ANC",                        category:"Headphones",       connectivity:"Both",      features:["ANC","Hi-Res","LDAC","Mic"],                   colors:["Black","White"],                  specs:{driver:"42mm",bt:"BT 5.2",battery:"60h",codec:"aptX Adaptive"},     price:27999, originalPrice:39990, discount:30, rating:4.8, reviewCount:8760,  badge:"award",      offer:"Free Delivery", image:"https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400" },
+  { id:13, brand:"boAt",     title:"boAt Rockerz 450 Pro On-Ear Bluetooth",                     category:"Headphones",       connectivity:"Both",      features:["Mic","Voice Assistant"],                       colors:["Black","Navy","Red"],             specs:{driver:"40mm",bt:"BT 5.0",battery:"70h",codec:"SBC"},               price:999,   originalPrice:2990,  discount:67, rating:4.3, reviewCount:54320, badge:"",          offer:"Buy 1 Get 1",   image:"https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400" },
+  { id:14, brand:"Apple",    title:"Apple AirPods Max Over-Ear Headphones",                     category:"Headphones",       connectivity:"Wireless",  features:["ANC","Hi-Res","Mic","Voice Assistant"],        colors:["Silver","Space Gray","Green","Pink","Sky Blue"], specs:{driver:"Custom",bt:"BT 5.0",battery:"20h",codec:"AAC"}, price:59900, originalPrice:64900, discount:8,  rating:4.7, reviewCount:12340, badge:"",          offer:"Free Delivery", image:"https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400" },
+  { id:15, brand:"Audio-Technica",title:"Audio-Technica ATH-M50xBT2 Studio Wireless",           category:"Headphones",       connectivity:"Both",      features:["Hi-Res","Mic","LDAC"],                         colors:["Black","White"],                  specs:{driver:"45mm",bt:"BT 5.0",battery:"50h",codec:"AAC/LDAC"},          price:14990, originalPrice:22990, discount:35, rating:4.7, reviewCount:7650,  badge:"",          offer:"Special Price", image:"https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400" },
+
+  // ── Bluetooth Speakers ───────────────────────────────────────
+  { id:16, brand:"JBL",      title:"JBL Flip 6 Portable Bluetooth Speaker",                     category:"Bluetooth Speakers",connectivity:"Wireless",  features:["Waterproof","Mic"],                            colors:["Black","Blue","Red","Green","Pink"],specs:{power:"30W",bt:"BT 5.1",battery:"12h",waterproof:"IP67"},            price:7999,  originalPrice:13999, discount:43, rating:4.7, reviewCount:45670, badge:"topseller", offer:"Free Delivery", image:"https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=400" },
+  { id:17, brand:"Sony",     title:"Sony SRS-XB100 Extra Bass Portable Speaker",                category:"Bluetooth Speakers",connectivity:"Wireless",  features:["Waterproof","Mic"],                            colors:["Black","Blue","Red","Orange"],     specs:{power:"4W",bt:"BT 5.3",battery:"16h",waterproof:"IP67"},            price:3990,  originalPrice:5990,  discount:33, rating:4.5, reviewCount:28760, badge:"",          offer:"Free Delivery", image:"https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=400" },
+  { id:18, brand:"Bose",     title:"Bose SoundLink Flex Portable Bluetooth Speaker",            category:"Bluetooth Speakers",connectivity:"Wireless",  features:["Waterproof","Mic","Voice Assistant"],           colors:["Black","White","Blue","Green"],    specs:{power:"N/A",bt:"BT 5.1",battery:"12h",waterproof:"IP67"},           price:11999, originalPrice:16999, discount:29, rating:4.8, reviewCount:18920, badge:"",          offer:"Special Price", image:"https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=400" },
+  { id:19, brand:"Marshall", title:"Marshall Emberton II Portable Bluetooth Speaker",           category:"Bluetooth Speakers",connectivity:"Wireless",  features:["Waterproof"],                                  colors:["Black","Cream"],                  specs:{power:"20W",bt:"BT 5.1",battery:"30h",waterproof:"IPX7"},           price:12999, originalPrice:17999, discount:28, rating:4.8, reviewCount:14320, badge:"award",      offer:"Free Delivery", image:"https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=400" },
+  { id:20, brand:"boAt",     title:"boAt Stone 1000 14W Outdoor Speaker",                      category:"Bluetooth Speakers",connectivity:"Wireless",  features:["Waterproof","Mic"],                            colors:["Black","Blue","Army Green"],       specs:{power:"14W",bt:"BT 5.0",battery:"12h",waterproof:"IPX5"},           price:1999,  originalPrice:4999,  discount:60, rating:4.3, reviewCount:32100, badge:"",          offer:"Buy 1 Get 1",   image:"https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=400" },
+  { id:21, brand:"Harman Kardon",title:"Harman Kardon Onyx Studio 8 Portable Speaker",         category:"Bluetooth Speakers",connectivity:"Wireless",  features:["Mic"],                                         colors:["Black","Champagne"],              specs:{power:"50W",bt:"BT 5.2",battery:"8h",waterproof:"None"},            price:15999, originalPrice:24999, discount:36, rating:4.6, reviewCount:9870,  badge:"",          offer:"Free Delivery", image:"https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=400" },
+  { id:22, brand:"Ultimate Ears",title:"UE Boom 3 360° Bluetooth Speaker",                    category:"Bluetooth Speakers",connectivity:"Wireless",  features:["Waterproof","Mic"],                            colors:["Black","Blue","Red","Yellow"],     specs:{power:"N/A",bt:"BT 5.0",battery:"15h",waterproof:"IP67"},           price:8999,  originalPrice:14999, discount:40, rating:4.7, reviewCount:12340, badge:"",          offer:"Special Price", image:"https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=400" },
+
+  // ── Soundbars ────────────────────────────────────────────────
+  { id:23, brand:"Sony",     title:"Sony HT-S400 2.1ch Dolby Atmos Soundbar 330W",             category:"Soundbars",        connectivity:"Both",      features:["Dolby Atmos","Waterproof","Voice Assistant"],  colors:["Black"],                          specs:{power:"330W",channels:"2.1",bt:"BT 5.0",subwoofer:"Wireless"},     price:19990, originalPrice:34990, discount:43, rating:4.7, reviewCount:14320, badge:"",          offer:"Free Delivery", image:"https://images.unsplash.com/photo-1545454675-3531b543be5d?w=400" },
+  { id:24, brand:"Samsung",  title:"Samsung HW-Q600C 3.1.2ch Dolby Atmos Soundbar",           category:"Soundbars",        connectivity:"Both",      features:["Dolby Atmos"],                                 colors:["Black"],                          specs:{power:"360W",channels:"3.1.2",bt:"BT 4.2",subwoofer:"Wireless"},   price:27990, originalPrice:44990, discount:38, rating:4.7, reviewCount:9870,  badge:"new",        offer:"Free Delivery", image:"https://images.unsplash.com/photo-1545454675-3531b543be5d?w=400" },
+  { id:25, brand:"Bose",     title:"Bose Smart Soundbar 300 with Alexa",                      category:"Soundbars",        connectivity:"Wi-Fi",     features:["Dolby Atmos","Voice Assistant","Wi-Fi"],       colors:["Black","White"],                  specs:{power:"N/A",channels:"3.0",bt:"BT 5.0",subwoofer:"Optional"},      price:37990, originalPrice:49990, discount:24, rating:4.7, reviewCount:7650,  badge:"",          offer:"Special Price", image:"https://images.unsplash.com/photo-1545454675-3531b543be5d?w=400" },
+  { id:26, brand:"JBL",      title:"JBL Bar 500 5.1ch Dolby Atmos Soundbar 295W",             category:"Soundbars",        connectivity:"Both",      features:["Dolby Atmos"],                                 colors:["Black"],                          specs:{power:"295W",channels:"5.1",bt:"BT 5.0",subwoofer:"Wireless"},     price:22999, originalPrice:37999, discount:39, rating:4.6, reviewCount:5430,  badge:"",          offer:"Free Delivery", image:"https://images.unsplash.com/photo-1545454675-3531b543be5d?w=400" },
+  { id:27, brand:"Polk Audio",title:"Polk Audio MagniFi Mini AX Compact Soundbar",            category:"Soundbars",        connectivity:"Both",      features:["Dolby Atmos","Voice Assistant"],               colors:["Black"],                          specs:{power:"250W",channels:"3.1.2",bt:"BT 5.0",subwoofer:"Wireless"},   price:28999, originalPrice:44999, discount:36, rating:4.6, reviewCount:3210,  badge:"",          offer:"Combo Pack",    image:"https://images.unsplash.com/photo-1545454675-3531b543be5d?w=400" },
+  { id:28, brand:"LG",       title:"LG S75Q 3.1.2ch Dolby Atmos Soundbar 380W",               category:"Soundbars",        connectivity:"Both",      features:["Dolby Atmos","Hi-Res"],                        colors:["Black"],                          specs:{power:"380W",channels:"3.1.2",bt:"BT 5.0",subwoofer:"Wireless"},   price:24999, originalPrice:39999, discount:38, rating:4.6, reviewCount:6540,  badge:"",          offer:"Free Delivery", image:"https://images.unsplash.com/photo-1545454675-3531b543be5d?w=400" },
+
+  // ── Home Theatre ─────────────────────────────────────────────
+  { id:29, brand:"Sony",     title:"Sony HT-A9 7.1.4ch 360 Spatial Sound Home Theatre",       category:"Home Theatre",     connectivity:"Wi-Fi",     features:["Dolby Atmos","Hi-Res","Voice Assistant"],      colors:["Black"],                          specs:{power:"504W",channels:"7.1.4",bt:"BT 5.0",subwoofer:"Wireless"},   price:99990, originalPrice:149990,discount:33, rating:4.8, reviewCount:5430,  badge:"award",      offer:"Free Delivery", image:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400" },
+  { id:30, brand:"Samsung",  title:"Samsung HW-Q990C 11.1.4ch Dolby Atmos Theatre",           category:"Home Theatre",     connectivity:"Wi-Fi",     features:["Dolby Atmos","Hi-Res"],                        colors:["Black"],                          specs:{power:"656W",channels:"11.1.4",bt:"BT 4.2",subwoofer:"Wireless"},  price:129990,originalPrice:199990,discount:35, rating:4.9, reviewCount:3210,  badge:"award",      offer:"Free Delivery", image:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400" },
+  { id:31, brand:"LG",       title:"LG SNH5 4.1ch Dolby Atmos Home Theatre 600W",             category:"Home Theatre",     connectivity:"Both",      features:["Dolby Atmos","Hi-Res"],                        colors:["Black"],                          specs:{power:"600W",channels:"4.1",bt:"BT 5.0",subwoofer:"Wireless"},     price:34999, originalPrice:59999, discount:42, rating:4.6, reviewCount:4320,  badge:"",          offer:"Special Price", image:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400" },
+  { id:32, brand:"Philips",  title:"Philips TAB8807 3.1 Soundbar with Wireless Subwoofer",   category:"Home Theatre",     connectivity:"Both",      features:["Dolby Atmos"],                                 colors:["Black"],                          specs:{power:"700W",channels:"3.1",bt:"BT 5.0",subwoofer:"Wireless"},     price:19999, originalPrice:34999, discount:43, rating:4.5, reviewCount:2100,  badge:"",          offer:"Free Delivery", image:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400" },
+  { id:33, brand:"Klipsch",  title:"Klipsch Bar 48 5.1 Surround Sound System",               category:"Home Theatre",     connectivity:"Both",      features:["Dolby Atmos","Hi-Res"],                        colors:["Black"],                          specs:{power:"440W",channels:"5.1",bt:"BT 4.2",subwoofer:"Wireless"},     price:49999, originalPrice:79999, discount:38, rating:4.7, reviewCount:1890,  badge:"",          offer:"Combo Pack",    image:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400" },
+
+  // ── Neckbands ────────────────────────────────────────────────
+  { id:34, brand:"OnePlus",  title:"OnePlus Bullets Z2 ANC Bluetooth Neckband",               category:"Neckbands",        connectivity:"Wireless",  features:["ANC","Mic","Waterproof"],                      colors:["Black","Blue"],                   specs:{driver:"12.4mm",bt:"BT 5.2",battery:"25h",codec:"AAC"},             price:1999,  originalPrice:2999,  discount:33, rating:4.5, reviewCount:32100, badge:"",          offer:"Free Delivery", image:"https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=400" },
+  { id:35, brand:"Sony",     title:"Sony WI-1000XM2 Wireless Noise Cancelling Neckband",     category:"Neckbands",        connectivity:"Both",      features:["ANC","Hi-Res","LDAC","Mic"],                   colors:["Black","Silver"],                 specs:{driver:"9mm",bt:"BT 5.0",battery:"10h",codec:"LDAC"},               price:12990, originalPrice:19990, discount:35, rating:4.6, reviewCount:9870,  badge:"",          offer:"Special Price", image:"https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=400" },
+  { id:36, brand:"boAt",     title:"boAt Rockerz 255 Pro+ Sports Neckband",                  category:"Neckbands",        connectivity:"Wireless",  features:["Mic","Waterproof"],                            colors:["Black","Blue","Red"],             specs:{driver:"10mm",bt:"BT 5.0",battery:"60h",codec:"SBC"},               price:899,   originalPrice:2990,  discount:70, rating:4.3, reviewCount:54320, badge:"",          offer:"Buy 1 Get 1",   image:"https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=400" },
+  { id:37, brand:"Jabra",    title:"Jabra Evolve2 55 ANC Wireless Neckband",                 category:"Neckbands",        connectivity:"Wireless",  features:["ANC","Mic","Voice Assistant"],                  colors:["Black","Titanium"],               specs:{driver:"N/A",bt:"BT 5.0",battery:"36h",codec:"AAC/SBC"},            price:24999, originalPrice:39999, discount:38, rating:4.7, reviewCount:4320,  badge:"",          offer:"Free Delivery", image:"https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=400" },
+  { id:38, brand:"Realme",   title:"Realme Buds Wireless 3 Neo Active Neckband",             category:"Neckbands",        connectivity:"Wireless",  features:["ANC","Mic"],                                   colors:["Black","Blue"],                   specs:{driver:"11.4mm",bt:"BT 5.2",battery:"30h",codec:"AAC"},             price:1499,  originalPrice:2499,  discount:40, rating:4.4, reviewCount:18920, badge:"",          offer:"Free Delivery", image:"https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=400" },
+
+  // ── Smart Speakers ───────────────────────────────────────────
+  { id:39, brand:"Amazon",   title:"Amazon Echo (4th Gen) Smart Speaker with Alexa",         category:"Smart Speakers",   connectivity:"Wi-Fi",     features:["Voice Assistant","Wi-Fi","Mic"],               colors:["Charcoal","Glacier White","Twilight Blue"], specs:{power:"N/A",bt:"BT 5.0",battery:"None",codec:"N/A"}, price:4999,  originalPrice:9999,  discount:50, rating:4.6, reviewCount:45670, badge:"",          offer:"Free Delivery", image:"https://images.unsplash.com/photo-1544923408-75c5cef46f14?w=400" },
+  { id:40, brand:"Google",   title:"Google Nest Audio Smart Speaker",                         category:"Smart Speakers",   connectivity:"Wi-Fi",     features:["Voice Assistant","Wi-Fi","Mic"],               colors:["Chalk","Charcoal"],                specs:{power:"N/A",bt:"BT 5.0",battery:"None",codec:"N/A"},                price:6999,  originalPrice:9999,  discount:30, rating:4.5, reviewCount:21340, badge:"",          offer:"Special Price", image:"https://images.unsplash.com/photo-1544923408-75c5cef46f14?w=400" },
+  { id:41, brand:"Amazon",   title:"Amazon Echo Studio Hi-Fi Smart Speaker",                 category:"Smart Speakers",   connectivity:"Wi-Fi",     features:["Hi-Res","Dolby Atmos","Voice Assistant","Wi-Fi","Mic"],colors:["Charcoal","Glacier White"],specs:{power:"330W",bt:"BT 5.0",battery:"None",codec:"Hi-Res"},         price:14999, originalPrice:22999, discount:35, rating:4.7, reviewCount:12340, badge:"",          offer:"Free Delivery", image:"https://images.unsplash.com/photo-1544923408-75c5cef46f14?w=400" },
+  { id:42, brand:"Sonos",    title:"Sonos Era 100 Smart Speaker with Hi-Res",                category:"Smart Speakers",   connectivity:"Wi-Fi",     features:["Hi-Res","Voice Assistant","Wi-Fi","Mic","LDAC"],colors:["Black","White"],            specs:{power:"N/A",bt:"BT 5.0",battery:"None",codec:"LDAC"},               price:24999, originalPrice:34999, discount:29, rating:4.8, reviewCount:8760,  badge:"award",      offer:"Special Price", image:"https://images.unsplash.com/photo-1544923408-75c5cef46f14?w=400" },
+
+  // ── Party Speakers ────────────────────────────────────────────
+  { id:43, brand:"JBL",      title:"JBL PartyBox 110 160W Portable Party Speaker",           category:"Party Speakers",   connectivity:"Both",      features:["Mic","Waterproof","Voice Assistant"],           colors:["Black"],                          specs:{power:"160W",bt:"BT 5.1",battery:"12h",waterproof:"IPX4"},          price:19999, originalPrice:31999, discount:38, rating:4.7, reviewCount:14320, badge:"",          offer:"Free Delivery", image:"https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=400" },
+  { id:44, brand:"Sony",     title:"Sony SRS-XP700 EXTRA BASS 100W Party Speaker",           category:"Party Speakers",   connectivity:"Both",      features:["Mic","Waterproof"],                            colors:["Black"],                          specs:{power:"100W",bt:"BT 5.0",battery:"25h",waterproof:"IPX4"},          price:24990, originalPrice:39990, discount:38, rating:4.7, reviewCount:9870,  badge:"",          offer:"Special Price", image:"https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=400" },
+  { id:45, brand:"boAt",     title:"boAt PartyPal 200 100W Portable Trolley Speaker",        category:"Party Speakers",   connectivity:"Both",      features:["Mic","Waterproof"],                            colors:["Black","Blue"],                   specs:{power:"100W",bt:"BT 5.0",battery:"10h",waterproof:"IPX5"},          price:7999,  originalPrice:17999, discount:56, rating:4.3, reviewCount:18920, badge:"",          offer:"Buy 1 Get 1",   image:"https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=400" },
+  { id:46, brand:"Marshall", title:"Marshall Woburn III Bluetooth Home Speaker",             category:"Party Speakers",   connectivity:"Both",      features:["Hi-Res","LDAC"],                               colors:["Black","Cream"],                  specs:{power:"120W",bt:"BT 5.2",battery:"None",waterproof:"None"},         price:52999, originalPrice:79999, discount:34, rating:4.8, reviewCount:5430,  badge:"award",      offer:"Free Delivery", image:"https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=400" },
+  { id:47, brand:"Philips",  title:"Philips TAX5706 120W Party Speaker with USB",            category:"Party Speakers",   connectivity:"Both",      features:["Mic"],                                         colors:["Black"],                          specs:{power:"120W",bt:"BT 5.0",battery:"None",waterproof:"None"},         price:8999,  originalPrice:14999, discount:40, rating:4.4, reviewCount:7650,  badge:"",          offer:"Combo Pack",    image:"https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=400" },
+  { id:48, brand:"Bose",     title:"Bose S1 Pro+ Portable PA System",                        category:"Party Speakers",   connectivity:"Both",      features:["Mic","Waterproof"],                            colors:["Black"],                          specs:{power:"N/A",bt:"BT 5.0",battery:"11h",waterproof:"IPX4"},           price:74990, originalPrice:89990, discount:17, rating:4.8, reviewCount:3210,  badge:"",          offer:"Free Delivery", image:"https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=400" },
 ];
 
-const grid=document.getElementById("grid");
-const search=document.getElementById("search");
-const sort=document.getElementById("sort");
-const brandChecks=document.querySelectorAll(".brand-filter");
-const priceRadios=document.querySelectorAll("input[name='price']");
-const countEls=document.querySelectorAll("#count,#productCount");
-const cartCount=document.getElementById("cartCount");
+// ============================================================
+//  STATE
+// ============================================================
+let filteredProducts = [...products];
+let currentPage = 1;
+const productsPerPage = 12;
+let currentView = 'grid';
+let activeFilters = { categories:[], brands:[], connectivity:[], features:[], offers:[] };
 
-function getCart(){return JSON.parse(localStorage.getItem("cart"))||[];}
-function setCart(c){localStorage.setItem("cart",JSON.stringify(c));updateCart();}
-function updateCart(){
-  cartCount.textContent=getCart().reduce((s,i)=>s+i.qty,0);
+// ============================================================
+//  CART
+// ============================================================
+function getCart() { try { return JSON.parse(localStorage.getItem('shopease_cart')) || []; } catch(e) { return []; } }
+function saveCart(c) { localStorage.setItem('shopease_cart', JSON.stringify(c)); updateCartBadge(); }
+function addToCart(p) {
+  const cart = getCart(), ex = cart.find(i => i.id===p.id);
+  if (ex) ex.qty++; else cart.push({ id:p.id, title:p.title, brand:p.brand, price:p.price, image:p.image, qty:1 });
+  saveCart(cart);
 }
-updateCart();
-
-function addToCart(id){
-  const cart=getCart();
-  const item=cart.find(i=>i.id===id);
-  if(item)item.qty++;
-  else cart.push({id,qty:1});
-  setCart(cart);
+function updateCartBadge() {
+  const total = getCart().reduce((s,i) => s+i.qty, 0);
+  const b = document.getElementById('cartBadge');
+  b.textContent = total; b.setAttribute('data-count', total);
 }
 
-function render(list){
-  grid.innerHTML="";
-  list.forEach(p=>{
-    const div=document.createElement("div");
-    div.className="card";
-    div.innerHTML=`
-      <div class="thumb"><img src="${p.img}"></div>
-      <div class="brand-name">${p.brand}</div>
-      <div class="title">${p.name}</div>
-      <div class="price">₹${p.price.toLocaleString()}</div>
-      <button class="add-btn" onclick="addToCart(${p.id})">Add to Cart</button>
-    `;
-    grid.appendChild(div);
+// ============================================================
+//  TOAST
+// ============================================================
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  document.getElementById('toastMsg').textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// ============================================================
+//  INIT
+// ============================================================
+document.addEventListener('DOMContentLoaded', () => {
+  buildSoundWave();
+  initFilters();
+  initEventListeners();
+  updateCartBadge();
+  renderProducts();
+  document.getElementById('totalProducts').textContent = products.length;
+});
+
+function buildSoundWave() {
+  const el = document.getElementById('soundWave');
+  const heights = [20,40,60,80,100,80,60,40,20,30,50,70,90,70,50,30,20,40,60,80,60,40,20,35,55,75,55,35,20,45,65,45];
+  el.innerHTML = heights.map((h,i) =>
+    `<div class="wave-bar" style="height:${h}%;animation-delay:${(i*0.07).toFixed(2)}s"></div>`
+  ).join('');
+}
+
+function initFilters() {
+  const cats = [...new Set(products.map(p => p.category))];
+  document.getElementById('categoryFilters').innerHTML = cats.map(c => {
+    const count = products.filter(p => p.category===c).length;
+    return `<label class="filter-option"><input type="checkbox" value="${c}" onchange="applyFilters()"><span>${c}</span><span class="count">${count}</span></label>`;
+  }).join('');
+
+  const brands = [...new Set(products.map(p => p.brand))].sort();
+  document.getElementById('brandFilters').innerHTML = brands.map(b => {
+    const count = products.filter(p => p.brand===b).length;
+    return `<label class="filter-option"><input type="checkbox" value="${b}" onchange="applyFilters()"><span>${b}</span><span class="count">${count}</span></label>`;
+  }).join('');
+
+  const colorMap = { 'Black':'#1a1a1a','White':'#f5f5f5','Silver':'#c0c0c0','Blue':'#1565c0','Red':'#e53935','Green':'#2e7d32','Navy':'#003366','Gold':'#b8960c','Cream':'#f5f0e0','Pink':'#ec407a','Orange':'#e65100','Yellow':'#f9a825','Gray':'#9e9e9e','Charcoal':'#37474f','Titanium':'#78909c','Midnight Blue':'#0d2137','Space Gray':'#636366','Midnight Black':'#1a1a2e','Splendid Blue':'#1976d2','Army Green':'#4caf50','Chalk':'#fafafa','Twilight Blue':'#4a90d9','Glacier White':'#eceff1','Champagne':'#f7e7ce','Coral':'#ff7043','Indigo':'#3949ab' };
+  const allColors = [...new Set(products.flatMap(p => p.colors))];
+  document.getElementById('colorFilters').innerHTML = allColors.slice(0,16).map(c => {
+    const hex = colorMap[c] || '#ccc';
+    const bd  = (c==='White'||c==='Cream'||c==='Chalk'||c==='Glacier White') ? 'border:1.5px solid #ddd;' : '';
+    return `<div class="color-option" style="background:${hex};${bd}" title="${c}" data-color="${c}" onclick="toggleColorFilter('${c}')"></div>`;
+  }).join('');
+}
+
+function initEventListeners() {
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const cat = btn.dataset.category;
+      document.querySelectorAll('#categoryFilters input').forEach(cb => { cb.checked = cat!=='all' && cb.value===cat; });
+      applyFilters();
+    });
   });
-  countEls.forEach(el=>el.textContent=list.length);
+  document.getElementById('searchInput').addEventListener('input', applyFilters);
 }
 
-function applyFilters(){
-  let filtered=[...products];
-
-  const q=search.value.toLowerCase();
-  if(q)filtered=filtered.filter(p=>p.name.toLowerCase().includes(q)||p.brand.toLowerCase().includes(q));
-
-  const brands=[...brandChecks].filter(c=>c.checked).map(c=>c.value);
-  if(brands.length)filtered=filtered.filter(p=>brands.includes(p.brand));
-
-  const priceVal=[...priceRadios].find(r=>r.checked).value;
-  if(priceVal==="under5000")filtered=filtered.filter(p=>p.price<5000);
-  else if(priceVal==="5000-15000")filtered=filtered.filter(p=>p.price>=5000&&p.price<=15000);
-
-  if(sort.value==="price-asc")filtered.sort((a,b)=>a.price-b.price);
-  else if(sort.value==="price-desc")filtered.sort((a,b)=>b.price-a.price);
-
-  render(filtered);
+function toggleColorFilter(c) {
+  const el = document.querySelector(`.color-option[data-color="${c}"]`);
+  if (el) { el.classList.toggle('active'); applyFilters(); }
 }
 
-search.addEventListener("input",applyFilters);
-sort.addEventListener("change",applyFilters);
-brandChecks.forEach(c=>c.addEventListener("change",applyFilters));
-priceRadios.forEach(r=>r.addEventListener("change",applyFilters));
+function applyFilters() {
+  const search = document.getElementById('searchInput').value.toLowerCase();
+  activeFilters.categories   = [...document.querySelectorAll('#categoryFilters input:checked')].map(i=>i.value);
+  activeFilters.brands       = [...document.querySelectorAll('#brandFilters input:checked')].map(i=>i.value);
+  activeFilters.connectivity = [...document.querySelectorAll('#connectivityFilters input:checked')].map(i=>i.value);
+  activeFilters.features     = [...document.querySelectorAll('#featureFilters input:checked')].map(i=>i.value);
+  activeFilters.offers       = [...document.querySelectorAll('#offerFilters input:checked')].map(i=>i.value);
+  const selectedColors       = [...document.querySelectorAll('.color-option.active')].map(e=>e.dataset.color);
+  const priceRanges          = [...document.querySelectorAll('[value="under1000"]:checked,[value="1000-3000"]:checked,[value="3000-8000"]:checked,[value="8000-25000"]:checked,[value="above25000"]:checked')].map(i=>i.value);
+  const minRatings           = [...document.querySelectorAll('.filter-section input[value="4"]:checked,.filter-section input[value="3"]:checked')].map(i=>parseInt(i.value));
 
-render(products);
+  filteredProducts = products.filter(p => {
+    if (search && !p.title.toLowerCase().includes(search) && !p.brand.toLowerCase().includes(search)) return false;
+    if (activeFilters.categories.length  && !activeFilters.categories.includes(p.category))    return false;
+    if (activeFilters.brands.length      && !activeFilters.brands.includes(p.brand))            return false;
+    if (activeFilters.connectivity.length && !activeFilters.connectivity.includes(p.connectivity)) return false;
+    if (activeFilters.features.length    && !activeFilters.features.every(f=>p.features.includes(f))) return false;
+    if (activeFilters.offers.length      && !activeFilters.offers.includes(p.offer))            return false;
+    if (selectedColors.length            && !p.colors.some(c=>selectedColors.includes(c)))      return false;
+    if (priceRanges.length) {
+      const ok = priceRanges.some(r => {
+        if (r==='under1000')  return p.price < 1000;
+        if (r==='1000-3000')  return p.price>=1000  && p.price<=3000;
+        if (r==='3000-8000')  return p.price>=3000  && p.price<=8000;
+        if (r==='8000-25000') return p.price>=8000  && p.price<=25000;
+        if (r==='above25000') return p.price > 25000;
+      });
+      if (!ok) return false;
+    }
+    if (minRatings.length && !minRatings.some(r=>p.rating>=r)) return false;
+    return true;
+  });
+
+  currentPage = 1;
+  updateActiveFiltersDisplay();
+  updateTabSelection();
+  sortProducts();
+}
+
+function updateTabSelection() {
+  const activeCats = [...document.querySelectorAll('#categoryFilters input:checked')].map(i=>i.value);
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.category==='all' ? activeCats.length===0 : activeCats.includes(btn.dataset.category));
+  });
+}
+
+function updateActiveFiltersDisplay() {
+  const container = document.getElementById('activeFilters');
+  const all = [
+    ...activeFilters.categories.map(v=>({type:'category',value:v})),
+    ...activeFilters.brands.map(v=>({type:'brand',value:v})),
+    ...activeFilters.connectivity.map(v=>({type:'connectivity',value:v})),
+    ...activeFilters.features.map(v=>({type:'feature',value:v})),
+    ...activeFilters.offers.map(v=>({type:'offer',value:v})),
+    ...[...document.querySelectorAll('.color-option.active')].map(e=>({type:'color',value:e.dataset.color})),
+  ];
+  if (!all.length) { container.innerHTML=''; return; }
+  container.innerHTML = all.map(f =>
+    `<div class="active-filter"><span>${f.value}</span><i class="fas fa-times" onclick="removeFilter('${f.type}','${f.value}')"></i></div>`
+  ).join('');
+}
+
+function removeFilter(type, value) {
+  if (type==='color') {
+    const el = document.querySelector(`.color-option[data-color="${value}"]`); if (el) el.classList.remove('active');
+  } else {
+    const m = {category:'categoryFilters',brand:'brandFilters',connectivity:'connectivityFilters',feature:'featureFilters',offer:'offerFilters'};
+    const el = document.querySelector(`#${m[type]} input[value="${value}"]`); if (el) el.checked=false;
+  }
+  applyFilters();
+}
+
+function clearAllFilters() {
+  document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked=false);
+  document.querySelectorAll('.color-option').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('.tab-btn[data-category="all"]').classList.add('active');
+  document.getElementById('searchInput').value='';
+  filteredProducts = [...products]; currentPage=1;
+  updateActiveFiltersDisplay(); sortProducts();
+}
+
+function toggleFilter(h) {
+  h.classList.toggle('collapsed');
+  const o = h.nextElementSibling; if (o) o.classList.toggle('collapsed');
+}
+
+function sortProducts() {
+  const v = document.getElementById('sortDropdown').value;
+  if (v==='price-low')  filteredProducts.sort((a,b)=>a.price-b.price);
+  else if (v==='price-high') filteredProducts.sort((a,b)=>b.price-a.price);
+  else if (v==='rating') filteredProducts.sort((a,b)=>b.rating-a.rating);
+  else filteredProducts.sort((a,b)=>b.reviewCount-a.reviewCount);
+  renderProducts();
+}
+
+function setView(v) {
+  currentView = v;
+  document.getElementById('gridViewBtn').classList.toggle('active', v==='grid');
+  document.getElementById('listViewBtn').classList.toggle('active', v==='list');
+  document.getElementById('productGrid').classList.toggle('list-view', v==='list');
+}
+
+function getStars(r) {
+  const f=Math.floor(r), h=r%1>=0.5; let s='';
+  for(let i=0;i<f;i++) s+='★'; if(h) s+='★';
+  for(let i=f+(h?1:0);i<5;i++) s+='☆';
+  return s;
+}
+
+function getBadgeHTML(p) {
+  if (p.badge==='topseller') return `<span class="badge topseller">BESTSELLER</span>`;
+  if (p.badge==='new')       return `<span class="badge new">NEW</span>`;
+  if (p.badge==='award')     return `<span class="badge award">⭐ AWARD</span>`;
+  if (p.discount>=50)        return `<span class="badge">${p.discount}% OFF</span>`;
+  return '';
+}
+
+// Mini animated audio bars for each card
+function getAudioStrip() {
+  const delays = [0,0.1,0.2,0.3,0.4,0.35,0.25,0.15,0.05,0.2,0.3,0.1,0.4,0.2,0.15,0.3];
+  return `<div class="audio-strip">${delays.map(d =>
+    `<div class="audio-bar" style="animation-delay:${d}s"></div>`
+  ).join('')}</div>`;
+}
+
+const colorHexMap = { 'Black':'#1a1a1a','White':'#f5f5f5','Silver':'#c0c0c0','Blue':'#1565c0','Red':'#e53935','Green':'#2e7d32','Navy':'#003366','Gold':'#b8960c','Cream':'#f5f0e0','Pink':'#ec407a','Orange':'#e65100','Yellow':'#f9a825','Gray':'#9e9e9e','Charcoal':'#37474f','Titanium':'#78909c','Midnight Blue':'#0d2137','Space Gray':'#636366','Midnight Black':'#1a1a2e','Splendid Blue':'#1976d2','Army Green':'#4caf50','Chalk':'#fafafa','Twilight Blue':'#4a90d9','Glacier White':'#eceff1','Champagne':'#f7e7ce' };
+
+function renderProducts() {
+  const grid = document.getElementById('productGrid');
+  const start = (currentPage-1)*productsPerPage, end = start+productsPerPage;
+  const pp = filteredProducts.slice(start, end);
+
+  document.getElementById('showingStart').textContent = filteredProducts.length ? start+1 : 0;
+  document.getElementById('showingEnd').textContent   = Math.min(end, filteredProducts.length);
+  document.getElementById('totalResults').textContent = filteredProducts.length;
+
+  if (!pp.length) {
+    grid.innerHTML=`<div class="no-results"><i class="fas fa-headphones"></i><h3>No products found</h3><p>Try adjusting your filters or search term</p></div>`;
+    renderPagination(); return;
+  }
+
+  let html='';
+  pp.forEach((p,idx) => {
+    if (currentPage===1 && idx===5) {
+      html+=`
+        <div class="promo-banner" style="grid-column:1/-1">
+          <div><h3>🎵 Sound Fest — Up to 60% Off!</h3><p>Premium audio gear — Sony, Bose, JBL, Marshall & more. Limited period deals.</p></div>
+          <button class="promo-banner-btn" onclick="clearAllFilters()">Shop All Deals</button>
+        </div>`;
+    }
+
+    const connTag = `<span class="meta-tag ${p.connectivity==='Wireless'?'green':p.connectivity==='Wi-Fi'?'blue':'dark'}">${p.connectivity}</span>`;
+    const featureTags = p.features.slice(0,3).map(f => `<span class="meta-tag">${f}</span>`).join('');
+
+    const specEntries = Object.entries(p.specs);
+    const specGrid = `<div class="spec-grid">${specEntries.map(([k,v])=>
+      `<div class="spec-item"><span class="spec-key">${k}</span><span class="spec-val">${v}</span></div>`
+    ).join('')}</div>`;
+
+    const colorDots = p.colors.slice(0,5).map(c => {
+      const hex = colorHexMap[c]||'#ccc';
+      const bd  = (c==='White'||c==='Cream'||c==='Chalk'||c==='Glacier White') ? 'border:1.5px solid #ddd;':'';
+      return `<div class="cdot" style="background:${hex};${bd}" title="${c}"></div>`;
+    }).join('');
+
+    html+=`
+      <div class="product-card ${currentView==='list'?'list-view':''}">
+        ${getAudioStrip()}
+        <div class="product-image">
+          <img src="${p.image}" alt="${p.title}" loading="lazy">
+          <button class="wishlist-btn" onclick="toggleWishlist(${p.id})"><i class="far fa-heart"></i></button>
+          ${getBadgeHTML(p)}
+        </div>
+        <div class="product-info">
+          <div class="product-brand">${p.brand}</div>
+          <h3 class="product-title">${p.title}</h3>
+          <div class="product-meta">${connTag}${featureTags}</div>
+          <div class="product-pricing">
+            <span class="current-price">₹${p.price.toLocaleString()}</span>
+            <span class="original-price">₹${p.originalPrice.toLocaleString()}</span>
+            <span class="discount">${p.discount}% off</span>
+          </div>
+          <div class="product-rating">
+            <span class="rating-stars">${getStars(p.rating)}</span>
+            <span class="rating-count">(${p.reviewCount.toLocaleString()})</span>
+          </div>
+          ${specGrid}
+          <div class="color-dots"><span>Colors:</span>${colorDots}</div>
+          <button class="add-to-cart-btn" onclick="addToCartClick(event,${p.id})">
+            <i class="fas fa-shopping-cart"></i> Add to Cart
+          </button>
+        </div>
+      </div>`;
+  });
+
+  grid.innerHTML = html;
+  renderPagination();
+}
+
+function addToCartClick(e, id) {
+  const p = products.find(x=>x.id===id); if (!p) return;
+  addToCart(p);
+  const btn = e.target.closest('.add-to-cart-btn');
+  btn.classList.add('added'); btn.innerHTML='<i class="fas fa-check"></i> Added!';
+  showToast(`"${p.title}" added to cart`);
+  setTimeout(() => { btn.classList.remove('added'); btn.innerHTML='<i class="fas fa-shopping-cart"></i> Add to Cart'; }, 1500);
+}
+
+function toggleWishlist(id) {
+  let wl = JSON.parse(localStorage.getItem('shopease_wishlist'))||[];
+  const idx = wl.findIndex(i=>i.id===id), p = products.find(x=>x.id===id);
+  if (idx>-1) wl.splice(idx,1); else wl.push({ id:p.id,title:p.title,brand:p.brand,price:p.price,image:p.image });
+  localStorage.setItem('shopease_wishlist', JSON.stringify(wl));
+  const btn = document.querySelector(`.wishlist-btn[onclick="toggleWishlist(${id})"]`);
+  if (btn) { btn.classList.toggle('active'); btn.innerHTML = btn.classList.contains('active') ? '<i class="fas fa-heart"></i>' : '<i class="far fa-heart"></i>'; }
+}
+
+function renderPagination() {
+  const pag = document.getElementById('pagination');
+  const total = Math.ceil(filteredProducts.length/productsPerPage);
+  if (total<=1) { pag.innerHTML=''; return; }
+  let h=`<button class="page-btn" onclick="goToPage(${currentPage-1})" ${currentPage===1?'disabled':''}><i class="fas fa-chevron-left"></i></button>`;
+  for (let i=1;i<=total;i++) {
+    if (i===1||i===total||(i>=currentPage-1&&i<=currentPage+1)) h+=`<button class="page-btn ${i===currentPage?'active':''}" onclick="goToPage(${i})">${i}</button>`;
+    else if (i===currentPage-2||i===currentPage+2) h+=`<span class="page-ellipsis">…</span>`;
+  }
+  h+=`<button class="page-btn" onclick="goToPage(${currentPage+1})" ${currentPage===total?'disabled':''}><i class="fas fa-chevron-right"></i></button>`;
+  pag.innerHTML = h;
+}
+
+function goToPage(p) {
+  const t = Math.ceil(filteredProducts.length/productsPerPage);
+  if (p<1||p>t) return;
+  currentPage=p; renderProducts();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
 </script>
-
 </body>
 </html>

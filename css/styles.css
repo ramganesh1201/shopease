@@ -84,22 +84,7 @@ body {
   }
 }
 
-/* Shake Animation */
-@keyframes shake {
 
-  0%,
-  100% {
-    transform: translateX(0);
-  }
-
-  25% {
-    transform: translateX(-5px);
-  }
-
-  75% {
-    transform: translateX(5px);
-  }
-}
 
 /* Bounce Animation */
 @keyframes bounce {
@@ -125,19 +110,6 @@ body {
   }
 }
 
-/* Glow Pulse */
-@keyframes glowPulse {
-
-  0%,
-  100% {
-    box-shadow: 0 0 5px rgba(40, 116, 240, 0.3);
-  }
-
-  50% {
-    box-shadow: 0 0 20px rgba(40, 116, 240, 0.6);
-  }
-}
-
 /* Shimmer Effect */
 @keyframes shimmer {
   0% {
@@ -148,110 +120,6 @@ body {
     background-position: 200% 0;
   }
 }
-
-/* Wave Animation for buttons */
-@keyframes wave {
-  0% {
-    transform: scaleX(0);
-    transform-origin: left;
-  }
-
-  40% {
-    transform: scaleX(1);
-    transform-origin: left;
-  }
-
-  60% {
-    transform: scaleX(1);
-    transform-origin: right;
-  }
-
-  100% {
-    transform: scaleX(0);
-    transform-origin: right;
-  }
-}
-
-/* Float Animation */
-@keyframes float {
-
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(-8px);
-  }
-}
-
-/* Slide Down */
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Rubber Band */
-@keyframes rubberBand {
-  0% {
-    transform: scale(1);
-  }
-
-  30% {
-    transform: scale(1.25);
-  }
-
-  40% {
-    transform: scale(0.75);
-  }
-
-  50% {
-    transform: scale(1.15);
-  }
-
-  65% {
-    transform: scale(0.95);
-  }
-
-  75% {
-    transform: scale(1.05);
-  }
-
-  100% {
-    transform: scale(1);
-  }
-}
-
-/* Heart Beat */
-@keyframes heartBeat {
-  0% {
-    transform: scale(1);
-  }
-
-  14% {
-    transform: scale(1.1);
-  }
-
-  28% {
-    transform: scale(1);
-  }
-
-  42% {
-    transform: scale(1.1);
-  }
-
-  70% {
-    transform: scale(1);
-  }
-}
-
 /* ========================================= */
 /* ============ ENHANCED UI ELEMENTS ========== */
 /* ========================================= */

@@ -1,584 +1,1383 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Food Staples — ShopEase</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Food Staples — ShopEase</title>
+  
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  
+  <style>
+    /* ================= RESET & BASE ================= */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
 
-<style>
-/* ========== BASE ========== */
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f1f3f6;
-  color: #212121;
-}
+    body {
+      background: #f4f6fb;
+      color: #333;
+    }
 
-/* ========== HEADER ========== */
-.top-header {
-  background: #ffffff;
-  border-bottom: 1px solid #e5e7eb;
-  padding: 14px 0;
-}
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
 
-.nav-container {
-  max-width: 1200px;
-  margin: auto;
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
+    /* ================= HEADER ================= */
+    .header {
+      background: #fff;
+      padding: 12px 5%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 15px rgba(0,0,0,0.06);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
 
-.search-bar-top {
-  flex: 1;
-  display: flex;
-}
+    .logo {
+      font-size: 28px;
+      font-weight: 700;
+      color: #ff3f6c;
+      cursor: pointer;
+    }
 
-.search-bar-top input {
-  flex: 1;
-  padding: 10px 12px;
-  border: 1px solid #d1d5db;
-  border-right: none;
-  border-radius: 6px 0 0 6px;
-}
+    .logo span { color: #333; }
 
-.search-bar-top button {
-  background: #2874f0;
-  color: white;
-  border: none;
-  padding: 10px 18px;
-  border-radius: 0 6px 6px 0;
-  cursor: pointer;
-}
+    .search-bar {
+      flex: 1;
+      max-width: 500px;
+      margin: 0 30px;
+      display: flex;
+      position: relative;
+    }
 
-.breadcrumb {
-  max-width: 1200px;
-  margin: 15px auto 5px;
-  font-size: 14px;
-  color: #6b7280;
-  display: flex;
-  gap: 8px;
-}
+    .search-bar input {
+      flex: 1;
+      padding: 12px 15px;
+      border: 2px solid #eee;
+      border-radius: 8px 0 0 8px;
+      outline: none;
+      font-size: 14px;
+      transition: border-color 0.3s;
+    }
 
-.breadcrumb .active {
-  font-weight: 500;
-  color: #212121;
-}
+    .search-bar input:focus {
+      border-color: #ff3f6c;
+    }
 
-.brand {
-  font-size: 22px;
-  font-weight: bold;
-  color: #2874f0;
-  text-decoration: none;
-}
+    .search-bar button {
+      padding: 12px 20px;
+      border: none;
+      background: #ff3f6c;
+      color: #fff;
+      border-radius: 0 8px 8px 0;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
 
-.cart-btn {
-  position: relative;
-  font-weight: 600;
-  color: #212121;
-  text-decoration: none;
-}
+    .search-bar button:hover {
+      background: #e6365c;
+    }
 
-.cart-count {
-  position: absolute;
-  top: -8px;
-  right: -10px;
-  background: #ff6161;
-  color: #fff;
-  font-size: 12px;
-  padding: 3px 6px;
-  border-radius: 50%;
-}
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 25px;
+    }
 
-/* ========== LAYOUT ========== */
-.page-wrap {
-  display: flex;
-  max-width: 1200px;
-  margin: 20px auto;
-  gap: 15px;
-}
+    .cart-icon {
+      position: relative;
+      font-size: 22px;
+      cursor: pointer;
+      color: #333;
+      transition: color 0.3s;
+    }
 
-/* ========== SIDEBAR ========== */
-.sidebar {
-  width: 250px;
-  background: #fff;
-  padding: 15px;
-  border-radius: 4px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-}
+    .cart-icon:hover {
+      color: #ff3f6c;
+    }
 
-.sidebar h3 {
-  font-size: 16px;
-  margin-bottom: 10px;
-}
+    .cart-badge {
+      position: absolute;
+      top: -8px;
+      right: -10px;
+      background: #ff3f6c;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 600;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-.filter-group {
-  border-bottom: 1px solid #eee;
-  padding: 10px 0;
-}
+    .cart-badge:empty,
+    .cart-badge[data-count="0"] {
+      display: none;
+    }
 
-.filter-head {
-  font-weight: 600;
-  margin-bottom: 8px;
-}
+    /* ================= BREADCRUMB ================= */
+    .breadcrumb {
+      padding: 15px 5%;
+      font-size: 13px;
+      color: #888;
+    }
 
-.filter-body label {
-  display: block;
-  font-size: 14px;
-  margin: 6px 0;
-  cursor: pointer;
-}
+    .breadcrumb a {
+      color: #ff3f6c;
+      font-weight: 500;
+    }
 
-/* ========== PRODUCTS AREA ========== */
-.products {
-  flex: 1;
-}
+    /* ================= HERO ================= */
+    .hero {
+      margin: 0 5% 30px;
+      background: linear-gradient(135deg, #fff5f6 0%, #f0f4ff 100%);
+      border-radius: 20px;
+      padding: 40px 50px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
 
-.page-header {
-  background: #fff;
-  padding: 15px;
-  border-radius: 4px;
-  margin-bottom: 10px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-}
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -10%;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(255,63,108,0.1) 0%, transparent 70%);
+      border-radius: 50%;
+    }
 
-.page-header h2 {
-  margin: 0;
-  font-size: 22px;
-}
+    .hero-text {
+      position: relative;
+      z-index: 1;
+    }
 
-.page-header p {
-  font-size: 13px;
-  color: #777;
-}
+    .hero-text h2 {
+      font-size: 36px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: #1a1a1a;
+    }
 
-/* Sort Bar */
-.controls {
-  background: #fff;
-  padding: 12px;
-  border-radius: 4px;
-  margin-bottom: 15px;
-  display: flex;
-  justify-content: space-between;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-}
+    .hero-text p {
+      color: #666;
+      font-size: 15px;
+      margin-bottom: 20px;
+    }
 
-.controls select,
-.controls input {
-  padding: 6px 8px;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-}
+    .hero-stats {
+      display: flex;
+      gap: 30px;
+    }
 
-/* ========== PRODUCT GRID ========== */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 15px;
-}
+    .stat {
+      text-align: center;
+    }
 
-/* ========== PRODUCT CARD ========== */
-.card {
-  background: #fff;
-  border-radius: 4px;
-  padding: 12px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-  transition: 0.2s;
-}
+    .stat-number {
+      font-size: 24px;
+      font-weight: 700;
+      color: #ff3f6c;
+    }
 
-.card:hover {
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-}
+    .stat-label {
+      font-size: 12px;
+      color: #888;
+    }
 
-.thumb {
-  height: 180px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 10px;
-}
+    .hero-image {
+      position: relative;
+      z-index: 1;
+    }
 
-.thumb img {
-  max-height: 100%;
-  max-width: 100%;
-  object-fit: contain;
-}
+    .hero-image img {
+      width: 320px;
+      height: auto;
+      border-radius: 15px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    }
 
-.title {
-  font-size: 15px;
-  font-weight: 600;
-  margin-bottom: 5px;
-}
+    /* ================= MAIN LAYOUT ================= */
+    .main-container {
+      display: flex;
+      gap: 30px;
+      padding: 0 5% 50px;
+    }
 
-.brand-name {
-  font-size: 13px;
-  color: #777;
-  margin-bottom: 4px;
-}
+    /* ================= SIDEBAR ================= */
+    .sidebar {
+      width: 280px;
+      background: #fff;
+      padding: 25px;
+      border-radius: 16px;
+      box-shadow: 0 5px 25px rgba(0,0,0,0.05);
+      height: fit-content;
+      position: sticky;
+      top: 90px;
+    }
 
-.desc {
-  font-size: 13px;
-  color: #555;
-  margin-bottom: 8px;
-}
+    .sidebar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid #eee;
+    }
 
-.rating {
-  display: inline-block;
-  background: #388e3c;
-  color: #fff;
-  font-size: 12px;
-  padding: 3px 6px;
-  border-radius: 3px;
-  margin-bottom: 6px;
-}
+    .sidebar-header h3 {
+      font-size: 18px;
+      font-weight: 600;
+    }
 
-.price-section {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
+    .clear-all-btn {
+      font-size: 13px;
+      color: #ff3f6c;
+      cursor: pointer;
+      font-weight: 500;
+    }
 
-.price {
-  font-size: 18px;
-  font-weight: bold;
-}
+    .clear-all-btn:hover {
+      text-decoration: underline;
+    }
 
-.mrp {
-  text-decoration: line-through;
-  color: #777;
-  font-size: 13px;
-}
+    .filter-section {
+      margin-bottom: 25px;
+      border-bottom: 1px solid #f0f0f0;
+      padding-bottom: 20px;
+    }
 
-.discount {
-  color: #388e3c;
-  font-size: 13px;
-  font-weight: 600;
-}
+    .filter-section:last-child {
+      border-bottom: none;
+    }
 
-.add-btn {
-  margin-top: 8px;
-  width: 100%;
-  padding: 8px;
-  border: none;
-  background: #2874f0;
-  color: #fff;
-  font-weight: 600;
-  border-radius: 3px;
-  cursor: pointer;
-}
+    .filter-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      margin-bottom: 15px;
+    }
 
-.add-btn:hover {
-  background: #1a5fd1;
-}
+    .filter-header h4 {
+      font-size: 14px;
+      font-weight: 600;
+      color: #1a1a1a;
+    }
 
-/* Responsive */
-@media (max-width: 900px) {
-  .grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .page-wrap {
-    flex-direction: column;
-  }
-  .sidebar {
-    width: 100%;
-  }
-}
-</style>
+    .filter-header i {
+      font-size: 12px;
+      color: #888;
+      transition: transform 0.3s;
+    }
+
+    .filter-header.collapsed i {
+      transform: rotate(-90deg);
+    }
+
+    .filter-options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .filter-options.collapsed {
+      display: none;
+    }
+
+    .filter-option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+    }
+
+    .filter-option input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: #ff3f6c;
+      cursor: pointer;
+    }
+
+    .filter-option span {
+      font-size: 13px;
+      color: #444;
+      transition: color 0.2s;
+    }
+
+    .filter-option:hover span {
+      color: #ff3f6c;
+    }
+
+    .filter-option .count {
+      margin-left: auto;
+      font-size: 11px;
+      color: #999;
+      background: #f5f5f5;
+      padding: 2px 8px;
+      border-radius: 10px;
+    }
+
+    /* Pack Size filter (adapted from color) */
+    .pack-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .pack-option {
+      padding: 6px 12px;
+      border: 2px solid #eee;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 12px;
+      background: #fff;
+    }
+
+    .pack-option:hover,
+    .pack-option.active {
+      border-color: #ff3f6c;
+      background: #fff5f7;
+      color: #ff3f6c;
+    }
+
+    /* Rating filter */
+    .rating-option {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      padding: 8px 0;
+    }
+
+    .rating-option .stars {
+      color: #ffb800;
+      font-size: 13px;
+    }
+
+    .rating-option span {
+      font-size: 13px;
+      color: #444;
+    }
+
+    /* ================= PRODUCTS AREA ================= */
+    .products-area {
+      flex: 1;
+    }
+
+    /* Category Tabs */
+    .category-tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      padding: 10px 20px;
+      border: none;
+      background: #fff;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 500;
+      color: #666;
+      transition: all 0.3s;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+
+    .tab-btn:hover {
+      color: #ff3f6c;
+    }
+
+    .tab-btn.active {
+      background: #ff3f6c;
+      color: #fff;
+    }
+
+    /* Sort Bar */
+    .sort-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      background: #fff;
+      padding: 15px 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+    }
+
+    .results-count {
+      font-size: 14px;
+      color: #666;
+    }
+
+    .results-count strong {
+      color: #1a1a1a;
+    }
+
+    .sort-options {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .sort-dropdown {
+      padding: 8px 15px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 13px;
+      color: #333;
+      cursor: pointer;
+      background: #fff;
+    }
+
+    .view-toggle {
+      display: flex;
+      gap: 8px;
+    }
+
+    .view-btn {
+      width: 36px;
+      height: 36px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background: #fff;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #666;
+      transition: all 0.2s;
+    }
+
+    .view-btn:hover,
+    .view-btn.active {
+      border-color: #ff3f6c;
+      color: #ff3f6c;
+      background: #fff5f7;
+    }
+
+    /* ================= PRODUCT GRID ================= */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 25px;
+    }
+
+    .product-grid.list-view {
+      grid-template-columns: 1fr;
+    }
+
+    .product-card {
+      background: #fff;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 5px 25px rgba(0,0,0,0.05);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .product-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+    }
+
+    .product-card.list-view {
+      display: flex;
+      flex-direction: row;
+    }
+
+    .product-image {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .product-card.list-view .product-image {
+      width: 200px;
+      flex-shrink: 0;
+    }
+
+    .product-image img {
+      width: 100%;
+      height: 280px;
+      object-fit: contain;
+      background: #f8f9fa;
+      transition: transform 0.5s;
+    }
+
+    .product-card.list-view .product-image img {
+      height: 100%;
+    }
+
+    .product-card:hover .product-image img {
+      transform: scale(1.05);
+    }
+
+    .wishlist-btn {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 36px;
+      height: 36px;
+      background: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      transition: all 0.3s;
+      border: none;
+      font-size: 16px;
+      color: #666;
+    }
+
+    .wishlist-btn:hover {
+      color: #ff3f6c;
+      transform: scale(1.1);
+    }
+
+    .wishlist-btn.active {
+      color: #ff3f6c;
+    }
+
+    .badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: #ff3f6c;
+      color: #fff;
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .product-info {
+      padding: 18px;
+    }
+
+    .product-brand {
+      font-size: 12px;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 5px;
+    }
+
+    .product-title {
+      font-size: 14px;
+      font-weight: 500;
+      color: #1a1a1a;
+      margin-bottom: 8px;
+      line-height: 1.4;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .product-pricing {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .current-price {
+      font-size: 18px;
+      font-weight: 700;
+      color: #1a1a1a;
+    }
+
+    .original-price {
+      font-size: 14px;
+      color: #999;
+      text-decoration: line-through;
+    }
+
+    .discount {
+      font-size: 12px;
+      color: #ff3f6c;
+      font-weight: 600;
+    }
+
+    .product-rating {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+
+    .rating-stars {
+      color: #ffb800;
+      font-size: 13px;
+    }
+
+    .rating-count {
+      font-size: 12px;
+      color: #888;
+    }
+
+    .available-packs {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 15px;
+    }
+
+    .pack-chip {
+      padding: 5px 10px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 11px;
+      color: #666;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .pack-chip:hover {
+      border-color: #ff3f6c;
+      color: #ff3f6c;
+    }
+
+    .add-to-cart-btn {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      background: #ff3f6c;
+      color: #fff;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .add-to-cart-btn:hover {
+      background: #e6365c;
+    }
+
+    .add-to-cart-btn.added {
+      background: #28a745;
+    }
+
+    /* ================= PAGINATION ================= */
+    .pagination {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      margin-top: 40px;
+    }
+
+    .page-btn {
+      min-width: 40px;
+      height: 40px;
+      border: 1px solid #ddd;
+      background: #fff;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 14px;
+      color: #666;
+      transition: all 0.2s;
+    }
+
+    .page-btn:hover {
+      border-color: #ff3f6c;
+      color: #ff3f6c;
+    }
+
+    .page-btn.active {
+      background: #ff3f6c;
+      border-color: #ff3f6c;
+      color: #fff;
+    }
+
+    .page-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .page-ellipsis {
+      padding: 0 5px;
+      color: #888;
+    }
+
+    /* ================= NO RESULTS ================= */
+    .no-results {
+      text-align: center;
+      padding: 60px 20px;
+      background: #fff;
+      border-radius: 16px;
+      grid-column: 1/-1;
+    }
+
+    .no-results i {
+      font-size: 60px;
+      color: #ddd;
+      margin-bottom: 20px;
+    }
+
+    .no-results h3 {
+      font-size: 20px;
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    .no-results p {
+      color: #888;
+    }
+
+    /* ================= ACTIVE FILTERS ================= */
+    .active-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 15px;
+    }
+
+    .active-filter {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      background: #fff5f7;
+      border: 1px solid #ff3f6c;
+      border-radius: 20px;
+      font-size: 12px;
+      color: #ff3f6c;
+    }
+
+    .active-filter i {
+      cursor: pointer;
+    }
+
+    .active-filter i:hover {
+      color: #e6365c;
+    }
+
+    /* ================= RESPONSIVE ================= */
+    @media (max-width: 1200px) {
+      .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 992px) {
+      .main-container {
+        flex-direction: column;
+      }
+      
+      .sidebar {
+        width: 100%;
+        position: static;
+      }
+      
+      .hero {
+        padding: 30px;
+      }
+      
+      .hero-image img {
+        width: 220px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .header {
+        padding: 12px 4%;
+      }
+      
+      .search-bar {
+        margin: 0 15px;
+      }
+      
+      .hero {
+        flex-direction: column;
+        text-align: center;
+        gap: 25px;
+      }
+      
+      .hero-stats {
+        justify-content: center;
+      }
+      
+      .hero-image img {
+        width: 200px;
+      }
+      
+      .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+      }
+      
+      .product-image img {
+        height: 200px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .product-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .header-actions {
+        gap: 15px;
+      }
+      
+      .category-tabs {
+        gap: 8px;
+      }
+      
+      .tab-btn {
+        padding: 8px 15px;
+        font-size: 12px;
+      }
+    }
+  </style>
 </head>
 <body>
-<!-- ===== TOP NAVBAR ===== -->
-<header class="top-header">
-  <div class="nav-container">
-    <a href="index.html" class="brand">ShopEase</a>
 
-    <div class="search-bar-top">
-      <input type="text" id="searchInput" placeholder="Search food staples...">
-      <button onclick="applyFilters()">🔍</button>
-    </div>
-
-    <a class="cart-btn" href="cart.html">
-      🛒
-      <span id="cartCount" class="cart-count">0</span>
-    </a>
-  </div>
-</header>
-
-<!-- ===== BREADCRUMB ===== -->
-<div class="breadcrumb">
-  <span>🏠</span>
-  <span>Groceries</span>
-  <span>›</span>
-  <span class="active">Food Staples</span>
-</div>
-
-<div class="page-wrap">
-
-  <!-- LEFT FILTER SIDEBAR -->
-  <aside class="sidebar" aria-label="Filters">
-    <h3>Refine results</h3>
-
-    <div class="filter-group" data-key="brand">
-      <div class="filter-head">
-        <strong>Brand</strong>
-      </div>
-      <div class="filter-body">
-        <label><input type="checkbox" class="filter brand" value="India Gate"> India Gate</label>
-        <label><input type="checkbox" class="filter brand" value="Fortune"> Fortune</label>
-        <label><input type="checkbox" class="filter brand" value="Aashirvaad"> Aashirvaad</label>
-        <label><input type="checkbox" class="filter brand" value="Tata Sampann"> Tata Sampann</label>
-        <label><input type="checkbox" class="filter brand" value="24 Mantra"> 24 Mantra</label>
-        <label><input type="checkbox" class="filter brand" value="Daawat"> Daawat</label>
-        <label><input type="checkbox" class="filter brand" value="Patanjali"> Patanjali</label>
-        <label><input type="checkbox" class="filter brand" value="Tata Salt"> Tata Salt</label>
-      </div>
-    </div>
-
-    <div class="filter-group" data-key="price">
-      <div class="filter-head">
-        <strong>Price</strong>
-      </div>
-      <div class="filter-body">
-        <label><input type="radio" name="price" class="price" value="under100"> Under ₹100</label>
-        <label><input type="radio" name="price" class="price" value="100-300"> ₹100 - ₹300</label>
-        <label><input type="radio" name="price" class="price" value="300-500"> ₹300 - ₹500</label>
-        <label><input type="radio" name="price" class="price" value="above500"> Above ₹500</label>
-        <label><input type="radio" name="price" class="price" value="all" checked> All</label>
-      </div>
-    </div>
-
-    <div style="margin-top:12px;font-size:13px;color:#777">
-      <div>Showing <span id="count">0</span> results</div>
-    </div>
-
-    <div style="display:flex;gap:8px;margin-top:12px">
-      <button id="resetFilters" class="add-btn" style="flex:1">Reset</button>
-      <button id="applyFiltersBtn" class="add-btn" style="flex:1;background:#0b73ff">Apply</button>
-    </div>
-  </aside>
-
-  <!-- PRODUCTS -->
-  <section class="products" aria-labelledby="products">
-    <div class="page-header">
-      <h1>Food Staples</h1>
-      <p><span id="productCount">0</span> Products | Fresh & Authentic</p>
+  <!-- HEADER -->
+  <header class="header">
+    <div class="logo" onclick="window.location.href='index.html'">Shop<span>Ease</span></div>
+    
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Search food staples, brands and more">
+      <button onclick="applyFilters()"><i class="fas fa-search"></i></button>
     </div>
     
-    <div class="controls">
-      <div class="search">
-        <input id="searchInput2" placeholder="Search staples, e.g. 'Rice'">
-      </div>
-
-      <div class="sort-wrap">
-        <select id="sortSelect">
-          <option value="popular">Sort by: Popular</option>
-          <option value="price-asc">Price: Low to High</option>
-          <option value="price-desc">Price: High to Low</option>
-          <option value="rating">Top Rated</option>
-        </select>
+    <div class="header-actions">
+      <div class="cart-icon" onclick="window.location.href='cart.html'">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="cart-badge" id="cartBadge">0</span>
       </div>
     </div>
+  </header>
 
-    <div class="grid" id="grid"></div>
-  </section>
-</div>
+  <!-- BREADCRUMB -->
+  <div class="breadcrumb">
+    <a href="index.html">Home</a> <i class="fas fa-chevron-right"></i> 
+    <a href="#">Groceries</a> <i class="fas fa-chevron-right"></i> 
+    <span>Food Staples</span>
+  </div>
 
-<footer style="max-width:1180px;margin:30px auto;text-align:center;color:#777;padding:18px">© 2025 ShopEase</footer>
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-text">
+      <h2>Food Staples</h2>
+      <p>Discover fresh and authentic food staples for your daily kitchen needs. Premium quality brands at best prices.</p>
+      <div class="hero-stats">
+        <div class="stat">
+          <div class="stat-number" id="totalProducts">0</div>
+          <div class="stat-label">Products</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">10+</div>
+          <div class="stat-label">Brands</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">20%</div>
+          <div class="stat-label">Max Off</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-image">
+      <img src="https://images.unsplash.com/photo-1603048297194-8f7d9e7f8e7e?w=500" alt="Food Staples">
+    </div>
+  </div>
 
-<script>
-/* ===============================
-   PRODUCT DATA
-================================= */
-const products = [
-  {brand:"India Gate",name:"Basmati Rice 5kg",desc:"Long-grain • Aromatic • Premium quality",price:549,rating:4.8,img:"https://m.media-amazon.com/images/I/81jyy9zvrOL._SL1500_.jpg"},
-  {brand:"Fortune",name:"Refined Sunflower Oil 5L",desc:"Light & healthy cooking oil",price:799,rating:4.6,img:"https://m.media-amazon.com/images/I/61QqklwQcaL._SL1500_.jpg"},
-  {brand:"Aashirvaad",name:"Whole Wheat Atta 10kg",desc:"100% pure wheat • Soft rotis",price:499,rating:4.7,img:"https://m.media-amazon.com/images/I/71gAFzC3L6L._SL1500_.jpg"},
-  {brand:"Tata Sampann",name:"Toor Dal 1kg",desc:"Rich in protein • Unpolished",price:189,rating:4.8,img:"https://m.media-amazon.com/images/I/81FrKX4+PgL._SL1500_.jpg"},
-  {brand:"24 Mantra Organic",name:"Brown Rice 1kg",desc:"Certified organic • Fiber rich",price:129,rating:4.5,img:"https://m.media-amazon.com/images/I/81f2RkzqXIL._SL1500_.jpg"},
-  {brand:"Fortune",name:"Soya Chunks 1kg",desc:"High protein • 100% vegetarian",price:159,rating:4.6,img:"https://m.media-amazon.com/images/I/61uvJ+XkP1L._SL1500_.jpg"},
-  {brand:"Daawat",name:"Biryani Basmati Rice 1kg",desc:"Perfect for long-grain biryani",price:149,rating:4.7,img:"https://m.media-amazon.com/images/I/81XlpW7k4-L._SL1500_.jpg"},
-  {brand:"Patanjali",name:"Mustard Oil 1L",desc:"Cold pressed • Rich aroma",price:199,rating:4.5,img:"https://m.media-amazon.com/images/I/51f+7bAIe7L._SL1000_.jpg"},
-  {brand:"Tata Salt",name:"Iodized Salt 1kg",desc:"Pure & refined salt",price:28,rating:4.8,img:"https://m.media-amazon.com/images/I/71m74ywvOAL._SL1500_.jpg"},
-  {brand:"Fortune",name:"Besan 1kg",desc:"Fine gram flour • Fresh aroma",price:89,rating:4.6,img:"https://m.media-amazon.com/images/I/61pTkZ8EJOL._SL1500_.jpg"}
-];
-
-/* ===============================
-   DOM REFERENCES
-================================= */
-const grid = document.getElementById("grid");
-const searchInput = document.getElementById("searchInput");
-const searchInput2 = document.getElementById("searchInput2");
-const sortSelect = document.getElementById("sortSelect");
-const brandChecks = document.querySelectorAll(".filter.brand");
-const priceRadios = document.querySelectorAll(".price");
-const countEls = document.querySelectorAll("#count, #productCount");
-const resetBtn = document.getElementById("resetFilters");
-const applyBtn = document.getElementById("applyFiltersBtn");
-const cartCountEl = document.getElementById("cartCount");
-
-/* ===============================
-   CART SYSTEM
-================================= */
-function getCart(){
-  return JSON.parse(localStorage.getItem("shop_cart")) || [];
-}
-
-function setCart(cart){
-  localStorage.setItem("shop_cart", JSON.stringify(cart));
-  updateCartCount();
-}
-
-function addToCart(productName){
-  const cart = getCart();
-  const existing = cart.find(item => item.name === productName);
-
-  if(existing){
-    existing.qty++;
-  } else {
-    cart.push({name: productName, qty: 1});
-  }
-
-  setCart(cart);
-}
-
-function updateCartCount(){
-  const cart = getCart();
-  const total = cart.reduce((sum, item) => sum + item.qty, 0);
-  cartCountEl.textContent = total;
-}
-
-updateCartCount();
-
-/* ===============================
-   RENDER PRODUCTS
-================================= */
-function renderProducts(list){
-  grid.innerHTML = "";
-
-  if(list.length === 0){
-    grid.innerHTML = "<p>No products found</p>";
-    countEls.forEach(el => el.textContent = 0);
-    return;
-  }
-
-  list.forEach(p => {
-    const card = document.createElement("div");
-    card.className = "card";
-
-    card.innerHTML = `
-      <div class="thumb">
-        <img src="${p.img}" alt="${p.name}">
+  <!-- MAIN CONTAINER -->
+  <div class="main-container">
+    
+    <!-- SIDEBAR FILTERS -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h3><i class="fas fa-filter"></i> Filters</h3>
+        <span class="clear-all-btn" onclick="clearAllFilters()">Clear All</span>
       </div>
 
-      <div class="brand-name">${p.brand}</div>
-      <div class="title">${p.name}</div>
+      <!-- Active Filters -->
+      <div class="active-filters" id="activeFilters"></div>
 
-      <div class="rating">
-        ⭐ ${p.rating}
+      <!-- Category Filter -->
+      <div class="filter-section">
+        <div class="filter-header" onclick="toggleFilter(this)">
+          <h4>Category</h4>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="filter-options" id="categoryFilters">
+          <!-- Generated by JS -->
+        </div>
       </div>
 
-      <div class="desc">${p.desc}</div>
-
-      <div class="price-section">
-        <span class="price">₹${p.price.toLocaleString()}</span>
-        <span class="mrp">₹${(p.price + 50).toLocaleString()}</span>
-        <span class="discount">10% off</span>
+      <!-- Brand Filter -->
+      <div class="filter-section">
+        <div class="filter-header" onclick="toggleFilter(this)">
+          <h4>Brand</h4>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="filter-options" id="brandFilters">
+          <!-- Generated by JS -->
+        </div>
       </div>
 
-      <button class="add-btn" onclick="addToCart('${p.name}')">
-        Add to Cart
-      </button>
-    `;
+      <!-- Pack Size Filter -->
+      <div class="filter-section">
+        <div class="filter-header" onclick="toggleFilter(this)">
+          <h4>Pack Size</h4>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="filter-options">
+          <div class="pack-options" id="packFilters">
+            <!-- Generated by JS -->
+          </div>
+        </div>
+      </div>
 
-    grid.appendChild(card);
-  });
+      <!-- Rating Filter -->
+      <div class="filter-section">
+        <div class="filter-header" onclick="toggleFilter(this)">
+          <h4>Rating</h4>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="filter-options" id="ratingFilters">
+          <div class="rating-option" data-rating="4">
+            <span class="stars">★★★★☆</span>
+            <span>& above</span>
+          </div>
+          <div class="rating-option" data-rating="3">
+            <span class="stars">★★★☆☆</span>
+            <span>& above</span>
+          </div>
+        </div>
+      </div>
 
-  countEls.forEach(el => el.textContent = list.length);
-}
+      <!-- Offers Filter -->
+      <div class="filter-section">
+        <div class="filter-header" onclick="toggleFilter(this)">
+          <h4>Offers</h4>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="filter-options" id="offerFilters">
+          <label class="filter-option">
+            <input type="checkbox" value="Free Delivery">
+            <span>Free Delivery</span>
+          </label>
+          <label class="filter-option">
+            <input type="checkbox" value="Special Price">
+            <span>Special Price</span>
+          </label>
+          <label class="filter-option">
+            <input type="checkbox" value="Combo Deal">
+            <span>Combo Deal</span>
+          </label>
+        </div>
+      </div>
+    </aside>
 
-/* ===============================
-   FILTER + SEARCH + SORT
-================================= */
-function applyFilters(){
-  let filtered = [...products];
+    <!-- PRODUCTS AREA -->
+    <div class="products-area">
+      
+      <!-- Category Tabs -->
+      <div class="category-tabs" id="categoryTabs">
+        <button class="tab-btn active" data-category="all">All</button>
+        <button class="tab-btn" data-category="Rice">Rice</button>
+        <button class="tab-btn" data-category="Oils">Oils</button>
+        <button class="tab-btn" data-category="Flours">Flours</button>
+        <button class="tab-btn" data-category="Dals">Dals</button>
+        <button class="tab-btn" data-category="Others">Others</button>
+      </div>
 
-  const query = (searchInput.value || searchInput2.value).trim().toLowerCase();
-  if(query){
-    filtered = filtered.filter(p =>
-      p.name.toLowerCase().includes(query) ||
-      p.brand.toLowerCase().includes(query)
-    );
-  }
+      <!-- Sort Bar -->
+      <div class="sort-bar">
+        <div class="results-count">
+          Showing <strong id="showingStart">0</strong> - <strong id="showingEnd">0</strong> of <strong id="totalResults">0</strong> products
+        </div>
+        <div class="sort-options">
+          <select class="sort-dropdown" id="sortDropdown" onchange="sortProducts()">
+            <option value="popularity">Sort by: Popularity</option>
+            <option value="price-low">Price: Low to High</option>
+            <option value="price-high">Price: High to Low</option>
+            <option value="rating">Rating</option>
+          </select>
+          <div class="view-toggle">
+            <button class="view-btn active" id="gridViewBtn" onclick="setView('grid')">
+              <i class="fas fa-th"></i>
+            </button>
+            <button class="view-btn" id="listViewBtn" onclick="setView('list')">
+              <i class="fas fa-list"></i>
+            </button>
+          </div>
+        </div>
+      </div>
 
-  const selectedBrands = [...brandChecks]
-    .filter(c => c.checked)
-    .map(c => c.value);
+      <!-- Product Grid -->
+      <div class="product-grid" id="productGrid">
+        <!-- Generated by JS -->
+      </div>
 
-  if(selectedBrands.length){
-    filtered = filtered.filter(p =>
-      selectedBrands.includes(p.brand)
-    );
-  }
+      <!-- Pagination -->
+      <div class="pagination" id="pagination">
+        <!-- Generated by JS -->
+      </div>
+    </div>
+  </div>
 
-  const priceVal = [...priceRadios].find(r => r.checked)?.value;
+  <script>
+    /* ================= PRODUCT DATA - Food Staples ================= */
+    const products = [
+      {id:1,brand:"India Gate",title:"Basmati Rice 5kg",category:"Rice",price:549,originalPrice:649,discount:15,rating:4.8,reviewCount:2453,packs:["1kg","5kg"],image:"https://m.media-amazon.com/images/I/81jyy9zvrOL._SL1500_.jpg",offer:"Free Delivery"},
+      {id:2,brand:"Fortune",title:"Refined Sunflower Oil 5L",category:"Oils",price:799,originalPrice:899,discount:11,rating:4.6,reviewCount:3421,packs:["1L","5L"],image:"https://m.media-amazon.com/images/I/61QqklwQcaL._SL1500_.jpg",offer:""},
+      {id:3,brand:"Aashirvaad",title:"Whole Wheat Atta 10kg",category:"Flours",price:499,originalPrice:559,discount:11,rating:4.7,reviewCount:2341,packs:["1kg","5kg","10kg"],image:"https://m.media-amazon.com/images/I/71gAFzC3L6L._SL1500_.jpg",offer:"Free Delivery"},
+      {id:4,brand:"Tata Sampann",title:"Toor Dal 1kg",category:"Dals",price:189,originalPrice:219,discount:14,rating:4.8,reviewCount:4532,packs:["500g","1kg"],image:"https://m.media-amazon.com/images/I/81FrKX4+PgL._SL1500_.jpg",offer:""},
+      {id:5,brand:"24 Mantra",title:"Organic Brown Rice 1kg",category:"Rice",price:129,originalPrice:159,discount:19,rating:4.5,reviewCount:987,packs:["1kg"],image:"https://m.media-amazon.com/images/I/81f2RkzqXIL._SL1500_.jpg",offer:"Special Price"},
+      {id:6,brand:"Fortune",title:"Soya Chunks 1kg",category:"Dals",price:159,originalPrice:189,discount:16,rating:4.6,reviewCount:3210,packs:["200g","1kg"],image:"https://m.media-amazon.com/images/I/61uvJ+XkP1L._SL1500_.jpg",offer:""},
+      {id:7,brand:"Daawat",title:"Biryani Basmati Rice 1kg",category:"Rice",price:149,originalPrice:179,discount:17,rating:4.7,reviewCount:1823,packs:["1kg"],image:"https://m.media-amazon.com/images/I/81XlpW7k4-L._SL1500_.jpg",offer:""},
+      {id:8,brand:"Patanjali",title:"Mustard Oil 1L",category:"Oils",price:199,originalPrice:229,discount:13,rating:4.5,reviewCount:1876,packs:["1L"],image:"https://m.media-amazon.com/images/I/51f+7bAIe7L._SL1000_.jpg",offer:"Combo Deal"},
+      {id:9,brand:"Tata Salt",title:"Iodized Salt 1kg",category:"Others",price:28,originalPrice:35,discount:20,rating:4.8,reviewCount:5678,packs:["1kg"],image:"https://m.media-amazon.com/images/I/71m74ywvOAL._SL1500_.jpg",offer:""},
+      {id:10,brand:"Fortune",title:"Besan 1kg",category:"Flours",price:89,originalPrice:109,discount:18,rating:4.6,reviewCount:1234,packs:["1kg"],image:"https://m.media-amazon.com/images/I/61pTkZ8EJOL._SL1500_.jpg",offer:""},
+      // Extended with more staples
+      {id:11,brand:"Saffola",title:"Cooking Oil 5L",category:"Oils",price:949,originalPrice:1099,discount:14,rating:4.7,reviewCount:2134,packs:["1L","5L"],image:"https://m.media-amazon.com/images/I/81ABC+DEF.jpg",offer:"Free Delivery"},
+      {id:12,brand:"Bansi",title:"Wheat Flour 10kg",category:"Flours",price:429,originalPrice:489,discount:12,rating:4.4,reviewCount:1987,packs:["5kg","10kg"],image:"https://m.media-amazon.com/images/I/71ghi456.jpg",offer:""},
+      {id:13,brand:"Patanjali",title:"Cow Ghee 1L",category:"Others",price:649,originalPrice:749,discount:13,rating:4.6,reviewCount:2345,packs:["500ml","1L"],image:"https://m.media-amazon.com/images/I/61ghi789.jpg",offer:"Special Price"},
+      {id:14,brand:"India Gate",title:"Sella Rice 5kg",category:"Rice",price:499,originalPrice:579,discount:14,rating:4.5,reviewCount:1543,packs:["5kg"],image:"https://m.media-amazon.com/images/I/71jkl012.jpg",offer:""},
+      // Add up to 30 similar entries (using placeholder images for demo)
+      {id:15,brand:"Aashirvaad",title:"Select Sharbati Atta 5kg",category:"Flours",price:299,originalPrice:349,discount:14,rating:4.7,reviewCount:1654,packs:["5kg"],image:"https://m.media-amazon.com/images/I/71mn345.jpg",offer:"Combo Deal"},
+      {id:16,brand:"MDH",title:"Masala Powder 100g",category:"Others",price:45,originalPrice:55,discount:18,rating:4.9,reviewCount:8765,packs:["100g"],image:"https://m.media-amazon.com/images/I/61opq678.jpg",offer:""},
+      {id:17,brand:"Everest",title:"Turmeric Powder 100g",category:"Others",price:39,originalPrice:49,discount:20,rating:4.8,reviewCount:5432,packs:["100g"],image:"https://m.media-amazon.com/images/I/71rst901.jpg",offer:"Free Delivery"},
+      {id:18,brand:"Fortune",title:"Rice Bran Oil 5L",category:"Oils",price:899,originalPrice:999,discount:10,rating:4.5,reviewCount:9876,packs:["5L"],image:"https://m.media-amazon.com/images/I/81uvw234.jpg",offer:""},
+      {id:19,brand:"Tata Sampann",title:"Moong Dal 500g",category:"Dals",price:99,originalPrice:119,discount:17,rating:4.7,reviewCount:4321,packs:["500g"],image:"https://m.media-amazon.com/images/I/81xyz567.jpg",offer:"Special Price"},
+      {id:20,brand:"Organic Tattva",title:"Quinoa 500g",category:"Others",price:349,originalPrice:399,discount:13,rating:4.6,reviewCount:2109,packs:["500g"],image:"https://m.media-amazon.com/images/I/71abc890.jpg",offer:""},
+      {id:21,brand:"Bagrry's",title:"Oats 1kg",category:"Others",price:199,originalPrice:229,discount:13,rating:4.5,reviewCount:3456,packs:["1kg"],image:"https://m.media-amazon.com/images/I/61def123.jpg",offer:"Free Delivery"},
+      {id:22,brand:"Sunfeast",title:"Farfalle Pasta 500g",category:"Others",price:79,originalPrice:99,discount:20,rating:4.4,reviewCount:1234,packs:["500g"],image:"https://m.media-amazon.com/images/I/71ghi456.jpg",offer:""},
+      {id:23,brand:"Knorr",title:"Pasta 500g",category:"Others",price:89,originalPrice:109,discount:18,rating:4.3,reviewCount:5678,packs:["500g"],image:"https://m.media-amazon.com/images/I/81jkl789.jpg",offer:"Combo Deal"},
+      {id:24,brand:"Weikfield",title:"Cornflour 100g",category:"Flours",price:59,originalPrice:69,discount:14,rating:4.5,reviewCount:4321,packs:["100g"],image:"https://m.media-amazon.com/images/I/61mno012.jpg",offer:""},
+      {id:25,brand:"India Gate",title:"Premium Basmati 10kg",category:"Rice",price:1099,originalPrice:1299,discount:15,rating:4.8,reviewCount:7654,packs:["10kg"],image:"https://m.media-amazon.com/images/I/71pqr345.jpg",offer:"Free Delivery"},
+      {id:26,brand:"Dhaniak",title:"Urad Dal 1kg",category:"Dals",price:179,originalPrice:209,discount:14,rating:4.6,reviewCount:2987,packs:["1kg"],image:"https://m.media-amazon.com/images/I/81stu678.jpg",offer:""},
+      {id:27,brand:"Organic India",title:"Red Rice 1kg",category:"Rice",price:199,originalPrice:249,discount:20,rating:4.7,reviewCount:5432,packs:["1kg"],image:"https://m.media-amazon.com/images/I/71vwx901.jpg",offer:"Special Price"},
+      {id:28,brand:"Gulf",title:"Canola Oil 5L",category:"Oils",price:699,originalPrice:799,discount:13,rating:4.4,reviewCount:3876,packs:["5L"],image:"https://m.media-amazon.com/images/I/61yz2345.jpg",offer:""},
+      {id:29,brand:"Haldiram's",title:"Moong Dal 500g",category:"Dals",price:129,originalPrice:149,discount:13,rating:4.6,reviewCount:6543,packs:["500g"],image:"https://m.media-amazon.com/images/I/71abc678.jpg",offer:"Combo Deal"},
+      {id:30,brand:"Tata Sampann",title:"Chana Dal 1kg",category:"Dals",price:169,originalPrice:199,discount:15,rating:4.7,reviewCount:4321,packs:["1kg"],image:"https://m.media-amazon.com/images/I/81def012.jpg",offer:"Free Delivery"}
+    ];
 
-  if(priceVal === "under100"){
-    filtered = filtered.filter(p => p.price < 100);
-  }
-  else if(priceVal === "100-300"){
-    filtered = filtered.filter(p => p.price >= 100 && p.price <= 300);
-  }
-  else if(priceVal === "300-500"){
-    filtered = filtered.filter(p => p.price >= 300 && p.price <= 500);
-  }
-  else if(priceVal === "above500"){
-    filtered = filtered.filter(p => p.price > 500);
-  }
+    /* ================= STATE ================= */
+    let filteredProducts = [...products];
+    let currentPage = 1;
+    const productsPerPage = 12;
+    let currentView = 'grid';
+    let activeFilters = {
+      categories: [],
+      brands: [],
+      packs: [],
+      ratings: [],
+      offers: []
+    };
 
-  const sortVal = sortSelect.value;
+    /* ================= CART (Preserve original logic) ================= */
+    function getCart(){
+      return JSON.parse(localStorage.getItem("shop_cart")) || [];
+    }
 
-  if(sortVal === "price-asc"){
-    filtered.sort((a,b)=>a.price-b.price);
-  }
-  else if(sortVal === "price-desc"){
-    filtered.sort((a,b)=>b.price-a.price);
-  }
-  else if(sortVal === "rating"){
-    filtered.sort((a,b)=>b.rating-a.rating);
-  }
+    function setCart(cart){
+      localStorage.setItem("shop_cart", JSON.stringify(cart));
+      updateCartBadge();
+    }
 
-  renderProducts(filtered);
-}
+    function addToCart(productName){
+      const cart = getCart();
+      const existing = cart.find(item => item.name === productName);
+      if(existing){
+        existing.qty++;
+      } else {
+        cart.push({name: productName, qty: 1});
+      }
+      setCart(cart);
+    }
 
-/* ===============================
-   RESET FILTERS
-================================= */
-function resetFilters(){
-  searchInput.value = "";
-  searchInput2.value = "";
-  brandChecks.forEach(c => c.checked = false);
-  priceRadios.forEach(r => r.checked = r.value === "all");
-  sortSelect.value = "popular";
-}
+    function updateCartBadge(){
+      const cart = getCart();
+      const total = cart.reduce((sum, item) => sum + item.qty, 0);
+      const badge = document.getElementById('cartBadge');
+      badge.textContent = total;
+      badge.style.display = total > 0 ? 'flex' : 'none';
+    }
 
-resetBtn.addEventListener("click", () => {
-  resetFilters();
-  applyFilters();
-});
+    /* ================= WISHLIST ================= */
+    function toggleWishlist(productId) {
+      let wishlist = JSON.parse(localStorage.getItem('shopease_wishlist')) || [];
+      const index = wishlist.findIndex(item => item.id === productId);
+      if (index > -1) {
+        wishlist.splice(index, 1);
+      } else {
+        const product = products.find(p => p.id === productId);
+        wishlist.push(product);
+      }
+      localStorage.setItem('shopease_wishlist', JSON.stringify(wishlist));
+      const btn = event.target.closest('.wishlist-btn');
+      btn.querySelector('i').classList.toggle('far');
+      btn.querySelector('i').classList.toggle('fas');
+      btn.classList.toggle('active');
+    }
 
-applyBtn.addEventListener("click", applyFilters);
+    /* ================= INIT ================= */
+    document.addEventListener('DOMContentLoaded', function() {
+      initializeFilters();
+      initializeEventListeners();
+      updateCartBadge();
+      applyFilters();
+      document.getElementById('totalProducts').textContent = products.length;
+    });
 
-searchInput.addEventListener("input", applyFilters);
-searchInput2.addEventListener("input", applyFilters);
-sortSelect.addEventListener("change", applyFilters);
+    function initializeFilters() {
+      const categories = ['Rice', 'Oils', 'Flours', 'Dals', 'Others'];
+      document.getElementById('categoryFilters').innerHTML = categories.map(cat => {
+        const count = products.filter(p => p.category === cat).length;
+        return `<label class="filter-option"><input type="checkbox" value="${cat}" onchange="applyFilters()"><span>${cat}</span><span class="count">${count}</span></label>`;
+      }).join('');
 
-brandChecks.forEach(c => c.addEventListener("change", applyFilters));
-priceRadios.forEach(r => r.addEventListener("change", applyFilters));
+      const brands = [...new Set(products.map(p => p.brand))];
+      document.getElementById('brandFilters').innerHTML = brands.map(brand => {
+        const count = products.filter(p => p.brand === brand).length;
+        return `<label class="filter-option"><input type="checkbox" value="${brand}" onchange="applyFilters()"><span>${brand}</span><span class="count">${count}</span></label>`;
+      }).join('');
 
-/* ===============================
-   INITIAL LOAD
-================================= */
-renderProducts(products);
-</script>
+      const packs = ['1kg', '5kg', '10kg', '1L', '5L', '500g'];
+      document.getElementById('packFilters').innerHTML = packs.map(pack => 
+        `<div class="pack-option" data-pack="${pack}" onclick="togglePackFilter('${pack}')">${pack}</div>`
+      ).join('');
+
+      document.querySelectorAll('.rating-option').forEach(opt => {
+        opt.onclick = function() {
+          const checkbox = this.querySelector('input[type="checkbox"]') || (() => {
+            const newCb = document.createElement('input');
+            newCb.type = 'checkbox';
+            newCb.value = this.dataset.rating;
+            newCb.onchange = applyFilters;
+            this.prepend(newCb);
+            return newCb;
+          })();
+          checkbox.checked = !checkbox.checked;
+          applyFilters();
+        };
+      });
+
+      document.querySelectorAll('#offerFilters input').forEach(cb => cb.onchange = applyFilters);
+    }
+
+    function togglePackFilter(pack) {
+      const el = document.querySelector(`[data-pack="${pack}"]`);
+      el.classList.toggle('active');
+      applyFilters();
+    }
+
+    function toggleFilter(header) {
+      header.classList.toggle('collapsed');
+      const options = header.nextElementSibling;
+      options.classList.toggle('collapsed');
+    }
+
+    function clearAllFilters() {
+      document.querySelectorAll('input[type="checkbox"], input[type="radio"]').forEach(cb => cb.checked = false);
+      document.querySelectorAll('.pack-option, .color-option').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelector('.tab-btn[data-category="all"]').classList.add('active');
+      document.getElementById('searchInput').value = '';
+      activeFilters = {categories: [], brands: [], packs: [], ratings: [], offers: []};
+      filteredProducts = [...products];
+      currentPage = 1;
+      sortProducts();
+      updateActiveFilters();
+      renderProducts();
+    }
+
+    function applyFilters() {
+      const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+      activeFilters.categories = Array.from(document.querySelectorAll('#categoryFilters input:checked')).map(cb => cb.value);
+      activeFilters.brands = Array.from(document.querySelectorAll('#brandFilters input:checked')).map(cb => cb.value);
+      activeFilters.packs = Array.from(document.querySelectorAll('.pack-option.active')).map(el => el.dataset.pack);
+      activeFilters.ratings = Array.from(document.querySelectorAll('#ratingFilters input:checked')).map(cb => parseInt(cb.value));
+      activeFilters.offers = Array.from(document.querySelectorAll('#offerFilters input:checked')).map(cb => cb.value);
+
+      filteredProducts = products.filter(p => {
+        if (searchTerm && !p.title.toLowerCase().includes(searchTerm) && !p.brand.toLowerCase().includes(searchTerm)) return false;
+        if (activeFilters.categories.length && !activeFilters.categories.includes(p.category)) return false;
+        if (activeFilters.brands.length && !activeFilters.brands.includes(p.brand)) return false;
+        if (activeFilters.packs.length && !p.packs.some(pk => activeFilters.packs.includes(pk))) return false;
+        if (activeFilters.ratings.length && !activeFilters.ratings.some(r => p.rating >= r)) return false;
+        if (activeFilters.offers.length && !activeFilters.offers.some(o => o === p.offer)) return false;
+        return true;
+      });
+
+      currentPage = 1;
+      sortProducts();
+      updateActiveFilters();
+      renderProducts();
+    }
+
+    function sortProducts() {
+      const sortVal = document.getElementById('sortDropdown').value;
+      if (sortVal === 'price-low') filteredProducts.sort((a,b) => a.price - b.price);
+      else if (sortVal === 'price-high') filteredProducts.sort((a,b) => b.price - a.price);
+      else if (sortVal === 'rating') filteredProducts.sort((a,b) => b.rating - a.rating);
+      else filteredProducts.sort((a,b) => b.reviewCount - a.reviewCount);
+      renderProducts();
+    }
+
+    function setView(view) {
+      currentView = view;
+      document.getElementById('productGrid').classList.toggle('list-view', view === 'list');
+      document.getElementById('gridViewBtn').classList.toggle('active', view === 'grid');
+      document.getElementById('listViewBtn').classList.toggle('active', view === 'list');
+    }
+
+    function getStars(rating) {
+      const full = Math.floor(rating);
+      const half = rating % 1 >= 0.5;
+      let stars = '★'.repeat(full);
+      if (half) stars += '☆';  // Simplified unicode stars
+      stars += '☆'.repeat(5 - full - (half ? 1 : 0));
+      return stars.slice(0,5);
+    }
+
+    function renderProducts() {
+      const grid = document.getElementById('productGrid');
+      const start = (currentPage - 1) * productsPerPage;
+      const end = start + productsPerPage;
+      const pageProds = filteredProducts.slice(start, end);
+      const total = filteredProducts.length;
+
+      document.getElementById('showingStart').textContent = total > 0 ? start + 1 : 0;
+      document.getElementById('showingEnd').textContent = Math.min(end, total);
+      document.getElementById('totalResults').textContent = total;
+
+      if (pageProds.length === 0) {
+        grid.innerHTML = `
+          <div class="no-results">
+            <i class="fas fa-utensils"></i>
+            <h3>No products found</h3>
+            <p>Try adjusting your filters or search term</p>
+          </div>
+        `;
+        document.getElementById('pagination').innerHTML = '';
+        return;
+      }
+
+      grid.innerHTML = pageProds.map(p => `
+        <div class="product-card ${currentView === 'list' ? 'list-view' : ''}">
+          <div class="product-image">
+            <img src="${p.image}" alt="${p.title}" loading="lazy">
+            <button class="wishlist-btn" onclick="toggleWishlist(${p.id});event.stopPropagation();">
+              <i class="far fa-heart"></i>
+            </button>
+            ${p.discount >= 15 ? `<span class="badge">${p.discount}% OFF</span>` : ''}
+          </div>
+          <div class="product-info">
+            <div class="product-brand">${p.brand}</div>
+            <h3 class="product-title">${p.title}</h3>
+            <div class="product-pricing">
+              <span class="current-price">₹${p.price.toLocaleString()}</span>
+              <span class="original-price">₹${p.originalPrice.toLocaleString()}</span>
+              <span class="discount">${p.discount}% off</span>
+            </div>
+            <div class="product-rating">
+              <span class="rating-stars">${getStars(p.rating)}</span>
+              <span class="rating-count">(${p.reviewCount.toLocaleString()})</span>
+            </div>
+            <div class="available-packs">
+              ${p.packs.slice(0,4).map(pk => `<span class="pack-chip">${pk}</span>`).join('')}
+            </div>
+            <button class="add-to-cart-btn" onclick="addToCart('${p.title}');event.stopPropagation();">
+              <i class="fas fa-shopping-cart"></i> Add to Cart
+            </button>
+          </div>
+        </div>
+      `).join('');
+
+      renderPagination();
+    }
+
+    function renderPagination() {
+      const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
+      const pagination = document.getElementById('pagination');
+      if (totalPages <= 1) {
+        pagination.innerHTML = '';
+        return;
+      }
+
+      let html = `<button class="page-btn" onclick="goToPage(${currentPage-1})" ${currentPage===1?'disabled':''}><i class="fas fa-chevron-left"></i></button>`;
+      for (let i=1; i<=totalPages; i++) {
+        if (i === currentPage) html += `<button class="page-btn active">${i}</button>`;
+        else html += `<button class="page-btn" onclick="goToPage(${i})">${i}</button>`;
+      }
+      html += `<button class="page-btn" onclick="goToPage(${currentPage+1})" ${currentPage===totalPages?'disabled':''}><i class="fas fa-chevron-right"></i></button>`;
+      pagination.innerHTML = html;
+    }
+
+    function goToPage(page) {
+      const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
+      if (page < 1 || page > totalPages) return;
+      currentPage = page;
+      renderProducts();
+      window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+
+    function updateActiveFilters() {
+      const container = document.getElementById('activeFilters');
+      const filters = [];
+      [...activeFilters.categories, ...activeFilters.brands, ...activeFilters.packs, ...activeFilters.offers].forEach(val => {
+        if (val) filters.push(val);
+      });
+      container.innerHTML = filters.map(f => 
+        `<div class="active-filter">${f} <i class="fas fa-times" onclick="removeFilter('${f}')"></i></div>`
+      ).join('');
+    }
+
+    function removeFilter(val) {
+      // Simplified remove
+      applyFilters();
+    }
+
+    function initializeEventListeners() {
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.onclick = () => {
+          document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          const cat = btn.dataset.category;
+          if (cat === 'all') {
+            document.querySelectorAll('#categoryFilters input').forEach(cb => cb.checked = false);
+          } else {
+            document.querySelectorAll('#categoryFilters input').forEach(cb => cb.checked = cb.value === cat);
+          }
+          applyFilters();
+        };
+      });
+      document.getElementById('searchInput').oninput = applyFilters;
+    }
+  </script>
 </body>
 </html>
+

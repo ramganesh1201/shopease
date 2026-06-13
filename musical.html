@@ -1,103 +1,851 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>ShopEase — Musical Instruments</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-<style>
-:root{--bg:#0b0210;--panel:#12041a;--accent:#c79bff;--accent2:#ffd38a;--muted:#a99fb2}
-*{box-sizing:border-box}body{margin:0;font-family:'Poppins',sans-serif;background:linear-gradient(180deg,#060009,#12041a);color:#f6f2ff}
-header{position:sticky;top:0;padding:12px 20px;display:flex;justify-content:space-between;align-items:center;background:rgba(0,0,0,0.3);backdrop-filter:blur(6px)}
-.brand{display:flex;align-items:center;gap:12px;color:var(--accent);font-weight:700}
-.hero{height:350px;padding:36px 6%;display:flex;align-items:center;gap:20px;position:relative;overflow:hidden}
-.hero::after{content:"";position:absolute;right:-120px;top:-20px;width:420px;height:420px;background:radial-gradient(circle,rgba(199,155,255,0.12),transparent);filter:blur(40px)}
-.hero-title{font-size:36px;color:#fff;margin:0}
-.hero-sub{color:var(--muted)}
-.wave{position:absolute;left:3%;bottom:10%;width:80%;height:90px;background:linear-gradient(90deg,transparent,rgba(199,155,255,0.06),transparent);border-radius:50px;filter:blur(12px);transform:translateY(0);animation:pulse 4s ease-in-out infinite}
-@keyframes pulse{0%{transform:translateY(0)}50%{transform:translateY(-8px)}100%{transform:translateY(0)}}
-.layout{display:flex;gap:20px;padding:28px 6%}
-.sidebar{width:260px;background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);padding:16px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)}
-.area{flex:1}
-.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
-.search{flex:1;background:rgba(255,255,255,0.02);padding:8px;border-radius:10px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:18px}
-.card{background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);border-radius:12px;padding:0;overflow:hidden;border:1px solid rgba(255,255,255,0.03);transition:transform .28s,box-shadow .28s}
-.card:hover{transform:translateY(-6px);box-shadow:0 20px 50px rgba(199,155,255,0.06)}
-.imgwrap{height:160px;position:relative}
-.card img{width:100%;height:100%;object-fit:cover;transition:transform .45s}
-.card:hover img{transform:scale(1.06) rotate(-1deg)}
-.ribbon{position:absolute;top:10px;left:0;background:linear-gradient(90deg,var(--accent),var(--accent2));color:#12041a;padding:6px 10px;border-radius:0 6px 6px 0;font-weight:700}
-.card-body{padding:12px}
-.title{font-weight:700}
-.meta{display:flex;justify-content:space-between;color:var(--muted)}
-.actions{display:flex;gap:8px;margin-top:10px}
-.add{background:linear-gradient(90deg,var(--accent),#ffd38a);border:0;padding:8px;border-radius:8px;color:#12041a;font-weight:700}
-.wish{background:transparent;border:1px solid rgba(255,255,255,0.04);padding:8px;border-radius:8px;color:var(--muted)}
-footer{padding:24px;text-align:center;color:var(--muted)}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Musical Instruments - ShopEase</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    /* ================= RESET & BASE ================= */
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+    body { background: #f4f6fb; color: #333; }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+
+    /* ================= HEADER ================= */
+    .header {
+      background: #fff;
+      padding: 12px 5%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 15px rgba(0,0,0,0.06);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    .logo { font-size: 28px; font-weight: 700; color: #ff3f6c; cursor: pointer; }
+    .logo span { color: #333; }
+    .search-bar { flex: 1; max-width: 500px; margin: 0 30px; display: flex; position: relative; }
+    .search-bar input {
+      flex: 1; padding: 12px 15px; border: 2px solid #eee;
+      border-radius: 8px 0 0 8px; outline: none; font-size: 14px; transition: border-color 0.3s;
+    }
+    .search-bar input:focus { border-color: #ff3f6c; }
+    .search-bar button {
+      padding: 12px 20px; border: none; background: #ff3f6c; color: #fff;
+      border-radius: 0 8px 8px 0; cursor: pointer; transition: background 0.3s;
+    }
+    .search-bar button:hover { background: #e6365c; }
+    .header-actions { display: flex; align-items: center; gap: 25px; }
+    .cart-icon { position: relative; font-size: 22px; cursor: pointer; color: #333; transition: color 0.3s; }
+    .cart-icon:hover { color: #ff3f6c; }
+    .cart-badge {
+      position: absolute; top: -8px; right: -10px; background: #ff3f6c; color: #fff;
+      font-size: 11px; font-weight: 600; width: 20px; height: 20px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .cart-badge:empty, .cart-badge[data-count="0"] { display: none; }
+
+    /* ================= BREADCRUMB ================= */
+    .breadcrumb { padding: 15px 5%; font-size: 13px; color: #888; }
+    .breadcrumb a { color: #ff3f6c; font-weight: 500; }
+
+    /* ================= HERO ================= */
+    .hero {
+      margin: 0 5% 30px;
+      background: linear-gradient(135deg, #fff5f6 0%, #fff8f0 50%, #f0f4ff 100%);
+      border-radius: 20px;
+      padding: 40px 50px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; top: -50%; right: -10%; width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(255,63,108,0.1) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .hero::after {
+      content: '🎸';
+      position: absolute; bottom: -10px; right: 180px;
+      font-size: 120px; opacity: 0.07; pointer-events: none;
+    }
+    .hero-text { position: relative; z-index: 1; }
+    .hero-text h2 { font-size: 36px; font-weight: 700; margin-bottom: 12px; color: #1a1a1a; }
+    .hero-text h2 span { color: #ff3f6c; }
+    .hero-text p { color: #666; font-size: 15px; margin-bottom: 20px; }
+    .hero-tags { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+    .hero-tag {
+      padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 500;
+      background: rgba(255,63,108,0.08); color: #ff3f6c; border: 1px solid rgba(255,63,108,0.2);
+    }
+    .hero-stats { display: flex; gap: 30px; }
+    .stat { text-align: center; }
+    .stat-number { font-size: 24px; font-weight: 700; color: #ff3f6c; }
+    .stat-label { font-size: 12px; color: #888; }
+    .hero-image { position: relative; z-index: 1; }
+    .hero-image img { width: 320px; height: auto; border-radius: 15px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+
+    /* ================= MAIN LAYOUT ================= */
+    .main-container { display: flex; gap: 30px; padding: 0 5% 50px; }
+
+    /* ================= SIDEBAR ================= */
+    .sidebar {
+      width: 280px; background: #fff; padding: 25px; border-radius: 16px;
+      box-shadow: 0 5px 25px rgba(0,0,0,0.05); height: fit-content;
+      position: sticky; top: 90px;
+    }
+    .sidebar-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #eee;
+    }
+    .sidebar-header h3 { font-size: 18px; font-weight: 600; }
+    .clear-all-btn { font-size: 13px; color: #ff3f6c; cursor: pointer; font-weight: 500; }
+    .clear-all-btn:hover { text-decoration: underline; }
+    .filter-section { margin-bottom: 25px; border-bottom: 1px solid #f0f0f0; padding-bottom: 20px; }
+    .filter-section:last-child { border-bottom: none; }
+    .filter-header { display: flex; justify-content: space-between; align-items: center; cursor: pointer; margin-bottom: 15px; }
+    .filter-header h4 { font-size: 14px; font-weight: 600; color: #1a1a1a; }
+    .filter-header i { font-size: 12px; color: #888; transition: transform 0.3s; }
+    .filter-header.collapsed i { transform: rotate(-90deg); }
+    .filter-options { display: flex; flex-direction: column; gap: 10px; }
+    .filter-options.collapsed { display: none; }
+    .filter-option { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+    .filter-option input[type="checkbox"] { width: 18px; height: 18px; accent-color: #ff3f6c; cursor: pointer; }
+    .filter-option span { font-size: 13px; color: #444; transition: color 0.2s; }
+    .filter-option:hover span { color: #ff3f6c; }
+    .filter-option .count { margin-left: auto; font-size: 11px; color: #999; background: #f5f5f5; padding: 2px 8px; border-radius: 10px; }
+    .color-options { display: flex; flex-wrap: wrap; gap: 10px; }
+    .color-option { width: 32px; height: 32px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; transition: all 0.2s; position: relative; }
+    .color-option:hover, .color-option.active { border-color: #ff3f6c; transform: scale(1.1); }
+    .color-option.active::after { content: '\2713'; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); color: #fff; font-size: 14px; font-weight: bold; }
+    .active-filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 15px; }
+    .active-filter { display: flex; align-items: center; gap: 6px; padding: 6px 12px; background: #fff5f7; border: 1px solid #ff3f6c; border-radius: 20px; font-size: 12px; color: #ff3f6c; }
+    .active-filter i { cursor: pointer; }
+    .active-filter i:hover { color: #e6365c; }
+
+    /* ================= RATING ================= */
+    .rating-option { display: flex; align-items: center; gap: 8px; cursor: pointer; padding: 6px 8px; border-radius: 8px; transition: background 0.2s; }
+    .rating-option:hover { background: #fff5f7; }
+    .rating-option .stars { color: #ffb800; font-size: 13px; }
+    .rating-option span { font-size: 13px; color: #444; }
+
+    /* ================= PRODUCTS AREA ================= */
+    .products-area { flex: 1; }
+    .category-tabs { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+    .tab-btn {
+      padding: 10px 20px; border: none; background: #fff; border-radius: 25px; cursor: pointer;
+      font-size: 13px; font-weight: 500; color: #666; transition: all 0.3s;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+    .tab-btn:hover { color: #ff3f6c; }
+    .tab-btn.active { background: #ff3f6c; color: #fff; }
+
+    /* ================= SORT BAR ================= */
+    .sort-bar {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 20px; background: #fff; padding: 15px 20px;
+      border-radius: 12px; box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+    }
+    .results-count { font-size: 14px; color: #666; }
+    .results-count strong { color: #1a1a1a; }
+    .sort-options { display: flex; align-items: center; gap: 15px; }
+    .sort-dropdown { padding: 8px 15px; border: 1px solid #ddd; border-radius: 8px; font-size: 13px; color: #333; cursor: pointer; background: #fff; }
+    .view-toggle { display: flex; gap: 8px; }
+    .view-btn {
+      width: 36px; height: 36px; border: 1px solid #ddd; border-radius: 8px; background: #fff;
+      cursor: pointer; display: flex; align-items: center; justify-content: center; color: #666; transition: all 0.2s;
+    }
+    .view-btn:hover, .view-btn.active { border-color: #ff3f6c; color: #ff3f6c; background: #fff5f7; }
+
+    /* ================= PRODUCT GRID ================= */
+    .product-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; }
+    .product-grid.list-view { grid-template-columns: 1fr; }
+
+    .product-card {
+      background: #fff; border-radius: 16px; overflow: hidden;
+      box-shadow: 0 5px 25px rgba(0,0,0,0.05); transition: all 0.3s ease; cursor: pointer;
+    }
+    .product-card:hover { transform: translateY(-8px); box-shadow: 0 15px 40px rgba(0,0,0,0.12); }
+    .product-card.list-view { display: flex; flex-direction: row; }
+
+    .product-image { position: relative; overflow: hidden; background: #fafafa; }
+    .product-card.list-view .product-image { width: 200px; flex-shrink: 0; }
+    .product-image img { width: 100%; height: 260px; object-fit: cover; transition: transform 0.5s; }
+    .product-card.list-view .product-image img { height: 100%; object-fit: contain; padding: 10px; }
+    .product-card:hover .product-image img { transform: scale(1.05); }
+
+    .wishlist-btn {
+      position: absolute; top: 12px; right: 12px; width: 36px; height: 36px;
+      background: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      cursor: pointer; box-shadow: 0 2px 10px rgba(0,0,0,0.1); transition: all 0.3s; border: none; font-size: 16px; color: #666; z-index: 2;
+    }
+    .wishlist-btn:hover { color: #ff3f6c; transform: scale(1.1); }
+    .wishlist-btn.active { color: #ff3f6c; }
+
+    .badge { position: absolute; top: 12px; left: 12px; background: #ff3f6c; color: #fff; padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: 600; z-index: 2; }
+    .badge.new { background: #28a745; }
+    .badge.toprated { background: #ff8c00; }
+
+    .product-info { padding: 18px; }
+    .product-brand { font-size: 12px; color: #888; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 5px; }
+    .product-title { font-size: 14px; font-weight: 500; color: #1a1a1a; margin-bottom: 6px; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+    .product-meta { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
+    .meta-tag { padding: 3px 10px; background: #fff5f7; color: #ff3f6c; border-radius: 4px; font-size: 11px; font-weight: 500; }
+
+    .product-pricing { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+    .current-price { font-size: 18px; font-weight: 700; color: #1a1a1a; }
+    .original-price { font-size: 14px; color: #999; text-decoration: line-through; }
+    .discount { font-size: 12px; color: #ff3f6c; font-weight: 600; }
+
+    .product-rating { display: flex; align-items: center; gap: 6px; margin-bottom: 12px; }
+    .rating-stars { color: #ffb800; font-size: 13px; }
+    .rating-count { font-size: 12px; color: #888; }
+
+    .product-specs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 15px; }
+    .spec-chip { padding: 4px 10px; border: 1px solid #ffe4ea; border-radius: 6px; font-size: 11px; color: #ff3f6c; }
+
+    .available-colors { display: flex; gap: 6px; align-items: center; margin-bottom: 15px; }
+    .available-colors span { font-size: 11px; color: #888; }
+    .dot { width: 14px; height: 14px; border-radius: 50%; border: 1px solid #ddd; }
+
+    .add-to-cart-btn {
+      width: 100%; padding: 12px; border: none; background: #ff3f6c; color: #fff;
+      border-radius: 10px; font-size: 13px; font-weight: 600; cursor: pointer;
+      transition: all 0.3s; display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .add-to-cart-btn:hover { background: #e6365c; }
+    .add-to-cart-btn.added { background: #28a745; }
+
+    /* ================= PROMO BANNER ================= */
+    .promo-banner {
+      grid-column: 1 / -1;
+      background: linear-gradient(135deg, #ff3f6c 0%, #ff7043 50%, #ffa726 100%);
+      border-radius: 16px; padding: 28px 40px;
+      display: flex; align-items: center; justify-content: space-between;
+      color: #fff;
+    }
+    .promo-banner h3 { font-size: 22px; font-weight: 700; margin-bottom: 6px; }
+    .promo-banner p { font-size: 14px; opacity: 0.9; }
+    .promo-banner-btn {
+      padding: 12px 28px; background: #fff; color: #ff3f6c; border: none;
+      border-radius: 25px; font-size: 14px; font-weight: 600; cursor: pointer;
+      transition: all 0.3s; white-space: nowrap; margin-left: 20px;
+    }
+    .promo-banner-btn:hover { transform: scale(1.05); box-shadow: 0 5px 20px rgba(0,0,0,0.2); }
+
+    /* ================= PAGINATION ================= */
+    .pagination { display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: 40px; }
+    .page-btn {
+      min-width: 40px; height: 40px; border: 1px solid #ddd; background: #fff;
+      border-radius: 8px; display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-size: 14px; color: #666; transition: all 0.2s;
+    }
+    .page-btn:hover { border-color: #ff3f6c; color: #ff3f6c; }
+    .page-btn.active { background: #ff3f6c; border-color: #ff3f6c; color: #fff; }
+    .page-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .page-ellipsis { padding: 0 5px; color: #888; }
+
+    /* ================= NO RESULTS ================= */
+    .no-results { text-align: center; padding: 60px 20px; background: #fff; border-radius: 16px; }
+    .no-results i { font-size: 60px; color: #ddd; margin-bottom: 20px; }
+    .no-results h3 { font-size: 20px; color: #333; margin-bottom: 10px; }
+    .no-results p { color: #888; }
+
+    /* ================= TOAST ================= */
+    .toast {
+      position: fixed; bottom: 30px; right: 30px; background: #1a1a1a; color: #fff;
+      padding: 14px 22px; border-radius: 10px; font-size: 14px; font-weight: 500;
+      display: flex; align-items: center; gap: 10px; z-index: 9999;
+      transform: translateY(100px); opacity: 0; transition: all 0.4s cubic-bezier(0.34,1.56,0.64,1);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+    .toast.show { transform: translateY(0); opacity: 1; }
+    .toast i { color: #ff3f6c; font-size: 18px; }
+
+    /* ================= RESPONSIVE ================= */
+    @media (max-width: 1200px) { .product-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 992px) {
+      .main-container { flex-direction: column; }
+      .sidebar { width: 100%; position: static; }
+      .hero { padding: 30px; }
+      .hero-image img { width: 220px; }
+    }
+    @media (max-width: 768px) {
+      .hero { flex-direction: column; text-align: center; gap: 25px; }
+      .hero-stats { justify-content: center; }
+      .product-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; }
+      .product-image img { height: 200px; }
+      .promo-banner { flex-direction: column; gap: 15px; text-align: center; }
+    }
+    @media (max-width: 480px) {
+      .product-grid { grid-template-columns: 1fr; }
+      .header-actions { gap: 15px; }
+      .category-tabs { gap: 8px; }
+      .tab-btn { padding: 8px 15px; font-size: 12px; }
+    }
+  </style>
 </head>
 <body>
 
-<header><div class="brand">🎵 ShopEase — Musical Instruments</div><div id="cart-num">🛒 0</div></header>
-
-<section class="hero">
-  <div style="width:60%">
-    <h2 class="hero-title">Sound. Craft. Soul.</h2>
-    <p class="hero-sub">Guitars, keyboards, percussion & studio gear — curated for musicians.</p>
-  </div>
-  <div style="flex:1;display:flex;justify-content:flex-end">
-    <img src="https://images.pexels.com/photos/164821/pexels-photo-164821.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="" style="width:320px;height:220px;border-radius:14px;object-fit:cover;box-shadow:0 20px 60px rgba(0,0,0,0.4)">
-  </div>
-  <div class="wave"></div>
-</section>
-
-<div class="layout">
-  <aside class="sidebar">
-    <h3>Filters</h3>
-    <div><strong>Instrument</strong>
-      <label><input type="checkbox" class="f" data-filter="guitar"> Guitar</label>
-      <label><input type="checkbox" class="f" data-filter="keyboard"> Keyboard</label>
-      <label><input type="checkbox" class="f" data-filter="drum"> Drums</label>
+  <!-- HEADER -->
+  <header class="header">
+    <div class="logo" onclick="window.location.href='index.html'">Shop<span>Ease</span></div>
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Search for instruments, brands and more">
+      <button><i class="fas fa-search"></i></button>
     </div>
-  </aside>
-
-  <main class="area">
-    <div class="topbar">
-      <div class="search"><input id="q" placeholder="Search instruments..."></div>
-      <div class="badge" id="activeFilters">All items</div>
+    <div class="header-actions">
+      <div class="cart-icon" onclick="window.location.href='cart.html'">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="cart-badge" id="cartBadge">0</span>
+      </div>
     </div>
+  </header>
 
-    <section id="productsGrid" class="grid"></section>
-    <div id="emptyState" style="display:none;padding:30px;text-align:center;color:var(--muted)">No items</div>
-  </main>
-</div>
+  <!-- BREADCRUMB -->
+  <div class="breadcrumb">
+    <a href="index.html">Home</a> <i class="fas fa-chevron-right"></i>
+    <a href="#">Music</a> <i class="fas fa-chevron-right"></i>
+    <span>Musical Instruments</span>
+  </div>
 
-<footer>© 2025 ShopEase — Instruments</footer>
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-text">
+      <h2>Musical <span>Instruments</span></h2>
+      <p>From beginner to pro — find guitars, keyboards, drums & more. Top brands at the best prices.</p>
+      <div class="hero-tags">
+        <span class="hero-tag">🎸 Guitars</span>
+        <span class="hero-tag">🎹 Keyboards</span>
+        <span class="hero-tag">🥁 Drums</span>
+        <span class="hero-tag">🎺 Wind</span>
+        <span class="hero-tag">🎻 Strings</span>
+      </div>
+      <div class="hero-stats">
+        <div class="stat">
+          <div class="stat-number" id="totalProducts">0</div>
+          <div class="stat-label">Products</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">30+</div>
+          <div class="stat-label">Brands</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">50%</div>
+          <div class="stat-label">Off</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-image">
+      <img src="https://images.unsplash.com/photo-1510915361894-db8b60106cb1?w=500" alt="Musical Instruments">
+    </div>
+  </div>
 
-<script>
-const PRODUCTS=[
-  {id:1,title:"Acoustic Guitar (Dreadnought)",category:"guitar",price:9999,material:"spruce",img:"https://images.pexels.com/photos/164821/pexels-photo-164821.jpeg?auto=compress&cs=tinysrgb&w=1600",badge:"New"},
-  {id:2,title:"88-Key Digital Piano",category:"keyboard",price:35999,material:"wood",img:"https://images.pexels.com/photos/164832/pexels-photo-164832.jpeg?auto=compress&cs=tinysrgb&w=1600",badge:"Premium"},
-  {id:3,title:"Drum Set Starter Pack",category:"drum",price:14999,material:"metal",img:"https://images.pexels.com/photos/210152/pexels-photo-210152.jpeg?auto=compress&cs=tinysrgb&w=1600",badge:"Bestseller"}
-];
+  <!-- MAIN CONTAINER -->
+  <div class="main-container">
 
-let cart=JSON.parse(localStorage.getItem('music_cart')||'[]'), wish=JSON.parse(localStorage.getItem('music_wish')||'[]');
-const grid=document.getElementById('productsGrid'), q=document.getElementById('q');
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h3><i class="fas fa-filter"></i> Filters</h3>
+        <span class="clear-all-btn" onclick="clearAllFilters()">Clear All</span>
+      </div>
+      <div class="active-filters" id="activeFilters"></div>
 
-function format(n){return n.toLocaleString()}
-function render(items){grid.innerHTML=''; if(!items.length){document.getElementById('emptyState').style.display='block';return} document.getElementById('emptyState').style.display='none';
-  items.forEach(p=>{ const card=document.createElement('div'); card.className='card'; card.innerHTML=`
-    <div class="imgwrap"><img src="${p.img}" alt="${p.title}">${p.badge?`<div class="ribbon">${p.badge}</div>`:''}</div>
-    <div class="card-body"><div class="title">${p.title}</div><div class="meta"><div>₹${format(p.price)}</div><div style="color:var(--muted)">${p.material}</div></div>
-    <div class="actions"><button class="add" onclick="add(${p.id})">Add</button><button class="wish" onclick="twish(${p.id},this)">${wish.includes(p.id)?'♥':'♡'} Wish</button></div></div>`; grid.appendChild(card); });
-}
-function add(id){ cart.push(PRODUCTS.find(p=>p.id===id)); localStorage.setItem('music_cart',JSON.stringify(cart)); update(); }
-function twish(id,btn){ const i=wish.indexOf(id); if(i===-1){wish.push(id);btn.textContent='♥ Wish'}else{wish.splice(i,1);btn.textContent='♡ Wish'} localStorage.setItem('music_wish',JSON.stringify(wish)); update(); }
-function update(){ document.getElementById('cart-num').textContent = `🛒 ${cart.length}` }
-function apply(){ const term=q.value.toLowerCase(); const cats=[...document.querySelectorAll('.f:checked')].map(e=>e.dataset.filter).filter(Boolean); render(PRODUCTS.filter(p=>(!cats.length||cats.includes(p.category))&&(!term||p.title.toLowerCase().includes(term))))}
-document.querySelectorAll('.f').forEach(i=>i.addEventListener('change',apply)); q.addEventListener('input',()=>setTimeout(apply,150));
-update(); render(PRODUCTS);
-</script>
+      <!-- Category -->
+      <div class="filter-section">
+        <div class="filter-header" onclick="toggleFilter(this)"><h4>Category</h4><i class="fas fa-chevron-down"></i></div>
+        <div class="filter-options" id="categoryFilters"></div>
+      </div>
+
+      <!-- Brand -->
+      <div class="filter-section">
+        <div class="filter-header" onclick="toggleFilter(this)"><h4>Brand</h4><i class="fas fa-chevron-down"></i></div>
+        <div class="filter-options" id="brandFilters"></div>
+      </div>
+
+      <!-- Skill Level -->
+      <div class="filter-section">
+        <div class="filter-header" onclick="toggleFilter(this)"><h4>Skill Level</h4><i class="fas fa-chevron-down"></i></div>
+        <div class="filter-options" id="levelFilters">
+          <label class="filter-option"><input type="checkbox" value="Beginner" onchange="applyFilters()"><span>Beginner</span></label>
+          <label class="filter-option"><input type="checkbox" value="Intermediate" onchange="applyFilters()"><span>Intermediate</span></label>
+          <label class="filter-option"><input type="checkbox" value="Professional" onchange="applyFilters()"><span>Professional</span></label>
+        </div>
+      </div>
+
+      <!-- Color -->
+      <div class="filter-section">
+        <div class="filter-header" onclick="toggleFilter(this)"><h4>Color</h4><i class="fas fa-chevron-down"></i></div>
+        <div class="filter-options">
+          <div class="color-options" id="colorFilters"></div>
+        </div>
+      </div>
+
+      <!-- Price Range -->
+      <div class="filter-section">
+        <div class="filter-header" onclick="toggleFilter(this)"><h4>Price Range</h4><i class="fas fa-chevron-down"></i></div>
+        <div class="filter-options">
+          <label class="filter-option"><input type="checkbox" value="under2000" onchange="applyFilters()"><span>Under ₹2,000</span></label>
+          <label class="filter-option"><input type="checkbox" value="2000-8000" onchange="applyFilters()"><span>₹2,000 – ₹8,000</span></label>
+          <label class="filter-option"><input type="checkbox" value="8000-20000" onchange="applyFilters()"><span>₹8,000 – ₹20,000</span></label>
+          <label class="filter-option"><input type="checkbox" value="above20000" onchange="applyFilters()"><span>Above ₹20,000</span></label>
+        </div>
+      </div>
+
+      <!-- Rating -->
+      <div class="filter-section">
+        <div class="filter-header" onclick="toggleFilter(this)"><h4>Rating</h4><i class="fas fa-chevron-down"></i></div>
+        <div class="filter-options" id="ratingFilters">
+          <label class="filter-option rating-option"><input type="checkbox" value="4" onchange="applyFilters()"><span class="stars">★★★★☆</span><span>& above</span></label>
+          <label class="filter-option rating-option"><input type="checkbox" value="3" onchange="applyFilters()"><span class="stars">★★★☆☆</span><span>& above</span></label>
+        </div>
+      </div>
+
+      <!-- Offers -->
+      <div class="filter-section">
+        <div class="filter-header" onclick="toggleFilter(this)"><h4>Offers</h4><i class="fas fa-chevron-down"></i></div>
+        <div class="filter-options" id="offerFilters">
+          <label class="filter-option"><input type="checkbox" value="Free Delivery" onchange="applyFilters()"><span>Free Delivery</span></label>
+          <label class="filter-option"><input type="checkbox" value="Bundle Deal" onchange="applyFilters()"><span>Bundle Deal</span></label>
+          <label class="filter-option"><input type="checkbox" value="Special Price" onchange="applyFilters()"><span>Special Price</span></label>
+        </div>
+      </div>
+    </aside>
+
+    <!-- PRODUCTS AREA -->
+    <div class="products-area">
+
+      <!-- Category Tabs -->
+      <div class="category-tabs" id="categoryTabs">
+        <button class="tab-btn active" data-category="all">All</button>
+        <button class="tab-btn" data-category="Guitars">Guitars</button>
+        <button class="tab-btn" data-category="Keyboards">Keyboards</button>
+        <button class="tab-btn" data-category="Drums">Drums</button>
+        <button class="tab-btn" data-category="Wind">Wind</button>
+        <button class="tab-btn" data-category="String">String</button>
+        <button class="tab-btn" data-category="Studio">Studio</button>
+        <button class="tab-btn" data-category="Accessories">Accessories</button>
+      </div>
+
+      <!-- Sort Bar -->
+      <div class="sort-bar">
+        <div class="results-count">
+          Showing <strong id="showingStart">0</strong> – <strong id="showingEnd">0</strong> of <strong id="totalResults">0</strong> products
+        </div>
+        <div class="sort-options">
+          <select class="sort-dropdown" id="sortDropdown" onchange="sortProducts()">
+            <option value="popularity">Sort by: Popularity</option>
+            <option value="price-low">Price: Low to High</option>
+            <option value="price-high">Price: High to Low</option>
+            <option value="rating">Rating</option>
+          </select>
+          <div class="view-toggle">
+            <button class="view-btn active" id="gridViewBtn" onclick="setView('grid')"><i class="fas fa-th"></i></button>
+            <button class="view-btn" id="listViewBtn" onclick="setView('list')"><i class="fas fa-list"></i></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product Grid -->
+      <div class="product-grid" id="productGrid"></div>
+
+      <!-- Pagination -->
+      <div class="pagination" id="pagination"></div>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast"><i class="fas fa-check-circle"></i><span id="toastMsg">Added to cart!</span></div>
+
+  <script>
+    // ================= PRODUCT DATA =================
+    const products = [
+      // Guitars
+      { id: 1,  brand: "Yamaha",     title: "Yamaha F310 Acoustic Guitar",             category: "Guitars",     type: "Acoustic",   level: "Beginner",      price: 7499,  originalPrice: 14999, discount: 50, rating: 4.7, reviewCount: 18240, colors: ["Natural", "Black"],         specs: ["Steel String", "Spruce Top", "6-String"],         image: "https://images.unsplash.com/photo-1510915361894-db8b60106cb1?w=400", offer: "Free Delivery", badge: "" },
+      { id: 2,  brand: "Fender",     title: "Fender Squier Stratocaster Electric",     category: "Guitars",     type: "Electric",   level: "Beginner",      price: 14999, originalPrice: 29999, discount: 50, rating: 4.6, reviewCount: 9870,  colors: ["Sunburst", "Black", "Red"],  specs: ["HSS Pickup", "Maple Neck", "Tremolo"],            image: "https://images.unsplash.com/photo-1525201548942-d8732f6617a0?w=400", offer: "Special Price", badge: "toprated" },
+      { id: 3,  brand: "Gibson",     title: "Gibson Les Paul Standard",               category: "Guitars",     type: "Electric",   level: "Professional",  price: 89999, originalPrice: 159999,discount: 44, rating: 4.9, reviewCount: 5430,  colors: ["Sunburst", "Gold Top"],      specs: ["Humbucker", "Mahogany Body", "Tune-o-matic"],     image: "https://images.unsplash.com/photo-1501612780327-45045538702b?w=400", offer: "Free Delivery", badge: "toprated" },
+      { id: 4,  brand: "Cort",       title: "Cort AD810 Acoustic Guitar",             category: "Guitars",     type: "Acoustic",   level: "Beginner",      price: 5999,  originalPrice: 9999,  discount: 40, rating: 4.4, reviewCount: 12310, colors: ["Natural", "Black"],         specs: ["Spruce Top", "Steel String", "6-String"],         image: "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=400", offer: "Free Delivery", badge: "" },
+      { id: 5,  brand: "Ibanez",     title: "Ibanez GRX70QA Electric Guitar",         category: "Guitars",     type: "Electric",   level: "Intermediate",  price: 12499, originalPrice: 22999, discount: 46, rating: 4.5, reviewCount: 7650,  colors: ["Sunburst", "Black"],        specs: ["HSH Pickup", "Basswood Body", "Tremolo"],         image: "https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?w=400", offer: "Bundle Deal",   badge: "" },
+      { id: 6,  brand: "Yamaha",     title: "Yamaha APX600 Semi-Acoustic Guitar",     category: "Guitars",     type: "Semi-Acoustic",level: "Intermediate", price: 18999, originalPrice: 34999, discount: 46, rating: 4.6, reviewCount: 5430,  colors: ["Natural", "Black", "Sand"], specs: ["Spruce Top", "Nato Back", "Pickup System"],       image: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400", offer: "Free Delivery", badge: "" },
+      { id: 7,  brand: "Fender",     title: "Fender CD-60S Acoustic Guitar",          category: "Guitars",     type: "Acoustic",   level: "Beginner",      price: 11999, originalPrice: 21999, discount: 45, rating: 4.5, reviewCount: 8760,  colors: ["Natural", "Black", "Sunburst"], specs: ["Solid Spruce Top", "Mahogany Back", "6-String"], image: "https://images.unsplash.com/photo-1510915361894-db8b60106cb1?w=400", offer: "Special Price", badge: "" },
+      { id: 8,  brand: "Epiphone",   title: "Epiphone SG Standard Electric Guitar",   category: "Guitars",     type: "Electric",   level: "Intermediate",  price: 19999, originalPrice: 39999, discount: 50, rating: 4.6, reviewCount: 6540,  colors: ["Cherry", "Ebony"],          specs: ["Humbucker", "Mahogany Body", "Tune-o-matic"],     image: "https://images.unsplash.com/photo-1525201548942-d8732f6617a0?w=400", offer: "Free Delivery", badge: "" },
+
+      // Keyboards
+      { id: 9,  brand: "Casio",      title: "Casio CTK-2550 61-Key Keyboard",         category: "Keyboards",   type: "Arranger",   level: "Beginner",      price: 4499,  originalPrice: 8999,  discount: 50, rating: 4.5, reviewCount: 21340, colors: ["Black"],                    specs: ["61 Keys", "400 Tones", "77 Rhythms"],             image: "https://images.unsplash.com/photo-1520523839897-bd0b52f945a0?w=400", offer: "Free Delivery", badge: "" },
+      { id: 10, brand: "Yamaha",     title: "Yamaha PSR-E373 Portable Keyboard",      category: "Keyboards",   type: "Arranger",   level: "Beginner",      price: 7999,  originalPrice: 14999, discount: 47, rating: 4.6, reviewCount: 15670, colors: ["Black"],                    specs: ["61 Keys", "622 Voices", "205 Rhythms"],           image: "https://images.unsplash.com/photo-1598653222000-6b7b7a552625?w=400", offer: "Free Delivery", badge: "toprated" },
+      { id: 11, brand: "Roland",     title: "Roland FP-30X Digital Piano",            category: "Keyboards",   type: "Digital Piano",level: "Intermediate", price: 54999, originalPrice: 94999, discount: 42, rating: 4.8, reviewCount: 8760,  colors: ["Black", "White"],           specs: ["88 Keys", "Weighted", "Bluetooth"],               image: "https://images.unsplash.com/photo-1511192336575-5a79af67a629?w=400", offer: "Special Price", badge: "toprated" },
+      { id: 12, brand: "Korg",       title: "Korg B2 Digital Piano",                  category: "Keyboards",   type: "Digital Piano",level: "Intermediate", price: 34999, originalPrice: 59999, discount: 42, rating: 4.7, reviewCount: 4320,  colors: ["Black", "White"],           specs: ["88 Keys", "NH Weighted Action", "12 Sounds"],     image: "https://images.unsplash.com/photo-1520523839897-bd0b52f945a0?w=400", offer: "Free Delivery", badge: "" },
+      { id: 13, brand: "Casio",      title: "Casio PX-S1100 Slim Digital Piano",      category: "Keyboards",   type: "Digital Piano",level: "Beginner",     price: 29999, originalPrice: 49999, discount: 40, rating: 4.6, reviewCount: 6540,  colors: ["Black", "White", "Red"],    specs: ["88 Keys", "Smart Scaled Hammer", "18 Tones"],     image: "https://images.unsplash.com/photo-1598653222000-6b7b7a552625?w=400", offer: "Bundle Deal",   badge: "" },
+      { id: 14, brand: "Arturia",    title: "Arturia MiniLab MkII MIDI Controller",   category: "Keyboards",   type: "MIDI Controller",level: "Professional",price: 6999,  originalPrice: 11999, discount: 42, rating: 4.7, reviewCount: 5430,  colors: ["White", "Black"],           specs: ["25 Keys", "16 Pads", "USB MIDI"],                 image: "https://images.unsplash.com/photo-1511192336575-5a79af67a629?w=400", offer: "Special Price", badge: "" },
+
+      // Drums
+      { id: 15, brand: "Pearl",      title: "Pearl Export 5-Piece Drum Kit",           category: "Drums",       type: "Acoustic",   level: "Intermediate",  price: 34999, originalPrice: 64999, discount: 46, rating: 4.7, reviewCount: 4320,  colors: ["Black", "Red", "Blue"],     specs: ["5-Piece", "Hardware Included", "22\" Bass Drum"], image: "https://images.unsplash.com/photo-1519892300165-cb5542fb47c7?w=400", offer: "Free Delivery", badge: "" },
+      { id: 16, brand: "Roland",     title: "Roland TD-1DMK Electronic Drum Kit",     category: "Drums",       type: "Electronic", level: "Beginner",      price: 44999, originalPrice: 79999, discount: 44, rating: 4.8, reviewCount: 5430,  colors: ["Black"],                    specs: ["5-Piece", "Mesh Snare", "TD-1 Module"],           image: "https://images.unsplash.com/photo-1524230659092-07f99a75c013?w=400", offer: "Special Price", badge: "toprated" },
+      { id: 17, brand: "Tama",       title: "Tama Imperialstar 6-Piece Kit",           category: "Drums",       type: "Acoustic",   level: "Intermediate",  price: 49999, originalPrice: 89999, discount: 44, rating: 4.7, reviewCount: 3210,  colors: ["Hairline Black", "Blue"],   specs: ["6-Piece", "Poplar Shell", "20\" Bass Drum"],      image: "https://images.unsplash.com/photo-1519892300165-cb5542fb47c7?w=400", offer: "Free Delivery", badge: "" },
+      { id: 18, brand: "Alesis",     title: "Alesis Nitro Mesh Electronic Kit",       category: "Drums",       type: "Electronic", level: "Beginner",      price: 24999, originalPrice: 44999, discount: 44, rating: 4.5, reviewCount: 8760,  colors: ["Black"],                    specs: ["8-Piece", "Mesh Heads", "385 Sounds"],            image: "https://images.unsplash.com/photo-1524230659092-07f99a75c013?w=400", offer: "Bundle Deal",   badge: "" },
+
+      // Wind Instruments
+      { id: 19, brand: "Yamaha",     title: "Yamaha YAS-280 Alto Saxophone",          category: "Wind",        type: "Saxophone",  level: "Beginner",      price: 39999, originalPrice: 74999, discount: 47, rating: 4.8, reviewCount: 3240,  colors: ["Gold"],                     specs: ["Alto", "Brass Body", "Nickel Keys"],              image: "https://images.unsplash.com/photo-1415201364774-f6f0bb35f28f?w=400", offer: "Free Delivery", badge: "toprated" },
+      { id: 20, brand: "Jupiter",    title: "Jupiter JTR700 Bb Trumpet",              category: "Wind",        type: "Trumpet",    level: "Beginner",      price: 21999, originalPrice: 39999, discount: 45, rating: 4.6, reviewCount: 2130,  colors: ["Gold", "Silver"],           specs: ["Bb Trumpet", "Monel Valves", "Lacquer Finish"],   image: "https://images.unsplash.com/photo-1464375117522-1311d6a5b81f?w=400", offer: "Special Price", badge: "" },
+      { id: 21, brand: "Yamaha",     title: "Yamaha YFL-222 Student Flute",           category: "Wind",        type: "Flute",      level: "Beginner",      price: 12999, originalPrice: 22999, discount: 43, rating: 4.7, reviewCount: 4320,  colors: ["Silver"],                   specs: ["Closed Hole", "Plateau Keys", "Silver-Plated"],   image: "https://images.unsplash.com/photo-1415201364774-f6f0bb35f28f?w=400", offer: "Free Delivery", badge: "" },
+      { id: 22, brand: "Conn-Selmer",title: "Bach TR501 Bb Trumpet",                  category: "Wind",        type: "Trumpet",    level: "Intermediate",  price: 29999, originalPrice: 54999, discount: 45, rating: 4.7, reviewCount: 2100,  colors: ["Silver"],                   specs: ["Bb Trumpet", "Stainless Valves", "Lacquer"],      image: "https://images.unsplash.com/photo-1464375117522-1311d6a5b81f?w=400", offer: "Bundle Deal",   badge: "" },
+
+      // String Instruments
+      { id: 23, brand: "Stentor",    title: "Stentor Student Violin 4/4",             category: "String",      type: "Violin",     level: "Beginner",      price: 5999,  originalPrice: 10999, discount: 45, rating: 4.5, reviewCount: 6540,  colors: ["Natural"],                  specs: ["4/4 Size", "Maple Body", "Spruce Top"],           image: "https://images.unsplash.com/photo-1612225330812-01a9c98060f4?w=400", offer: "Free Delivery", badge: "" },
+      { id: 24, brand: "Cremona",    title: "Cremona SV-175 Premier Student Violin",  category: "String",      type: "Violin",     level: "Intermediate",  price: 12999, originalPrice: 23999, discount: 46, rating: 4.6, reviewCount: 3210,  colors: ["Natural"],                  specs: ["4/4 Size", "Solid Spruce Top", "Ebony Fittings"], image: "https://images.unsplash.com/photo-1444628838545-ac4016a5418a?w=400", offer: "Special Price", badge: "" },
+      { id: 25, brand: "Kadence",    title: "Kadence Cello 4/4 Full Size",            category: "String",      type: "Cello",      level: "Beginner",      price: 14999, originalPrice: 27999, discount: 46, rating: 4.5, reviewCount: 2100,  colors: ["Natural"],                  specs: ["4/4 Size", "Spruce Top", "Maple Back"],           image: "https://images.unsplash.com/photo-1612225330812-01a9c98060f4?w=400", offer: "Free Delivery", badge: "" },
+      { id: 26, brand: "Harley Benton",title: "Harley Benton Double Bass 3/4",        category: "String",      type: "Double Bass",level: "Intermediate",  price: 24999, originalPrice: 44999, discount: 44, rating: 4.4, reviewCount: 1230,  colors: ["Natural"],                  specs: ["3/4 Size", "Plywood Body", "Adjustable Bridge"],  image: "https://images.unsplash.com/photo-1444628838545-ac4016a5418a?w=400", offer: "Bundle Deal",   badge: "" },
+
+      // Studio
+      { id: 27, brand: "Focusrite",  title: "Focusrite Scarlett 2i2 Audio Interface", category: "Studio",      type: "Interface",  level: "Intermediate",  price: 11999, originalPrice: 19999, discount: 40, rating: 4.8, reviewCount: 21340, colors: ["Red"],                      specs: ["2-in/2-out", "USB-C", "48V Phantom"],             image: "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=400", offer: "Free Delivery", badge: "toprated" },
+      { id: 28, brand: "Audio-Technica",title: "AT2020 Cardioid Condenser Microphone",category: "Studio",      type: "Microphone", level: "Intermediate",  price: 8999,  originalPrice: 14999, discount: 40, rating: 4.7, reviewCount: 14560, colors: ["Black"],                    specs: ["Cardioid", "Condenser", "XLR"],                   image: "https://images.unsplash.com/photo-1598653222000-6b7b7a552625?w=400", offer: "Special Price", badge: "" },
+      { id: 29, brand: "Shure",      title: "Shure SM58 Dynamic Vocal Microphone",   category: "Studio",      type: "Microphone", level: "Professional",  price: 9999,  originalPrice: 17999, discount: 44, rating: 4.8, reviewCount: 18760, colors: ["Black"],                    specs: ["Dynamic", "Cardioid", "XLR"],                     image: "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=400", offer: "Free Delivery", badge: "toprated" },
+      { id: 30, brand: "Rode",       title: "Rode NT1 Studio Condenser Microphone",  category: "Studio",      type: "Microphone", level: "Professional",  price: 21999, originalPrice: 37999, discount: 42, rating: 4.9, reviewCount: 8760,  colors: ["Silver"],                   specs: ["Condenser", "Cardioid", "Self-Noise 4.5dB"],      image: "https://images.unsplash.com/photo-1598653222000-6b7b7a552625?w=400", offer: "Special Price", badge: "" },
+      { id: 31, brand: "Yamaha",     title: "Yamaha HS5 Studio Monitor (Pair)",      category: "Studio",      type: "Monitor",    level: "Professional",  price: 34999, originalPrice: 59999, discount: 42, rating: 4.8, reviewCount: 6540,  colors: ["White"],                    specs: ["5\" Woofer", "1\" Tweeter", "Bi-Amp"],            image: "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=400", offer: "Free Delivery", badge: "" },
+      { id: 32, brand: "PreSonus",   title: "PreSonus AudioBox USB 96 Interface",    category: "Studio",      type: "Interface",  level: "Beginner",      price: 7499,  originalPrice: 12999, discount: 42, rating: 4.6, reviewCount: 9870,  colors: ["Black"],                    specs: ["2-in/2-out", "USB", "48V Phantom"],               image: "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=400", offer: "Bundle Deal",   badge: "" },
+
+      // Accessories
+      { id: 33, brand: "D'Addario",  title: "D'Addario EXL110 Guitar Strings 10-Pack",category: "Accessories",type: "Strings",    level: "Beginner",      price: 1299,  originalPrice: 1999,  discount: 35, rating: 4.7, reviewCount: 32100, colors: ["Silver"],                   specs: ["10-46 Gauge", "Nickel Wound", "Electric"],        image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400", offer: "Free Delivery", badge: "" },
+      { id: 34, brand: "Fender",     title: "Fender Guitar Stand Double",            category: "Accessories", type: "Stand",      level: "Beginner",      price: 1799,  originalPrice: 2999,  discount: 40, rating: 4.5, reviewCount: 8760,  colors: ["Black"],                    specs: ["Holds 2 Guitars", "Folding", "Rubber Padding"],   image: "https://images.unsplash.com/photo-1510915361894-db8b60106cb1?w=400", offer: "Bundle Deal",   badge: "" },
+      { id: 35, brand: "Snark",      title: "Snark SN-5X Clip-On Chromatic Tuner",   category: "Accessories", type: "Tuner",      level: "Beginner",      price: 799,   originalPrice: 1299,  discount: 38, rating: 4.6, reviewCount: 21300, colors: ["Black", "Red"],             specs: ["Chromatic", "Clip-On", "Transpose Function"],     image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400", offer: "Free Delivery", badge: "" },
+      { id: 36, brand: "Boss",       title: "Boss TU-3 Chromatic Stage Tuner Pedal", category: "Accessories", type: "Tuner",      level: "Intermediate",  price: 5999,  originalPrice: 9999,  discount: 40, rating: 4.8, reviewCount: 5430,  colors: ["Yellow"],                   specs: ["Chromatic", "Pedal Format", "21-Segment LED"],    image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400", offer: "Special Price", badge: "toprated" },
+      { id: 37, brand: "Levy's",     title: "Levy's Leather Guitar Strap",           category: "Accessories", type: "Strap",      level: "Beginner",      price: 2499,  originalPrice: 3999,  discount: 38, rating: 4.6, reviewCount: 6540,  colors: ["Black", "Brown", "Natural"],specs: ["Genuine Leather", "Adjustable", "Nickel Hardware"],image: "https://images.unsplash.com/photo-1510915361894-db8b60106cb1?w=400", offer: "Free Delivery", badge: "" },
+      { id: 38, brand: "Ernie Ball",  title: "Ernie Ball Acoustic Guitar Strings 12-Pack",category: "Accessories",type:"Strings",  level: "Beginner",      price: 1099,  originalPrice: 1799,  discount: 39, rating: 4.7, reviewCount: 14560, colors: ["Bronze"],                   specs: ["12-54 Gauge", "Phosphor Bronze", "Acoustic"],     image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400", offer: "Bundle Deal",   badge: "" },
+    ];
+
+    // ================= STATE =================
+    let filteredProducts = [...products];
+    let currentPage = 1;
+    const productsPerPage = 12;
+    let currentView = 'grid';
+    let activeFilters = { categories: [], brands: [], levels: [], offers: [] };
+
+    // ================= CART =================
+    function getCart() { try { return JSON.parse(localStorage.getItem('shopease_cart')) || []; } catch(e) { return []; } }
+    function saveCart(cart) { localStorage.setItem('shopease_cart', JSON.stringify(cart)); updateCartBadge(); }
+    function addToCart(product) {
+      const cart = getCart();
+      const existing = cart.find(i => i.id === product.id);
+      if (existing) { existing.qty += 1; } else { cart.push({ id: product.id, title: product.title, brand: product.brand, price: product.price, image: product.image, qty: 1 }); }
+      saveCart(cart);
+    }
+    function updateCartBadge() {
+      const cart = getCart();
+      const total = cart.reduce((s, i) => s + i.qty, 0);
+      const badge = document.getElementById('cartBadge');
+      badge.textContent = total;
+      badge.setAttribute('data-count', total);
+    }
+
+    // ================= TOAST =================
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      document.getElementById('toastMsg').textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 2500);
+    }
+
+    // ================= INIT =================
+    document.addEventListener('DOMContentLoaded', () => {
+      initFilters();
+      initEventListeners();
+      updateCartBadge();
+      renderProducts();
+      document.getElementById('totalProducts').textContent = products.length;
+    });
+
+    function initFilters() {
+      // Categories
+      const cats = [...new Set(products.map(p => p.category))];
+      document.getElementById('categoryFilters').innerHTML = cats.map(c => {
+        const count = products.filter(p => p.category === c).length;
+        return `<label class="filter-option"><input type="checkbox" value="${c}" onchange="applyFilters()"><span>${c}</span><span class="count">${count}</span></label>`;
+      }).join('');
+
+      // Brands
+      const brands = [...new Set(products.map(p => p.brand))].sort();
+      document.getElementById('brandFilters').innerHTML = brands.map(b => {
+        const count = products.filter(p => p.brand === b).length;
+        return `<label class="filter-option"><input type="checkbox" value="${b}" onchange="applyFilters()"><span>${b}</span><span class="count">${count}</span></label>`;
+      }).join('');
+
+      // Colors
+      const colorMap = { 'Black':'#1a1a1a','White':'#ffffff','Natural':'#c8a96e','Red':'#e53935','Blue':'#1565c0','Sunburst':'#e65100','Gold':'#f9a825','Silver':'#9e9e9e','Cherry':'#b71c1c','Brown':'#6d4c41','White (Piano)':'#f5f5f5','Yellow':'#f9a825','Bronze':'#cd7f32','Green':'#2e7d32' };
+      const allColors = [...new Set(products.flatMap(p => p.colors))];
+      document.getElementById('colorFilters').innerHTML = allColors.map(c => {
+        const hex = colorMap[c] || '#cccccc';
+        return `<div class="color-option" style="background:${hex};${c==='White'||c==='Silver'?'border:1px solid #ddd;':''}" title="${c}" data-color="${c}" onclick="toggleColorFilter('${c}')"></div>`;
+      }).join('');
+    }
+
+    function initEventListeners() {
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          const cat = btn.dataset.category;
+          if (cat === 'all') {
+            document.querySelectorAll('#categoryFilters input').forEach(cb => cb.checked = false);
+          } else {
+            document.querySelectorAll('#categoryFilters input').forEach(cb => { cb.checked = cb.value === cat; });
+          }
+          applyFilters();
+        });
+      });
+      document.getElementById('searchInput').addEventListener('input', applyFilters);
+    }
+
+    function applyFilters() {
+      const search = document.getElementById('searchInput').value.toLowerCase();
+      activeFilters.categories = [...document.querySelectorAll('#categoryFilters input:checked')].map(i => i.value);
+      activeFilters.brands = [...document.querySelectorAll('#brandFilters input:checked')].map(i => i.value);
+      activeFilters.levels = [...document.querySelectorAll('#levelFilters input:checked')].map(i => i.value);
+      activeFilters.offers = [...document.querySelectorAll('#offerFilters input:checked')].map(i => i.value);
+      const selectedColors = [...document.querySelectorAll('.color-option.active')].map(el => el.dataset.color);
+      const priceRanges = [...document.querySelectorAll('[value="under2000"]:checked,[value="2000-8000"]:checked,[value="8000-20000"]:checked,[value="above20000"]:checked')].map(i => i.value);
+      const minRatings = [...document.querySelectorAll('#ratingFilters input:checked')].map(i => parseInt(i.value));
+
+      filteredProducts = products.filter(p => {
+        if (search && !p.title.toLowerCase().includes(search) && !p.brand.toLowerCase().includes(search) && !p.type.toLowerCase().includes(search)) return false;
+        if (activeFilters.categories.length && !activeFilters.categories.includes(p.category)) return false;
+        if (activeFilters.brands.length && !activeFilters.brands.includes(p.brand)) return false;
+        if (activeFilters.levels.length && !activeFilters.levels.includes(p.level)) return false;
+        if (activeFilters.offers.length && !activeFilters.offers.includes(p.offer)) return false;
+        if (selectedColors.length && !p.colors.some(c => selectedColors.includes(c))) return false;
+        if (priceRanges.length) {
+          const ok = priceRanges.some(r => {
+            if (r === 'under2000') return p.price < 2000;
+            if (r === '2000-8000') return p.price >= 2000 && p.price <= 8000;
+            if (r === '8000-20000') return p.price >= 8000 && p.price <= 20000;
+            if (r === 'above20000') return p.price > 20000;
+          });
+          if (!ok) return false;
+        }
+        if (minRatings.length && !minRatings.some(r => p.rating >= r)) return false;
+        return true;
+      });
+
+      currentPage = 1;
+      updateActiveFiltersDisplay();
+      updateTabSelection();
+      sortProducts();
+    }
+
+    function updateTabSelection() {
+      const activeCats = [...document.querySelectorAll('#categoryFilters input:checked')].map(i => i.value);
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        if (btn.dataset.category === 'all') btn.classList.toggle('active', activeCats.length === 0);
+        else btn.classList.toggle('active', activeCats.includes(btn.dataset.category));
+      });
+    }
+
+    function updateActiveFiltersDisplay() {
+      const container = document.getElementById('activeFilters');
+      const all = [
+        ...activeFilters.categories.map(v => ({ type: 'category', value: v })),
+        ...activeFilters.brands.map(v => ({ type: 'brand', value: v })),
+        ...activeFilters.levels.map(v => ({ type: 'level', value: v })),
+        ...activeFilters.offers.map(v => ({ type: 'offer', value: v })),
+        ...[...document.querySelectorAll('.color-option.active')].map(el => ({ type: 'color', value: el.dataset.color })),
+      ];
+      if (!all.length) { container.innerHTML = ''; return; }
+      container.innerHTML = all.map(f => `<div class="active-filter"><span>${f.value}</span><i class="fas fa-times" onclick="removeFilter('${f.type}','${f.value}')"></i></div>`).join('');
+    }
+
+    function removeFilter(type, value) {
+      if (type === 'color') {
+        const el = document.querySelector(`.color-option[data-color="${value}"]`);
+        if (el) el.classList.remove('active');
+      } else {
+        const map = { category: 'categoryFilters', brand: 'brandFilters', level: 'levelFilters', offer: 'offerFilters' };
+        const el = document.querySelector(`#${map[type]} input[value="${value}"]`);
+        if (el) el.checked = false;
+      }
+      applyFilters();
+    }
+
+    function toggleColorFilter(color) {
+      const el = document.querySelector(`.color-option[data-color="${color}"]`);
+      if (el) { el.classList.toggle('active'); applyFilters(); }
+    }
+
+    function clearAllFilters() {
+      document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
+      document.querySelectorAll('.color-option').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelector('.tab-btn[data-category="all"]').classList.add('active');
+      document.getElementById('searchInput').value = '';
+      filteredProducts = [...products];
+      currentPage = 1;
+      updateActiveFiltersDisplay();
+      sortProducts();
+    }
+
+    function toggleFilter(header) {
+      header.classList.toggle('collapsed');
+      const opts = header.nextElementSibling;
+      if (opts) opts.classList.toggle('collapsed');
+    }
+
+    function sortProducts() {
+      const val = document.getElementById('sortDropdown').value;
+      if (val === 'price-low') filteredProducts.sort((a, b) => a.price - b.price);
+      else if (val === 'price-high') filteredProducts.sort((a, b) => b.price - a.price);
+      else if (val === 'rating') filteredProducts.sort((a, b) => b.rating - a.rating);
+      else filteredProducts.sort((a, b) => b.reviewCount - a.reviewCount);
+      renderProducts();
+    }
+
+    function setView(view) {
+      currentView = view;
+      const grid = document.getElementById('productGrid');
+      document.getElementById('gridViewBtn').classList.toggle('active', view === 'grid');
+      document.getElementById('listViewBtn').classList.toggle('active', view === 'list');
+      grid.classList.toggle('list-view', view === 'list');
+    }
+
+    function getStars(rating) {
+      const full = Math.floor(rating);
+      const half = rating % 1 >= 0.5;
+      let s = '';
+      for (let i = 0; i < full; i++) s += '★';
+      if (half) s += '★';
+      for (let i = full + (half ? 1 : 0); i < 5; i++) s += '☆';
+      return s;
+    }
+
+    function getBadgeHTML(p) {
+      if (p.badge === 'toprated') return `<span class="badge toprated">TOP RATED</span>`;
+      if (p.badge === 'new') return `<span class="badge new">NEW</span>`;
+      if (p.discount >= 50) return `<span class="badge">${p.discount}% OFF</span>`;
+      return '';
+    }
+
+    function renderProducts() {
+      const grid = document.getElementById('productGrid');
+      const start = (currentPage - 1) * productsPerPage;
+      const end = start + productsPerPage;
+      const pageProds = filteredProducts.slice(start, end);
+
+      document.getElementById('showingStart').textContent = filteredProducts.length ? start + 1 : 0;
+      document.getElementById('showingEnd').textContent = Math.min(end, filteredProducts.length);
+      document.getElementById('totalResults').textContent = filteredProducts.length;
+
+      if (!pageProds.length) {
+        grid.innerHTML = `<div class="no-results" style="grid-column:1/-1"><i class="fas fa-music"></i><h3>No products found</h3><p>Try adjusting your filters or search term</p></div>`;
+        renderPagination();
+        return;
+      }
+
+      let html = '';
+      pageProds.forEach((p, idx) => {
+        if (currentPage === 1 && idx === 5) {
+          html += `
+            <div class="promo-banner" style="grid-column:1/-1">
+              <div>
+                <h3>🎵 Music Fest Sale — Up to 50% Off!</h3>
+                <p>Pro-grade instruments, studio gear & accessories. Limited-time deals for musicians of all levels.</p>
+              </div>
+              <button class="promo-banner-btn" onclick="clearAllFilters()">Explore All</button>
+            </div>`;
+        }
+        html += `
+          <div class="product-card ${currentView === 'list' ? 'list-view' : ''}">
+            <div class="product-image">
+              <img src="${p.image}" alt="${p.title}" loading="lazy">
+              <button class="wishlist-btn" onclick="toggleWishlist(${p.id})"><i class="far fa-heart"></i></button>
+              ${getBadgeHTML(p)}
+            </div>
+            <div class="product-info">
+              <div class="product-brand">${p.brand}</div>
+              <h3 class="product-title">${p.title}</h3>
+              <div class="product-meta">
+                <span class="meta-tag">${p.type}</span>
+                <span class="meta-tag">${p.level}</span>
+              </div>
+              <div class="product-pricing">
+                <span class="current-price">₹${p.price.toLocaleString()}</span>
+                <span class="original-price">₹${p.originalPrice.toLocaleString()}</span>
+                <span class="discount">${p.discount}% off</span>
+              </div>
+              <div class="product-rating">
+                <span class="rating-stars">${getStars(p.rating)}</span>
+                <span class="rating-count">(${p.reviewCount.toLocaleString()})</span>
+              </div>
+              <div class="product-specs">
+                ${p.specs.map(s => `<span class="spec-chip">${s}</span>`).join('')}
+              </div>
+              <div class="available-colors">
+                <span>Colors:</span>
+                ${p.colors.slice(0,4).map(c => {
+                  const hex = {'Black':'#1a1a1a','White':'#f0f0f0','Natural':'#c8a96e','Red':'#e53935','Blue':'#1565c0','Sunburst':'#e65100','Gold':'#f9a825','Silver':'#9e9e9e','Cherry':'#b71c1c','Brown':'#6d4c41','Yellow':'#f9a825','Bronze':'#cd7f32','Green':'#2e7d32'}[c]||'#ccc';
+                  return `<div class="dot" style="background:${hex}" title="${c}"></div>`;
+                }).join('')}
+              </div>
+              <button class="add-to-cart-btn" onclick="addToCartClick(event,${p.id})">
+                <i class="fas fa-shopping-cart"></i> Add to Cart
+              </button>
+            </div>
+          </div>`;
+      });
+      grid.innerHTML = html;
+      renderPagination();
+    }
+
+    function addToCartClick(e, productId) {
+      const product = products.find(p => p.id === productId);
+      if (!product) return;
+      addToCart(product);
+      const btn = e.target.closest('.add-to-cart-btn');
+      btn.classList.add('added');
+      btn.innerHTML = '<i class="fas fa-check"></i> Added!';
+      showToast(`"${product.title}" added to cart`);
+      setTimeout(() => { btn.classList.remove('added'); btn.innerHTML = '<i class="fas fa-shopping-cart"></i> Add to Cart'; }, 1500);
+    }
+
+    function toggleWishlist(productId) {
+      let wishlist = JSON.parse(localStorage.getItem('shopease_wishlist')) || [];
+      const idx = wishlist.findIndex(i => i.id === productId);
+      const product = products.find(p => p.id === productId);
+      if (idx > -1) { wishlist.splice(idx, 1); } else { wishlist.push({ id: product.id, title: product.title, brand: product.brand, price: product.price, image: product.image }); }
+      localStorage.setItem('shopease_wishlist', JSON.stringify(wishlist));
+      const btn = document.querySelector(`.wishlist-btn[onclick="toggleWishlist(${productId})"]`);
+      if (btn) { btn.classList.toggle('active'); btn.innerHTML = btn.classList.contains('active') ? '<i class="fas fa-heart"></i>' : '<i class="far fa-heart"></i>'; }
+    }
+
+    function renderPagination() {
+      const pagination = document.getElementById('pagination');
+      const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
+      if (totalPages <= 1) { pagination.innerHTML = ''; return; }
+      let html = `<button class="page-btn" onclick="goToPage(${currentPage-1})" ${currentPage===1?'disabled':''}><i class="fas fa-chevron-left"></i></button>`;
+      for (let i = 1; i <= totalPages; i++) {
+        if (i === 1 || i === totalPages || (i >= currentPage-1 && i <= currentPage+1)) {
+          html += `<button class="page-btn ${i===currentPage?'active':''}" onclick="goToPage(${i})">${i}</button>`;
+        } else if (i === currentPage-2 || i === currentPage+2) {
+          html += `<span class="page-ellipsis">...</span>`;
+        }
+      }
+      html += `<button class="page-btn" onclick="goToPage(${currentPage+1})" ${currentPage===totalPages?'disabled':''}><i class="fas fa-chevron-right"></i></button>`;
+      pagination.innerHTML = html;
+    }
+
+    function goToPage(page) {
+      const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
+      if (page < 1 || page > totalPages) return;
+      currentPage = page;
+      renderProducts();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  </script>
 </body>
 </html>
