@@ -48,6 +48,15 @@ This system isolates user-facing UI rendering elements from backing state manage
 
 ---
 
+---
+
+## ✨ Key Product Features
+
+- **Dynamic Cart Offcanvas:** Seamless slide-out or overlay cart experience showing live updates without full-page refreshes.
+- **Persistent Sessions:** Items remain safely stored in the user's browser cart even if they accidentally close the tab or refresh the page.
+- **Instant Price Aggregation:** Automatic, real-time summation of items, tax estimations, and checkout totals based on quantities selected.
+- **Fluid Layout Adapters:** Fully responsive UI design built to scale cleanly from ultra-wide monitors down to compact mobile screens.
+
 ## 🚀 Local Bootstrapping Infrastructure
 
 ### Prerequisites
