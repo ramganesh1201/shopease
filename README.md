@@ -8,7 +8,7 @@ A lightweight, state-driven digital commerce interface engineered entirely in va
 
 This system isolates user-facing UI rendering elements from backing state management machines to maintain deterministic operational cart boundaries. Data persistence across user sessions is handled locally at the browser boundary.
 
-'''text
+```text
                   ┌────────────────────────┐
                   │   Tailwind/HTML5 UI    │
                   └───────────┬────────────┘
@@ -24,7 +24,8 @@ This system isolates user-facing UI rendering elements from backing state manage
                   ┌────────────────────────┐
                   │  Browser localStorage  │
                   │   (Persistent State)   │
-                  └────────────────────────┘'''
+                  └────────────────────────┘```
+
 ---
 
 ## ⚡ Engineering Core & Highlights
