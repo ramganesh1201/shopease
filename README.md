@@ -1,4 +1,8 @@
 # Shopease Engine Architecture
+![Static Badge](https://img.shields.io/badge/Frontend-Vanilla_JS-yellow)
+![Static Badge](https://img.shields.io/badge/Styling-Tailwind_CSS-blue)
+![Static Badge](https://img.shields.io/badge/Storage-localStorage-green)
+![Static Badge](https://img.shields.io/badge/License-MIT-purple)
 
 A lightweight, state-driven digital commerce interface engineered entirely in vanilla web technologies. This system utilizes client-side storage mechanisms to handle persistent state transitions without external database overhead.
 
