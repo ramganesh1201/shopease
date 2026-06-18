@@ -24,7 +24,7 @@ This system isolates user-facing UI rendering elements from backing state manage
                   ┌────────────────────────┐
                   │  Browser localStorage  │
                   │   (Persistent State)   │
-                  └────────────────────────┘```
+                  └────────────────────────┘
 
 ---
 
